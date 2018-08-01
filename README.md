@@ -1,6 +1,7 @@
 # MSL
 Marty(Sama0134) Support Library for C++17
 
+### What it contains
 It includes:
 - <msl/check_assert.h>
 	- msl::check_assert; inline function for asserts (instead of macros)
@@ -16,3 +17,6 @@ It includes:
 ```cpp
 #include <msl/msl.h>
 ```
+
+### Dependencies
+No dependencies.
