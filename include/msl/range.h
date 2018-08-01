@@ -25,14 +25,8 @@ template <class T> class xrange
 	std::vector<T> m_vec;
 
 public:
-	xrange(T max) : xrange(0, max) {}
-	xrange(T min, T max)
-	{
-		if (min >= max)
-			throw std::runtime_error("xrange min >= max");
-		m_vec.resize(max - min);
-		std::generate(m_vec.begin(), m_vec.end(), [n = min]() mutable { return n++; });
-	}
+	xrange(T max) : xrange(0, max, 1) {}
+	xrange(T min, T max) : xrange(min, max, 1) {}
 	xrange(T min, T max, T diff)
 	{
 		if (min >= max)
@@ -40,8 +34,7 @@ public:
 		if (diff <= 0)
 			throw std::runtime_error("xrange diff <= 0");
 		// 4x faster than emplace_back
-		size_t n = (max - min) / diff;
-		m_vec.resize(n);
+		m_vec.resize((max - min) / diff);
 		for (auto & e : m_vec)
 		{
 			e += min;

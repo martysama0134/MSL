@@ -111,6 +111,44 @@ int main()
 		for (auto n = min; n < max; n += diff)
 			m_vec.emplace_back(n);
 	});
+	{
+		std::cout << "### range tests with bench" << '\n';
+		std::cout << "### xirange test to 5" << '\n';
+		msl::bench([] {
+			for (auto i : msl::xirange(5))
+				;
+		});
+		std::cout << "### xirange test 3 to 5" << '\n';
+		msl::bench([] {
+			for (auto i : msl::xirange(3, 5))
+				;
+		});
+		std::cout << "### xdrange test 2 to 5 by 0.5" << '\n';
+		msl::bench([] {
+			for (auto i : msl::xdrange(2, 5, 0.5))
+				;
+		});
+		std::cout << "### xdrange test 2 to 5 by 1.0" << '\n';
+		msl::bench([] {
+			for (auto i : msl::xdrange(2, 5, 1))
+				;
+		});
+		std::cout << "### xirange test 2 to 5 by 1" << '\n';
+		msl::bench([] {
+			for (auto i : msl::xirange(2, 5, 1))
+				;
+		});
+		std::cout << "### xcrange test 2 to 5 by 1" << '\n';
+		msl::bench([] {
+			for (auto i : msl::xcrange(2, 5, 1))
+				;
+		});
+		std::cout << "### xcrange test 3 to 5" << '\n';
+		msl::bench([] {
+			for (auto i : msl::xcrange(3, 5))
+				;
+		});
+	}
 
 	std::cout << "All tests passed." << '\n';
 	getchar();
