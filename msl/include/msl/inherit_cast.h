@@ -1,4 +1,5 @@
 #pragma once
+#include <utility>
 namespace msl
 {
 /// \brief more meaningful cast between dynamic_cast and static_cast
