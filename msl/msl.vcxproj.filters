@@ -30,6 +30,9 @@
     <ClInclude Include="..\include\msl\truncate_cast.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\msl\range.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="msl_tests.cpp">

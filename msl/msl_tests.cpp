@@ -6,6 +6,18 @@ using namespace std::string_literals;
 
 int main()
 {
+	// range tests
+	{
+		std::cout << "### range tests" << '\n';
+		//for (auto i : msl::range<int>(5))
+		//	printf("%x\n", i);
+		std::cout << "### xrange test to 5" << '\n';
+		for (auto i : msl::xrange<int>(5))
+			printf("%x\n", i);
+		std::cout << "### xrange test 3 to 5" << '\n';
+		for (auto i : msl::xrange<int>(3, 5))
+			printf("%x\n", i);
+	}
 	// file_ptr tests
 	{
 		std::cout << "### file_ptr tests" << '\n';

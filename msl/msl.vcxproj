@@ -127,6 +127,7 @@
     <ClInclude Include="..\include\msl\file_ptr.h" />
     <ClInclude Include="..\include\msl\inherit_cast.h" />
     <ClInclude Include="..\include\msl\msl.h" />
+    <ClInclude Include="..\include\msl\range.h" />
     <ClInclude Include="..\include\msl\truncate_cast.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
