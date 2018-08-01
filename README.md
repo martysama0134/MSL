@@ -1,5 +1,5 @@
 # MSL
-Marty(Sama) Support Library for C++17
+Marty(Sama0134) Support Library for C++17
 
 It includes:
 - <msl/check_assert.h>
