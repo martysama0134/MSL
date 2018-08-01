@@ -1,0 +1,50 @@
+### vs data binaries
+*.ncb
+*.opensdf
+*.sdf
+##unskipped:
+#*.suo
+
+### vs compile binaries
+*.bsc
+*.exe
+*.ilk
+*.map
+*.pdb
+*.idb
+
+### vs folders
+obj/
+ipch/
+Debug/
+Release/
+## vs out:
+bin/
+
+### libs
+*.a
+*.dll
+*.lib
+*.o
+*.so
+
+### backups and git conflicts
+*.bak
+*.orig
+*.rej
+
+### archives
+*.rar
+*.7z
+*.zip
+*.gz
+*.bz
+*.tar
+*.tgz
+*.txz
+
+### vs2017 workspace
+.vs/
+
+### giteye (eclipse egit)
+/.project
