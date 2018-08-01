@@ -4,8 +4,8 @@ Marty(Sama0134) Support Library for C++17
 ### What it contains
 It includes:
 - `<msl/bench.h>`
-	- `msl::bench(func, args...)`; perform easy benchmark tests and print the result
-	- `msl::evaluate(tries, func, args...)`; perform easy benchmark tests and return the ms
+	- `msl::bench(func)`; perform easy benchmark tests and print the result
+	- `msl::evaluate(tries, func)`; perform easy benchmark tests and return the ms
 - `<msl/check_assert.h>`
 	- `msl::check_assert(condition)`; inline function for asserts (instead of macros)
 - `<msl/file_ptr.h>` Smart pointer (wrapper) for FILE.
