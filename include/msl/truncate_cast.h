@@ -10,13 +10,12 @@ struct truncate_error : public std::exception
 };
 template <class T, class U> constexpr T truncate_cast(U u)
 {
-	return static_cast<T>(u);
+	return static_cast<T>(std::trunc(u));
 }
 template <class T, class U> constexpr T truncate(U u)
 {
-	u = std::trunc(u);
 	T t = truncate_cast<T>(u);
-	if (static_cast<U>(t) != u)
+	if (static_cast<U>(t) != std::trunc(u))
 		throw truncate_error();
 	return t;
 }
