@@ -29,20 +29,26 @@ public:
 	xrange(T min, T max)
 	{
 		if (min >= max)
-			std::runtime_error("xrange min >= max");
+			throw std::runtime_error("xrange min >= max");
 		m_vec.resize(max - min);
 		std::generate(m_vec.begin(), m_vec.end(), [n = min]() mutable { return n++; });
 	}
 	xrange(T min, T max, T diff)
 	{
 		if (min >= max)
-			std::runtime_error("xrange min >= max");
+			throw std::runtime_error("xrange min >= max");
 		if (diff <= 0)
-			std::runtime_error("xrange diff <= 0");
+			throw std::runtime_error("xrange diff <= 0");
 		for (T n = min; n < max; n += diff)
 			m_vec.emplace_back(n);
 	}
 	auto begin() { return std::begin(m_vec); }
 	auto end() { return std::end(m_vec); }
 };
+
+using xcrange = xrange<char>;
+using xirange = xrange<int>;
+using xllrange = xrange<long long>;
+using xfrange = xrange<float>;
+using xdrange = xrange<double>;
 } // namespace msl

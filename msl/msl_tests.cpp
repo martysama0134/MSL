@@ -20,6 +20,9 @@ int main()
 		std::cout << "### xrange test 2 to 5 by 0.5" << '\n';
 		for (auto i : msl::xrange<double>(2, 5, 0.5))
 			std::cout << i << '\n';
+		std::cout << "### xcrange test 3 to 5" << '\n';
+		for (auto i : msl::xcrange(3, 5))
+			std::cout << (int)i << '\n';
 	}
 	// file_ptr tests
 	{
