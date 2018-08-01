@@ -31,6 +31,30 @@ int main()
 		std::cout << res << '\n';
 		msl::check_assert(res == 3);
 	}
+	// truncate_cast tests
+	{
+		std::cout << "### truncate_cast tests" << '\n';
+		{
+			auto res = msl::truncate_cast<int>(3.4);
+			std::cout << res << '\n';
+			msl::check_assert(res == 3);
+		}
+		{
+			auto res = msl::truncate<unsigned short>(255.55);
+			std::cout << res << '\n';
+			msl::check_assert(res == 255);
+		}
+		try
+		{
+			auto res = msl::truncate<unsigned short>(100000.66);
+			std::cout << res << '\n';
+			msl::check_assert(res == 100000);
+		}
+		catch (msl::truncate_error & e)
+		{
+			std::cout << e.what() << '\n';
+		}
+	}
 	getchar();
 	getchar();
 	return 0;
