@@ -28,4 +28,4 @@ It includes:
 
 ### Dependencies
 No dependencies.
-Each include is self-independent.
+Each include is also self-independent.
