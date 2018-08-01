@@ -121,6 +121,10 @@
   <ItemGroup>
     <ClCompile Include="test.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\msl\file_ptr.h" />
+    <ClInclude Include="..\include\msl\msl.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

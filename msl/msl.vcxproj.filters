@@ -13,10 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="File di intestazione\msl">
+      <UniqueIdentifier>{4e3db336-6ef2-43d5-943b-cc7ce48f17a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\msl\file_ptr.h">
+      <Filter>File di intestazione\msl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\msl\msl.h">
+      <Filter>File di intestazione\msl</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
