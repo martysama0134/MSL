@@ -1,5 +1,8 @@
 #pragma once
 
+#include <algorithm>
+#include <vector>
+
 namespace msl
 {
 /*template <class T> class range
@@ -27,9 +30,7 @@ public:
 		if (min >= max)
 			std::runtime_error("xrange min >= max");
 		m_vec.resize(max - min);
-		T i = min;
-		for (auto & e : m_vec)
-			e = i++;
+		std::generate(m_vec.begin(), m_vec.end(), [n = min]() mutable { return n++; });
 	}
 	auto begin() { return std::begin(m_vec); }
 	auto end() { return std::end(m_vec); }
