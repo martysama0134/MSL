@@ -10,8 +10,9 @@ It includes:
 - <msl/inherit_cast.h>
 	- msl::inherit_cast<T>; static_cast vs dynamic_cast conflictual? not anymore
 - <msl/truncate_cast.h>
-	- msl::truncate_cast<T>; Truncate floating-point to integral
-	- msl::truncate<T>; Truncate floating-point (mostly to integral type) and throw truncate_error exception if wrong.
+	- msl::truncate_cast<T>; Truncate floating-point
+	- msl::truncate<T>; Truncate floating-point (mostly to integral type) and throw msl::truncate_error exception if wrong.
+	- msl::integral_cast<T>; Truncate floating-point to integral and throw msl::truncate_error exception if wrong.
 
 ### How to use it
 ```cpp
