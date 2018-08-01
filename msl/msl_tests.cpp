@@ -11,6 +11,9 @@ int main()
 		std::cout << "### range tests" << '\n';
 		for (auto i : msl::range<int>(5))
 			std::cout << i << '\n';
+		std::cout << "### range tests" << '\n';
+		for (auto i : msl::range<double>(5))
+			std::cout << i << '\n';
 		std::cout << "### xrange test to 5" << '\n';
 		for (auto i : msl::xrange<int>(5))
 			std::cout << i << '\n';
@@ -148,9 +151,19 @@ int main()
 			for (auto i : msl::xcrange(3, 5))
 				;
 		});
-		std::cout << "### irange test 0 to 5" << '\n';
+		std::cout << "### irange test to 5" << '\n';
 		msl::bench([] {
-			for (auto i : msl::irange(0, 5))
+			for (auto i : msl::irange(5))
+				;
+		});
+		std::cout << "### irange test 3 to 5" << '\n';
+		msl::bench([] {
+			for (auto i : msl::irange(3, 5))
+				;
+		});
+		std::cout << "### drange test 3 to 5" << '\n';
+		msl::bench([] {
+			for (auto i : msl::drange(3, 5))
 				;
 		});
 	}
