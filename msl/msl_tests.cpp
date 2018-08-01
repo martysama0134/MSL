@@ -78,6 +78,29 @@ int main()
 			std::cout << e.what() << '\n';
 		}
 	}
+	// bench tests
+	msl::bench([] {
+		std::vector<double> m_vec;
+		double min = 2;
+		double max = 5;
+		double diff = 0.5;
+		auto n = (max - min) / diff;
+		m_vec.resize(n);
+		for (auto & e : m_vec)
+		{
+			e += min;
+			min += diff;
+		}
+	});
+	msl::bench([] {
+		std::vector<double> m_vec;
+		double min = 2;
+		double max = 5;
+		double diff = 0.5;
+		for (auto n = min; n < max; n += diff)
+			m_vec.emplace_back(n);
+	});
+
 	std::cout << "All tests passed." << '\n';
 	getchar();
 	getchar();
