@@ -19,6 +19,7 @@ public:
 	T * end() { return m_ptr2; }
 };*/
 
+/// \brief xrange mostly used in for-range (it uses std::vector with n=((max-min)/diff) elements)
 template <class T> class xrange
 {
 	std::vector<T> m_vec;
