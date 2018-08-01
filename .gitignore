@@ -13,6 +13,11 @@
 *.pdb
 *.idb
 
+### gcc/clang linux/unix compile binaries
+*.out
+*.core
+*.elf
+
 ### vs folders
 obj/
 ipch/

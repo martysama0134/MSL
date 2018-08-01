@@ -5,6 +5,14 @@
 #include <iostream>
 namespace msl
 {
+template <class F, class... Args> auto evaluate(size_t tries, F && func, Args &&... args)
+{
+	auto start = std::chrono::steady_clock::now();
+	for (auto i = 0; i < tries; i++)
+		std::invoke(std::forward<decltype(func)>(func), std::forward<Args>(args)...);
+	return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start);
+}
+
 class bench
 {
 public:
@@ -15,11 +23,4 @@ public:
 	}
 };
 
-template <class F, class... Args> auto evaluate(size_t tries, F && func, Args &&... args)
-{
-	auto start = std::chrono::steady_clock::now();
-	for (auto i = 0; i < tries; i++)
-		std::invoke(std::forward<decltype(func)>(func), std::forward<Args>(args)...);
-	return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start);
-}
 } // namespace msl
