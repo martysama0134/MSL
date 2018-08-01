@@ -5,19 +5,60 @@
 
 namespace msl
 {
-/*template <class T> class range
+/// \brief range_iterator used for range
+template <class T> class range_iterator
 {
-	T m_min{};
-	T m_max{};
-	T * m_ptr{};
-	T * m_ptr2{};
+	T m_value{};
 
 public:
-	range(T max) : m_max{max} { m_ptr2 += max; }
-	//range(T min, T max) : m_min{ min } m_max { max } {}
-	T * begin() { return m_ptr++; }
-	T * end() { return m_ptr2; }
-};*/
+	range_iterator(T value) : m_value{value} {}
+	T operator*() { return m_value; }
+	range_iterator<T> & operator++()
+	{
+		++m_value;
+		return *this;
+	}
+	range_iterator<T> & operator--()
+	{
+		--m_value;
+		return *this;
+	}
+	range_iterator<T> operator++(int)
+	{
+		++m_value;
+		return *this;
+	}
+	range_iterator<T> operator--(int)
+	{
+		--m_value;
+		return *this;
+	}
+	bool operator!=(range_iterator<T> & r) { return m_value != *r; }
+};
+
+/// \brief range mostly used in for-range (no memory allocation)
+template <class T> class range
+{
+	range_iterator<T> m_min{0};
+	range_iterator<T> m_max;
+
+public:
+	range(T max) : m_max{max} {}
+	range(T min, T max) : m_min{min}, m_max{max} {}
+	range_iterator<T> begin()
+	{
+		if (*m_min == *m_max)
+			return m_max;
+		return m_min;
+	}
+	range_iterator<T> end() { return m_max; }
+};
+
+using crange = range<char>;
+using irange = range<int>;
+using llrange = range<long long>;
+using frange = range<float>;
+using drange = range<double>;
 
 /// \brief xrange mostly used in for-range (it uses std::vector with n=((max-min)/diff) elements)
 template <class T> class xrange
