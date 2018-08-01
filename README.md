@@ -28,4 +28,5 @@ It includes:
 
 ### Dependencies
 No dependencies.
-Each include is also self-independent.
+
+Each include is also self-independent and header-only.
