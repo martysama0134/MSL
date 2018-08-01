@@ -11,3 +11,8 @@ It includes:
 - <msl/truncate_cast.h>
 	- msl::truncate_cast<T>
 	- msl::truncate<T>
+
+### How to use it
+```cpp
+#include <msl/msl.h>
+```
