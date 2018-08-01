@@ -46,7 +46,7 @@ public:
 	/// \brief return the file size whether from the current position or from beginning
 	std::size_t size(bool from_current = false) const
 	{
-		std::size_t cur = std::ftell(m_ptr); // get current pos
+		auto cur = std::ftell(m_ptr); // get current pos
 		std::fseek(m_ptr, 0, SEEK_END); // go to EOF
 		std::size_t filesize = std::ftell(m_ptr); // get filesize
 		std::fseek(m_ptr, cur, SEEK_SET); // go to current pos
