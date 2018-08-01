@@ -60,6 +60,7 @@ int main()
 			std::cout << e.what() << '\n';
 		}
 	}
+	std::cout << "All tests passed." << '\n';
 	getchar();
 	getchar();
 	return 0;
