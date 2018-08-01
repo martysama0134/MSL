@@ -1,0 +1,95 @@
+###>https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+###>https://releases.llvm.org/6.0.0/tools/clang/docs/ClangFormatStyleOptions.html
+BasedOnStyle: LLVM
+AccessModifierOffset: -4
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignEscapedNewlines: Left
+AlignOperands: false
+AlignTrailingComments: false
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortBlocksOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+# AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakAfterReturnType: None
+AlwaysBreakBeforeMultilineStrings: false
+AlwaysBreakTemplateDeclarations: false
+# BinPackArguments: true
+# BinPackParameters: true
+BreakBeforeBinaryOperators: None
+BreakBeforeBraces: Allman
+###>no namespace extern union indent (Custom instead of Allman)
+# BreakBeforeBraces: Custom
+# BraceWrapping:
+    # AfterClass: true
+    # AfterControlStatement: true
+    # AfterEnum: true
+    # AfterFunction: true
+    # AfterNamespace: false
+    # AfterStruct: true
+    # AfterUnion: false
+    # AfterExternBlock: false
+    # BeforeCatch: true
+    # BeforeElse: true
+    # IndentBraces: false
+    # SplitEmptyFunction: false
+    # SplitEmptyRecord: false
+# BreakBeforeInheritanceComma: false
+# BreakBeforeTernaryOperators: false
+# BreakConstructorInitializers: BeforeComma
+# BreakStringLiterals: false
+ColumnLimit: 140
+# ??? # CommentPragmas (std::string)
+CompactNamespaces: false
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+# ConstructorInitializerIndentWidth: 4
+ContinuationIndentWidth: 4
+Cpp11BracedListStyle: true
+# ??? # DerivePointerAlignment (bool)
+# ??? # DisableFormat (bool)
+# ??? # ExperimentalAutoDetectBinPacking (bool)
+FixNamespaceComments: true
+# ??? # ForEachMacros (std::vector<std::string>)
+# ??? # IncludeBlocks (IncludeBlocksStyle)
+# ??? # IncludeCategories (std::vector<IncludeCategory>)
+# ??? # IncludeIsMainRegex (std::string)
+IndentCaseLabels: false
+IndentPPDirectives: AfterHash
+IndentWidth: 4
+IndentWrappedFunctionNames: true
+KeepEmptyLinesAtTheStartOfBlocks: false
+Language: Cpp
+# ??? # MacroBlockBegin (std::string)
+# ??? # MacroBlockEnd (std::string)
+MaxEmptyLinesToKeep: 2
+NamespaceIndentation: None
+# ??? # PenaltyBreakAssignment (unsigned)
+# ??? # PenaltyBreakBeforeFirstCallParameter (unsigned)
+# ??? # PenaltyBreakComment (unsigned)
+# ??? # PenaltyBreakFirstLessLess (unsigned)
+# ??? # PenaltyBreakString (unsigned)
+# ??? # PenaltyExcessCharacter (unsigned)
+# ??? # PenaltyReturnTypeOnItsOwnLine (unsigned)
+PointerAlignment: Middle
+# ??? # RawStringFormats (std::vector<RawStringFormat>)
+ReflowComments: false
+SortIncludes: false
+SortUsingDeclarations: true
+SpaceAfterCStyleCast: true
+SpaceAfterTemplateKeyword: true
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeParens: ControlStatements
+SpaceInEmptyParentheses: false
+# SpacesBeforeTrailingComments (unsigned=3)
+SpacesInAngles: false
+SpacesInCStyleCastParentheses: false
+SpacesInContainerLiterals: false
+SpacesInParentheses: false
+SpacesInSquareBrackets: false
+Standard: Cpp11
+TabWidth: 4
+UseTab: ForContinuationAndIndentation

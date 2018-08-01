@@ -1,0 +1,22 @@
+### default behavior
+* text=auto eol=lf
+## note: eol in text auto is fixed since git 2.10 (31 aug 2016)
+
+### windows (always crlf)
+*.bat eol=crlf
+*.sln eol=crlf
+*.filters eol=crlf
+*.users eol=crlf
+*.vcxproj eol=crlf
+*.vssscc eol=crlf
+
+### unix (always lf)
+*.sh eol=lf
+*.bash eol=lf
+*.py eol=lf
+
+### binaries
+*.suo binary
+
+### others
+*.txt eol=crlf
