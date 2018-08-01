@@ -4,7 +4,7 @@
 #include <iostream>
 namespace msl
 {
-template <class F, class... Args> auto evaluate(size_t tries, F && func)
+template <class F> auto evaluate(F && func, size_t tries = 1)
 {
 	auto start = std::chrono::steady_clock::now();
 	for (auto i = 0; i < tries; i++)
@@ -15,11 +15,7 @@ template <class F, class... Args> auto evaluate(size_t tries, F && func)
 class bench
 {
 public:
-	template <class F, class... Args> bench(F && func)
-	{
-		constexpr auto tries = 10000;
-		std::cout << "Elapsed time: " << evaluate(tries, func).count() << "ms\n";
-	}
+	template <class F> bench(F && func, size_t tries = 10000) { std::cout << "Elapsed time: " << evaluate(func, tries).count() << "ms\n"; }
 };
 
 } // namespace msl
