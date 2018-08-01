@@ -7,6 +7,7 @@ int main()
 {
 	// file_ptr tests
 	{
+		std::cout << "### file_ptr tests" << '\n';
 		msl::file_ptr p("test.txt"); // open test.txt on read-mode
 
 		std::cout << ((p.is_open()) ? "OPEN"s : "CLOSE"s) << '\n';
@@ -21,6 +22,13 @@ int main()
 
 		std::cout << p.remain_size() << '\n';
 		msl::check_assert(p.remain_size() == 0); // check its remaining size after read
+	}
+	// inherit_cast tests
+	{
+		std::cout << "### inherit_cast tests" << '\n';
+		auto res = msl::inherit_cast<int>(3.4);
+		std::cout << res << '\n';
+		msl::check_assert(res == 3);
 	}
 	getchar();
 	getchar();
