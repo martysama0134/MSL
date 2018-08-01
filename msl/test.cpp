@@ -1,7 +1,8 @@
 #include <iostream>
-#include <msl/msl.h>
 #include <string>
 using namespace std::string_literals;
+
+#include "include/msl/msl.h" // instead of <msl/msl.h> for non-system headers analysing
 
 int main()
 {

@@ -1,5 +1,5 @@
 #pragma once
 
-#include <msl/check_assert.h>
-#include <msl/file_ptr.h>
-#include <msl/inherit_cast.h>
+#include "check_assert.h"
+#include "file_ptr.h"
+#include "inherit_cast.h"
