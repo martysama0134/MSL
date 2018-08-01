@@ -14,8 +14,9 @@ template <class T, class U> constexpr T truncate_cast(U u)
 }
 template <class T, class U> constexpr T truncate(U u)
 {
+	u = std::trunc(u);
 	T t = truncate_cast<T>(u);
-	if (static_cast<U>(t) != std::trunc(u))
+	if (static_cast<U>(t) != u)
 		throw truncate_error();
 	return t;
 }

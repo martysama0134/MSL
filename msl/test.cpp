@@ -2,7 +2,7 @@
 #include <string>
 using namespace std::string_literals;
 
-#include "include/msl/msl.h" // instead of <msl/msl.h> for non-system headers analysing
+#include "../include/msl/msl.h" // instead of <msl/msl.h> for non-system headers analysing
 
 int main()
 {
@@ -43,6 +43,11 @@ int main()
 			auto res = msl::truncate<unsigned short>(255.55);
 			std::cout << res << '\n';
 			msl::check_assert(res == 255);
+		}
+		{
+			auto res = msl::truncate<double>(222.44);
+			std::cout << res << '\n';
+			msl::check_assert(res == 222);
 		}
 		try
 		{
