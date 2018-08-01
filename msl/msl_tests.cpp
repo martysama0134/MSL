@@ -13,10 +13,13 @@ int main()
 		//	printf("%x\n", i);
 		std::cout << "### xrange test to 5" << '\n';
 		for (auto i : msl::xrange<int>(5))
-			printf("%x\n", i);
+			std::cout << i << '\n';
 		std::cout << "### xrange test 3 to 5" << '\n';
 		for (auto i : msl::xrange<int>(3, 5))
-			printf("%x\n", i);
+			std::cout << i << '\n';
+		std::cout << "### xrange test 2 to 5 by 0.5" << '\n';
+		for (auto i : msl::xrange<double>(2, 5, 0.5))
+			std::cout << i << '\n';
 	}
 	// file_ptr tests
 	{
