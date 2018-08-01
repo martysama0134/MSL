@@ -4,7 +4,8 @@ Marty(Sama0134) Support Library for C++17
 ### What it contains
 It includes:
 - <msl/bench.h>
-	- msl::bench; perform easy benchmark tests
+	- msl::bench(lambda, args..., tries); perform easy benchmark tests and print the result
+	- msl::evaluate(lambda, args..., tries); perform easy benchmark tests and return the ms
 - <msl/check_assert.h>
 	- msl::check_assert; inline function for asserts (instead of macros)
 - <msl/file_ptr.h>
