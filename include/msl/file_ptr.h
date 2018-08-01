@@ -44,20 +44,22 @@ public:
 	bool is_open() const { return m_ptr; }
 
 	/// \brief return the file size whether from the current position or from beginning
-	std::size_t size(bool from_current = true) const
+	std::size_t size(bool from_current = false) const
 	{
 		std::size_t cur = std::ftell(m_ptr); // get current pos
 		std::fseek(m_ptr, 0, SEEK_END); // go to EOF
 		std::size_t filesize = std::ftell(m_ptr); // get filesize
 		std::fseek(m_ptr, cur, SEEK_SET); // go to current pos
-		return (from_current) ? filesize : filesize + cur;
+		return (from_current) ? filesize - cur : filesize;
 	}
+	/// \brief return the file size from the current position; alias of size(true)
+	std::size_t remain_size() const { return size(true); }
 
 	/// \brief read the file from the current position as byte stream
 	std::vector<char> read(std::size_t n = 0)
 	{
 		if (n == 0) // 0 implies reading the whole remaining file
-			n = this->size();
+			n = this->remain_size();
 		std::vector<char> buf(n);
 		std::fread(buf.data(), 1, buf.size(), m_ptr);
 		return buf;
