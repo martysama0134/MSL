@@ -8,13 +8,14 @@ namespace msl
 class bench
 {
 public:
-	template <class F, class... Args> bench(F && func, Args &&... args, size_t tries = 10000)
+	template <class F, class... Args> bench(F && func, Args &&... args)
 	{
-		std::cout << "Elapsed time: " << evaluate(func, args..., tries).count() << "ms\n";
+		constexpr auto tries = 10000;
+		std::cout << "Elapsed time: " << evaluate(tries, func, args...).count() << "ms\n";
 	}
 };
 
-template <class F, class... Args> auto evaluate(F && func, Args &&... args, size_t tries = 1)
+template <class F, class... Args> auto evaluate(size_t tries, F && func, Args &&... args)
 {
 	auto start = std::chrono::steady_clock::now();
 	for (auto i = 0; i < tries; i++)
