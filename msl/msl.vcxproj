@@ -122,6 +122,7 @@
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\msl\check_assert.h" />
     <ClInclude Include="..\include\msl\file_ptr.h" />
     <ClInclude Include="..\include\msl\msl.h" />
   </ItemGroup>

@@ -4,15 +4,6 @@
 #include <string>
 using namespace std::string_literals;
 
-#include <cstdlib>
-
-namespace msl {
-	inline auto check_assert = [](bool condition) {
-		if (!(condition))
-			std::abort();
-	};
-}
-
 int main()
 {
 	// file_ptr tests
