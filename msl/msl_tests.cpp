@@ -83,6 +83,17 @@ int main()
 		std::vector<double> m_vec;
 		double min = 2;
 		double max = 5;
+		auto n = (max - min);
+		m_vec.resize(n);
+		for (auto & e : m_vec)
+		{
+			e += min++;
+		}
+	});
+	msl::bench([] {
+		std::vector<double> m_vec;
+		double min = 2;
+		double max = 5;
 		double diff = 0.5;
 		auto n = (max - min) / diff;
 		m_vec.resize(n);
