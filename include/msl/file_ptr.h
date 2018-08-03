@@ -11,16 +11,34 @@ class file_ptr
 	std::FILE * m_ptr{nullptr};
 
 public:
+	// constructor
+	file_ptr() = delete;
 	file_ptr(const char * filename, const char * mode = "r") { open(filename, mode); }
 	file_ptr(std::FILE * ptr) { m_ptr = ptr; }
+	// move constructor
+	file_ptr(file_ptr && fp) { m_ptr = std::move(fp.m_ptr); }
+	file_ptr & operator=(file_ptr && fp)
+	{
+		reset(std::move(fp.m_ptr));
+		return *this;
+	}
+	// copy constructor
+	file_ptr(const file_ptr &) = delete;
+	file_ptr & operator=(const file_ptr &) = delete;
+	// destructor
 	~file_ptr() { std::fclose(m_ptr); }
 
-	std::FILE *& operator*() { return m_ptr; }
-	bool operator!() { return is_open(); }
-	std::FILE *& operator->() { return m_ptr; }
+	/// \brief *ptr
+	std::FILE * operator*() const { return m_ptr; }
+	/// \brief if (!ptr)
+	bool operator!() const { return is_open(); }
+	/// \brief ptr->elem
+	std::FILE * operator->() const { return m_ptr; }
+	/// \brief if (ptr)
+	operator bool() const { return get(); }
 
 	/// \brief get the file ptr
-	std::FILE * get() { return m_ptr; }
+	std::FILE * get() const { return m_ptr; }
 
 	/// \brief close the file ptr and reset it
 	void open(const char * filename, const char * mode = "r")
@@ -35,7 +53,7 @@ public:
 	void close() { reset(); }
 
 	/// \brief swap two file_ptr
-	void swap(file_ptr & fp) { std::swap(m_ptr, *fp); }
+	void swap(file_ptr & fp) { std::swap(m_ptr, fp.m_ptr); }
 
 	/// \brief reset and reopen new file
 	void reset(const char * filename, const char * mode = "r")
