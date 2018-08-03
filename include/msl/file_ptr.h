@@ -14,7 +14,11 @@ public:
 	file_ptr(const char * filename, const char * mode = "r") { open(filename, mode); }
 	file_ptr(std::FILE * ptr) { m_ptr = ptr; }
 	~file_ptr() { std::fclose(m_ptr); }
-	std::FILE * operator*() { return m_ptr; }
+
+	std::FILE *& operator*() { return m_ptr; }
+	bool operator!() { return is_open(); }
+	std::FILE *& operator->() { return m_ptr; }
+
 	/// \brief get the file ptr
 	std::FILE * get() { return m_ptr; }
 
