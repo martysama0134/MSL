@@ -12,7 +12,7 @@ class file_ptr
 
 public:
 	// constructor
-	file_ptr() = delete;
+	file_ptr() = default;
 	file_ptr(const char * filename, const char * mode = "r") { open(filename, mode); }
 	file_ptr(std::FILE * ptr) { m_ptr = ptr; }
 	// move constructor
