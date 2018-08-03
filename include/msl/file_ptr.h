@@ -34,6 +34,8 @@ public:
 	/// \brief alias of reset()
 	void close() { reset(); }
 
+	void swap(file_ptr & fp) { std::swap(m_ptr, *fp); }
+
 	/// \brief close the file and reset the ptr
 	void reset()
 	{
