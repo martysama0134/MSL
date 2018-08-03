@@ -26,7 +26,7 @@ public:
 	file_ptr(const file_ptr &) = delete;
 	file_ptr & operator=(const file_ptr &) = delete;
 	// destructor
-	~file_ptr() { std::fclose(m_ptr); }
+	~file_ptr() { reset(); }
 
 	/// \brief *ptr
 	std::FILE * operator*() const { return m_ptr; }
