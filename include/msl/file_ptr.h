@@ -34,7 +34,22 @@ public:
 	/// \brief alias of reset()
 	void close() { reset(); }
 
+	/// \brief swap two file_ptr
 	void swap(file_ptr & fp) { std::swap(m_ptr, *fp); }
+
+	/// \brief reset and reopen new file
+	void reset(const char * filename, const char * mode = "r")
+	{
+		reset();
+		open(filename, mode);
+	}
+
+	/// \brief reset and reassign new ownership
+	void reset(std::FILE * ptr)
+	{
+		reset();
+		m_ptr = ptr;
+	}
 
 	/// \brief close the file and reset the ptr
 	void reset()
@@ -44,6 +59,14 @@ public:
 			std::fclose(m_ptr);
 			m_ptr = nullptr;
 		}
+	}
+
+	/// \brief release the file ptr
+	FILE * release()
+	{
+		auto ptr = m_ptr;
+		m_ptr = nullptr;
+		return ptr;
 	}
 
 	/// \brief return whether or not the file is open
