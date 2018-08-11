@@ -87,7 +87,7 @@ int main()
 		double min = 2;
 		double max = 5;
 		auto n = (max - min);
-		m_vec.resize(n);
+		m_vec.resize(static_cast<size_t>(n));
 		for (auto & e : m_vec)
 		{
 			e += min++;
@@ -99,7 +99,7 @@ int main()
 		double max = 5;
 		double diff = 0.5;
 		auto n = (max - min) / diff;
-		m_vec.resize(n);
+		m_vec.resize(static_cast<size_t>(n));
 		for (auto & e : m_vec)
 		{
 			e += min;

@@ -75,7 +75,7 @@ public:
 		if (diff <= 0)
 			throw std::runtime_error("xrange diff <= 0");
 		// 4x faster than emplace_back
-		m_vec.resize((max - min) / diff);
+		m_vec.resize(static_cast<size_t>((max - min) / diff));
 		for (auto & e : m_vec)
 		{
 			e += min;
