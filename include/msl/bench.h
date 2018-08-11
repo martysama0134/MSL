@@ -7,7 +7,7 @@ namespace msl
 template <class F> auto evaluate(F && func, size_t tries = 1)
 {
 	auto start = std::chrono::steady_clock::now();
-	for (auto i = 0; i < tries; i++)
+	for (size_t i = 0; i < tries; i++)
 		func();
 	return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start);
 }
