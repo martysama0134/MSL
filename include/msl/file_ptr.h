@@ -28,19 +28,19 @@ public:
 	// destructor
 	~file_ptr() { reset(); }
 
-	/// \brief *ptr
+	//! @brief *ptr
 	std::FILE * operator*() const { return m_ptr; }
-	/// \brief if (!ptr)
+	//! @brief if (!ptr)
 	bool operator!() const { return is_open(); }
-	/// \brief ptr->elem
+	//! @brief ptr->elem
 	std::FILE * operator->() const { return m_ptr; }
-	/// \brief if (ptr)
+	//! @brief if (ptr)
 	operator bool() const { return get(); }
 
-	/// \brief get the file ptr
+	//! @brief get the file ptr
 	std::FILE * get() const { return m_ptr; }
 
-	/// \brief close the file ptr and reset it
+	//! @brief close the file ptr and reset it
 	void open(const char * filename, const char * mode = "r")
 	{
 #ifdef _WIN32
@@ -49,27 +49,27 @@ public:
 		m_ptr = std::fopen(filename, mode);
 #endif
 	}
-	/// \brief alias of reset()
+	//! @brief alias of reset()
 	void close() { reset(); }
 
-	/// \brief swap two file_ptr
+	//! @brief swap two file_ptr
 	void swap(file_ptr & fp) { std::swap(m_ptr, fp.m_ptr); }
 
-	/// \brief reset and reopen new file
+	//! @brief reset and reopen new file
 	void reset(const char * filename, const char * mode = "r")
 	{
 		reset();
 		open(filename, mode);
 	}
 
-	/// \brief reset and reassign new ownership
+	//! @brief reset and reassign new ownership
 	void reset(std::FILE * ptr)
 	{
 		reset();
 		m_ptr = ptr;
 	}
 
-	/// \brief close the file and reset the ptr
+	//! @brief close the file and reset the ptr
 	void reset()
 	{
 		if (m_ptr)
@@ -79,7 +79,7 @@ public:
 		}
 	}
 
-	/// \brief release the file ptr
+	//! @brief release the file ptr
 	FILE * release()
 	{
 		auto ptr = m_ptr;
@@ -87,10 +87,10 @@ public:
 		return ptr;
 	}
 
-	/// \brief return whether or not the file is open
+	//! @brief return whether or not the file is open
 	bool is_open() const { return m_ptr; }
 
-	/// \brief return the file size whether from the current position or from beginning
+	//! @brief return the file size whether from the current position or from beginning
 	std::size_t size(bool from_current = false) const
 	{
 		auto cur = std::ftell(m_ptr); // get current pos
@@ -99,10 +99,10 @@ public:
 		std::fseek(m_ptr, cur, SEEK_SET); // go to current pos
 		return (from_current) ? filesize - cur : filesize;
 	}
-	/// \brief return the file size from the current position; alias of size(true)
+	//! @brief return the file size from the current position; alias of size(true)
 	std::size_t remain_size() const { return size(true); }
 
-	/// \brief read the file from the current position as byte stream
+	//! @brief read the file from the current position as byte stream
 	std::vector<char> read(std::size_t n = 0)
 	{
 		if (n == 0) // 0 implies reading the whole remaining file
@@ -112,7 +112,7 @@ public:
 		return buf;
 	}
 
-	/// \brief read the file from the current position as null-terminated string
+	//! @brief read the file from the current position as null-terminated string
 	std::string string_read(std::size_t n = 0)
 	{
 		auto vec = this->read(n);

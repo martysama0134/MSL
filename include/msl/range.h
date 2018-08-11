@@ -5,7 +5,7 @@
 
 namespace msl
 {
-/// \brief range_iterator used for range
+//! @brief range_iterator used for range
 template <class T> class range_iterator
 {
 	T m_value{};
@@ -36,7 +36,7 @@ public:
 	bool operator!=(range_iterator<T> & r) { return m_value != *r; }
 };
 
-/// \brief range mostly used in for-range (no memory allocation)
+//! @brief range mostly used in for-range (no memory allocation)
 template <class T> class range
 {
 	range_iterator<T> m_min{0};
@@ -60,7 +60,7 @@ using llrange = range<long long>;
 using frange = range<float>;
 using drange = range<double>;
 
-/// \brief xrange mostly used in for-range (it uses std::vector with n=((max-min)/diff) elements)
+//! @brief xrange mostly used in for-range (it uses std::vector with n=((max-min)/diff) elements)
 template <class T> class xrange
 {
 	std::vector<T> m_vec;
