@@ -7,6 +7,7 @@ using namespace std::string_literals;
 int main()
 {
 	// range tests
+	if (false)
 	{
 		std::cout << "### range tests" << '\n';
 		for (auto i : msl::range<int>(5))
@@ -28,6 +29,7 @@ int main()
 			std::cout << (int) i << '\n';
 	}
 	// file_ptr tests
+	if (false)
 	{
 		std::cout << "### file_ptr tests" << '\n';
 		msl::file_ptr p("test.txt"); // open test.txt on read-mode
@@ -46,6 +48,7 @@ int main()
 		msl::check_assert(p.remain_size() == 0); // check its remaining size after read
 	}
 	// inherit_cast tests
+	if (false)
 	{
 		std::cout << "### inherit_cast tests" << '\n';
 		auto res = msl::inherit_cast<int>(3.4);
@@ -53,6 +56,7 @@ int main()
 		msl::check_assert(res == 3);
 	}
 	// truncate_cast tests
+	if (false)
 	{
 		std::cout << "### truncate_cast tests" << '\n';
 		{
@@ -82,38 +86,42 @@ int main()
 		}
 	}
 	// bench tests
-	msl::bench([] {
-		std::vector<double> m_vec;
-		double min = 2;
-		double max = 5;
-		auto n = (max - min);
-		m_vec.resize(static_cast<size_t>(n));
-		for (auto & e : m_vec)
-		{
-			e += min++;
-		}
-	});
-	msl::bench([] {
-		std::vector<double> m_vec;
-		double min = 2;
-		double max = 5;
-		double diff = 0.5;
-		auto n = (max - min) / diff;
-		m_vec.resize(static_cast<size_t>(n));
-		for (auto & e : m_vec)
-		{
-			e += min;
-			min += diff;
-		}
-	});
-	msl::bench([] {
-		std::vector<double> m_vec;
-		double min = 2;
-		double max = 5;
-		double diff = 0.5;
-		for (auto n = min; n < max; n += diff)
-			m_vec.emplace_back(n);
-	});
+	if (false)
+	{
+		msl::bench([] {
+			std::vector<double> m_vec;
+			double min = 2;
+			double max = 5;
+			auto n = (max - min);
+			m_vec.resize(static_cast<std::size_t>(n));
+			for (auto & e : m_vec)
+			{
+				e += min++;
+			}
+		});
+		msl::bench([] {
+			std::vector<double> m_vec;
+			double min = 2;
+			double max = 5;
+			double diff = 0.5;
+			auto n = (max - min) / diff;
+			m_vec.resize(static_cast<std::size_t>(n));
+			for (auto & e : m_vec)
+			{
+				e += min;
+				min += diff;
+			}
+		});
+		msl::bench([] {
+			std::vector<double> m_vec;
+			double min = 2;
+			double max = 5;
+			double diff = 0.5;
+			for (auto n = min; n < max; n += diff)
+				m_vec.emplace_back(n);
+		});
+	}
+	if (false)
 	{
 		std::cout << "### range tests with bench" << '\n';
 		std::cout << "### xirange test to 5" << '\n';
