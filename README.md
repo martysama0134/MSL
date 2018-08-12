@@ -23,6 +23,7 @@ It includes:
 	- `msl::string_split(str, char token)`; split a string into a vector by providing a single delim character
 	- `msl::string_split(str, string token)`; split a string into a vector by providing the delim string
 	- `msl::string_split_any(str, string tokens)`; split a string into a vector by providing any of the single delim characters
+	- `msl::string_join(vector<string>, token)`; join all the vector elements with the token into a string
 
 ### How to use it
 ```cpp
