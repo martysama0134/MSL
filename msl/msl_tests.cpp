@@ -170,68 +170,68 @@ int main()
 		std::cout << "### xirange test to 5" << '\n';
 		msl::bench([] {
 			for (auto i : msl::xirange(5))
-				;
+				i;
 		});
 		std::cout << "### xirange test 3 to 5" << '\n';
 		msl::bench([] {
 			for (auto i : msl::xirange(3, 5))
-				;
+				i;
 		});
 		std::cout << "### xdrange test 2 to 5 by 0.5" << '\n';
 		msl::bench([] {
 			for (auto i : msl::xdrange(2, 5, 0.5))
-				;
+				i;
 		});
 		std::cout << "### xdrange test 2 to 5 by 1.0" << '\n';
 		msl::bench([] {
 			for (auto i : msl::xdrange(2, 5, 1))
-				;
+				i;
 		});
 		std::cout << "### xirange test 2 to 5 by 1" << '\n';
 		msl::bench([] {
 			for (auto i : msl::xirange(2, 5, 1))
-				;
+				i;
 		});
 		std::cout << "### xcrange test 2 to 5 by 1" << '\n';
 		msl::bench([] {
 			for (auto i : msl::xcrange(2, 5, 1))
-				;
+				i;
 		});
 		std::cout << "### xcrange test 3 to 5" << '\n';
 		msl::bench([] {
 			for (auto i : msl::xcrange(3, 5))
-				;
+				i;
 		});
 		std::cout << "### irange test to 5" << '\n';
 		msl::bench([] {
 			for (auto i : msl::irange(5))
-				;
+				i;
 		});
 		std::cout << "### irange test 3 to 5" << '\n';
 		msl::bench([] {
 			for (auto i : msl::irange(3, 5))
-				;
+				i;
 		});
 		std::cout << "### drange test 3 to 5" << '\n';
 		msl::bench([] {
 			for (auto i : msl::drange(3, 5))
-				;
+				i;
 		});
 #if 0
 		std::cout << "### xirange test to 100" << '\n'; // 370ms
 		msl::bench([] {
 			for (auto i : msl::xirange(100))
-				;
+				i;
 		});
 		std::cout << "### irange test to 100" << '\n'; // 93ms
 		msl::bench([] {
 			for (auto i : msl::irange(100))
-				;
+				i;
 		});
 		std::cout << "### normal for loop test to 100" << '\n'; // 2ms
 		msl::bench([] {
 			for (int i = 0; i < 100; i++)
-				;
+				i;
 		});
 #endif
 	}
