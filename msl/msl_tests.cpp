@@ -6,15 +6,32 @@ using namespace std::string_literals;
 
 int main()
 {
+	// string_join
+	if (false)
+	{
+		std::cout << "### string_join tests" << '\n';
+		if (false)
+		{
+			msl::bench([] { auto a = msl::string_join({"1", "22", "333", "4444"}, ' '); });
+			msl::bench([] { auto a = msl::string_join({"1", "22", "333", "4444"}, " "); });
+		}
+		if (false)
+		{
+			auto s1 = msl::string_join({"1", "22", "333", "4444"}, ' ');
+			std::cout << s1 << '\n';
+			auto s2 = msl::string_join({"1", "22", "333", "4444"}, ";;;");
+			std::cout << s2 << '\n';
+		}
+	}
 	// string_split
 	if (false)
 	{
 		std::cout << "### string_split tests" << '\n';
 		if (false)
 		{
-			msl::bench([] { auto a = msl::string_split("this is sentence number 1", ' '); }, 1'000'000);
-			msl::bench([] { auto a = msl::string_split("this is sentence number 1", " "); }, 1'000'000);
-			msl::bench([] { auto a = msl::string_split_any("this is sentence number 1", " "); }, 1'000'000);
+			msl::bench([] { auto a = msl::string_split("this is sentence number 1", ' '); });
+			msl::bench([] { auto a = msl::string_split("this is sentence number 1", " "); });
+			msl::bench([] { auto a = msl::string_split_any("this is sentence number 1", " "); });
 		}
 		if (false)
 		{

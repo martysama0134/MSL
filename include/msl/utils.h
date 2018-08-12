@@ -54,4 +54,27 @@ inline std::vector<std::string> string_split_any(const std::string & str, const 
 	return vec;
 }
 
+inline std::string string_join(const std::vector<std::string> & vec, const char tok = ' ')
+{
+	std::string str;
+	for (auto & elem : vec)
+	{
+		if (!str.empty())
+			str += tok;
+		str += elem;
+	}
+	return str;
+}
+
+inline std::string string_join(const std::vector<std::string> & vec, const std::string & tok = " ")
+{
+	std::string str;
+	for (auto & elem : vec)
+	{
+		if (!str.empty())
+			str += tok;
+		str += elem;
+	}
+	return str;
+}
 } // namespace msl
