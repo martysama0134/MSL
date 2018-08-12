@@ -33,6 +33,9 @@
     <ClInclude Include="..\include\msl\cast.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\msl\utils.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="msl_tests.cpp">

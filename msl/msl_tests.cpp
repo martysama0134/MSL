@@ -6,6 +6,32 @@ using namespace std::string_literals;
 
 int main()
 {
+	// string_split
+	if (false)
+	{
+		std::cout << "### string_split tests" << '\n';
+		if (false)
+		{
+			msl::bench([] { auto a = msl::string_split("this is sentence number 1", ' '); }, 1'000'000);
+			msl::bench([] { auto a = msl::string_split("this is sentence number 1", " "); }, 1'000'000);
+			msl::bench([] { auto a = msl::string_split_any("this is sentence number 1", " "); }, 1'000'000);
+		}
+		if (false)
+		{
+			auto v1 = msl::string_split("this is sentence number 1", ' ');
+			for (auto & s : v1)
+				std::cout << s << '\n';
+			auto v2a = msl::string_split("this;;;is;;;sentence;;;number;;;2;;;;;;asd", ";;;");
+			for (auto & s : v2a)
+				std::cout << s << '\n';
+			auto v2b = msl::string_split("this;;;is;;;sentence;;;number;;;2;;;;;;;;", ";;;");
+			for (auto & s : v2b)
+				std::cout << s << '\n';
+			auto v3 = msl::string_split_any("this;is,big.boss", ";,.");
+			for (auto & s : v3)
+				std::cout << s << '\n';
+		}
+	}
 	// range tests
 	if (false)
 	{
