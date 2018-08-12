@@ -54,6 +54,7 @@ inline std::vector<std::string> string_split_any(const std::string & str, const 
 	return vec;
 }
 
+//! @brief string_join join a vector into a string by uniting them with tok char
 inline std::string string_join(const std::vector<std::string> & vec, const char tok = ' ')
 {
 	std::string str;
@@ -66,6 +67,7 @@ inline std::string string_join(const std::vector<std::string> & vec, const char 
 	return str;
 }
 
+//! @brief string_join join a vector into a string by uniting them with tok string
 inline std::string string_join(const std::vector<std::string> & vec, const std::string & tok = " ")
 {
 	std::string str;
