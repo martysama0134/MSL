@@ -235,23 +235,24 @@ int main()
 			for (auto i : msl::drange(3, 5))
 				i;
 		});
-#if 0
-		std::cout << "### xirange test to 100" << '\n'; // 370ms
-		msl::bench([] {
-			for (auto i : msl::xirange(100))
-				i;
-		});
-		std::cout << "### irange test to 100" << '\n'; // 93ms
-		msl::bench([] {
-			for (auto i : msl::irange(100))
-				i;
-		});
-		std::cout << "### normal for loop test to 100" << '\n'; // 2ms
-		msl::bench([] {
-			for (int i = 0; i < 100; i++)
-				i;
-		});
-#endif
+		if (false)
+		{
+			std::cout << "### xirange test to 100" << '\n'; // 370ms
+			msl::bench([] {
+				for (auto i : msl::xirange(100))
+					i;
+			});
+			std::cout << "### irange test to 100" << '\n'; // 93ms
+			msl::bench([] {
+				for (auto i : msl::irange(100))
+					i;
+			});
+			std::cout << "### normal for loop test to 100" << '\n'; // 2ms
+			msl::bench([] {
+				for (int i = 0; i < 100; i++)
+					i;
+			});
+		}
 	}
 
 	std::cout << "All tests passed." << '\n';
