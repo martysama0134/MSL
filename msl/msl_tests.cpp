@@ -9,6 +9,114 @@ using namespace std::string_literals;
 
 int main()
 {
+	// string_replace
+	if (false)
+	{
+		std::cout << "### string_replace tests" << '\n';
+		if (false)
+		{
+			{
+				auto s = "omae wa mou shindeiru"s;
+				auto from = ' ';
+				auto to = '.';
+				auto r = s;
+				msl::string_replace_in_place(r, from, to);
+				msl::check_assert(r == "omae.wa.mou.shindeiru"s); // check if correct
+				std::cout << r << '\n';
+				msl::string_replace_in_place(r, to, from);
+				msl::check_assert(s == r); // check the inverse as well
+			}
+			{
+				auto s = "shinde kudasai"s;
+				auto from = ' ';
+				auto to = ',';
+				auto r = s;
+				msl::string_replace_in_place(r, from, to);
+				msl::check_assert(r == "shinde,kudasai"s); // check if correct
+				std::cout << r << '\n';
+				msl::string_replace_in_place(r, to, from);
+				msl::check_assert(s == r); // check the inverse as well
+			}
+		}
+		if (false)
+		{
+			{
+				auto s = "what is this a crossover episode?"s;
+				auto from = ' ';
+				auto to = '.';
+				auto r = msl::string_replace(s, from, to);
+				msl::check_assert(r == "what.is.this.a.crossover.episode?"s); // check if correct
+				std::cout << r << '\n';
+				msl::check_assert(s == msl::string_replace(s, to, from)); // check the inverse as well
+			}
+			{
+				auto s = "what is this a crossover episode?"s;
+				auto from = " "s;
+				auto to = ","s;
+				auto r = msl::string_replace(s, from, to);
+				msl::check_assert(r == "what,is,this,a,crossover,episode?"s); // check if correct
+				std::cout << r << '\n';
+				msl::check_assert(s == msl::string_replace(s, to, from)); // check the inverse as well
+			}
+			{
+				auto s = "what is this a crossover episode?"s;
+				auto from = " "s;
+				auto to = ";;;"s;
+				auto r = msl::string_replace(s, from, to);
+				msl::check_assert(r == "what;;;is;;;this;;;a;;;crossover;;;episode?"s); // check if correct
+				std::cout << r << '\n';
+				msl::check_assert(s == msl::string_replace(s, to, from)); // check the inverse as well
+			}
+			{
+				auto s = "what;;;is;;;this;;;a;;;crossover;;;episode?"s;
+				auto from = ";;;"s;
+				auto to = ":::"s;
+				auto r = msl::string_replace(s, from, to);
+				msl::check_assert(r == "what:::is:::this:::a:::crossover:::episode?"s); // check if correct
+				std::cout << r << '\n';
+				msl::check_assert(s == msl::string_replace(s, to, from)); // check the inverse as well
+			}
+			{
+				auto s = "whatOOOOisOOOOthisOOOOaOOOOcrossoverOOOOepisode?"s;
+				auto from = "OOOO"s;
+				auto to = "@@"s;
+				auto r = msl::string_replace(s, from, to);
+				msl::check_assert(r == "what@@is@@this@@a@@crossover@@episode?"s); // check if correct
+				std::cout << r << '\n';
+				msl::check_assert(s == msl::string_replace(s, to, from)); // check the inverse as well
+			}
+			{
+				auto s = "what is this a crossover episode?"s;
+				auto from = " "s;
+				auto to = ""s;
+				auto r = msl::string_replace(s, from, to);
+				msl::check_assert(r == "whatisthisacrossoverepisode?"s); // check if correct
+				std::cout << r << '\n';
+				try
+				{
+					msl::check_assert(s == msl::string_replace(s, to, from)); // check the inverse as well
+				}
+				catch (const std::runtime_error &)
+				{
+				}
+			}
+			{
+				auto s = "what is this a crossover episode?"s;
+				auto from = ""s;
+				auto to = ""s;
+				try
+				{
+					auto r = msl::string_replace(s, from, to);
+					msl::check_assert(r == "whatisthisacrossoverepisode?"s); // check if correct
+					std::cout << r << '\n';
+					msl::check_assert(s == msl::string_replace(s, to, from)); // check the inverse as well
+				}
+				catch (const std::runtime_error &)
+				{
+				}
+			}
+		}
+	}
 	// string_join
 	if (false)
 	{

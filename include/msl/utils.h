@@ -79,4 +79,53 @@ template <class T = std::vector<std::string>> std::string string_join(const T & 
 	}
 	return str;
 }
+
+//! @brief string_replace replace all char instances of 'from' to 'to' into a new output string
+inline std::string string_replace(std::string str, const char from, const char to)
+{
+	for (auto & c : str)
+	{
+		if (c == from)
+			c = to;
+	}
+	return str;
+}
+
+//! @brief string_replace_in_place replace all char instances of 'from' to 'to' from the input string
+inline void string_replace_in_place(std::string & str, const char from, const char to)
+{
+	for (auto & c : str)
+	{
+		if (c == from)
+			c = to;
+	}
+}
+
+//! @brief string_replace replace all string instances of 'from' to 'to' into a new output string
+inline std::string string_replace(std::string str, const std::string & from, const std::string & to)
+{
+	if (from.empty())
+		throw std::runtime_error("from is empty");
+	std::size_t pos = 0;
+	while ((pos = str.find(from, pos)) != std::string::npos)
+	{
+		str.replace(pos, from.length(), to);
+		pos += to.length();
+	}
+	return str;
+}
+
+//! @brief string_replace_in_place replace all string instances of 'from' to 'to' from the input string
+inline void string_replace_in_place(std::string & str, const std::string & from, const std::string & to)
+{
+	if (from.empty())
+		throw std::runtime_error("from is empty");
+	std::size_t pos = 0;
+	while ((pos = str.find(from, pos)) != std::string::npos)
+	{
+		str.replace(pos, from.length(), to);
+		pos += to.length();
+	}
+}
+
 } // namespace msl
