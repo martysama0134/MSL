@@ -1,5 +1,8 @@
+#include <array>
+#include <deque>
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std::string_literals;
 
 #include "../include/msl/msl.h" // instead of <msl/msl.h> for non-system headers analysing
@@ -32,6 +35,21 @@ int main()
 				msl::check_assert(s == "1;;;22;;;333;;;4444"s); // check if correct
 				std::cout << s << '\n';
 				msl::check_assert(v == msl::string_split(s, t)); // check the inverse as well
+			}
+			{
+				std::deque<std::string> v = {"1", "22", "333", "4444"};
+				auto t = ".";
+				auto s = msl::string_join(v, t);
+				msl::check_assert(s == "1.22.333.4444"s); // check if correct
+				std::cout << s << '\n';
+				msl::check_assert(v == msl::string_split<std::deque<std::string>>(s, t)); // check the inverse as well
+			}
+			{
+				std::array<std::string, 4> v = {"1", "22", "333", "4444"};
+				auto t = "v";
+				auto s = msl::string_join(v, t);
+				msl::check_assert(s == "1v22v333v4444"s); // check if correct
+				std::cout << s << '\n';
 			}
 		}
 	}
