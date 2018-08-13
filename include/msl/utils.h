@@ -7,9 +7,9 @@
 namespace msl
 {
 //! @brief string_split split a string into a vector by providing a single delim character
-inline std::vector<std::string> string_split(const std::string & str, char tok = ' ')
+template <class T = std::vector<std::string>> T string_split(const std::string & str, char tok = ' ')
 {
-	std::vector<std::string> vec;
+	T vec;
 	std::size_t prev = 0;
 	std::size_t cur = str.find(tok);
 	while (cur != std::string::npos)
@@ -23,9 +23,9 @@ inline std::vector<std::string> string_split(const std::string & str, char tok =
 }
 
 //! @brief string_split split a string into a vector by providing the delim string
-inline std::vector<std::string> string_split(const std::string & str, const std::string & tok = " ")
+template <class T = std::vector<std::string>> T string_split(const std::string & str, const std::string & tok = " ")
 {
-	std::vector<std::string> vec;
+	T vec;
 	std::size_t prev = 0;
 	std::size_t cur = str.find(tok);
 	while (cur != std::string::npos)
@@ -39,9 +39,9 @@ inline std::vector<std::string> string_split(const std::string & str, const std:
 }
 
 //! @brief string_split_any split a string into a vector by providing any of the single delim characters
-inline std::vector<std::string> string_split_any(const std::string & str, const std::string & toks = " ")
+template <class T = std::vector<std::string>> T string_split_any(const std::string & str, const std::string & toks = " ")
 {
-	std::vector<std::string> vec;
+	T vec;
 	std::size_t prev = 0;
 	std::size_t cur = str.find_first_of(toks);
 	while (cur != std::string::npos)
@@ -55,7 +55,7 @@ inline std::vector<std::string> string_split_any(const std::string & str, const 
 }
 
 //! @brief string_join join a vector into a string by uniting them with tok char
-inline std::string string_join(const std::vector<std::string> & vec, const char tok = ' ')
+template <class T = std::vector<std::string>> std::string string_join(const T & vec, const char tok = ' ')
 {
 	std::string str;
 	for (auto & elem : vec)
@@ -68,7 +68,7 @@ inline std::string string_join(const std::vector<std::string> & vec, const char 
 }
 
 //! @brief string_join join a vector into a string by uniting them with tok string
-inline std::string string_join(const std::vector<std::string> & vec, const std::string & tok = " ")
+template <class T = std::vector<std::string>> std::string string_join(const T & vec, const std::string & tok = " ")
 {
 	std::string str;
 	for (auto & elem : vec)
