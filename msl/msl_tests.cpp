@@ -17,12 +17,22 @@ int main()
 		}
 		if (false)
 		{
-			auto s1 = msl::string_join({"1", "22", "333", "4444"}, ' ');
-			msl::check_assert(s1 == "1 22 333 4444"s);
-			std::cout << s1 << '\n';
-			auto s2 = msl::string_join({"1", "22", "333", "4444"}, ";;;");
-			msl::check_assert(s2 == "1;;;22;;;333;;;4444"s);
-			std::cout << s2 << '\n';
+			{
+				std::vector<std::string> v = {"1", "22", "333", "4444"};
+				auto t = ' ';
+				auto s = msl::string_join(v, t);
+				msl::check_assert(s == "1 22 333 4444"s); // check if correct
+				std::cout << s << '\n';
+				msl::check_assert(v == msl::string_split(s, t)); // check the inverse as well
+			}
+			{
+				std::vector<std::string> v = {"1", "22", "333", "4444"};
+				auto t = ";;;";
+				auto s = msl::string_join(v, t);
+				msl::check_assert(s == "1;;;22;;;333;;;4444"s); // check if correct
+				std::cout << s << '\n';
+				msl::check_assert(v == msl::string_split(s, t)); // check the inverse as well
+			}
 		}
 	}
 	// string_split
@@ -38,30 +48,39 @@ int main()
 		if (false)
 		{
 			{
-				auto v = msl::string_split("this is sentence number 1", ' ');
+				auto s = "this is sentence number 1"s;
+				auto t = ' ';
+				auto v = msl::string_split(s, t);
 				std::vector<std::string> vc = {"this", "is", "sentence", "number", "1"};
-				msl::check_assert(v == vc);
+				msl::check_assert(v == vc); // check if correct
 				for (auto & s : v)
 					std::cout << s << '\n';
+				msl::check_assert(s == msl::string_join(v, t)); // check the inverse as well
 			}
 			{
-				auto v = msl::string_split("this;;;is;;;sentence;;;number;;;2;;;;;;asd", ";;;");
+				auto s = "this;;;is;;;sentence;;;number;;;2;;;;;;asd";
+				auto t = ";;;";
+				auto v = msl::string_split(s, t);
 				std::vector<std::string> vc = {"this", "is", "sentence", "number", "2", "", "asd"};
-				msl::check_assert(v == vc);
+				msl::check_assert(v == vc); // check if correct
 				for (auto & s : v)
 					std::cout << s << '\n';
+				msl::check_assert(s == msl::string_join(v, t)); // check the inverse as well
 			}
 			{
-				auto v = msl::string_split("this;;;is;;;sentence;;;number;;;2;;;;;;;;", ";;;");
+				auto s = "this;;;is;;;sentence;;;number;;;2;;;;;;;;";
+				auto t = ";;;";
+				auto v = msl::string_split(s, t);
 				std::vector<std::string> vc = {"this", "is", "sentence", "number", "2", "", ";;"};
-				msl::check_assert(v == vc);
+				msl::check_assert(v == vc); // check if correct
 				for (auto & s : v)
 					std::cout << s << '\n';
+				msl::check_assert(s == msl::string_join(v, t)); // check the inverse as well
 			}
 			{
 				auto v = msl::string_split_any("this;is,big.boss", ";,.");
 				std::vector<std::string> vc = {"this", "is", "big", "boss"};
-				msl::check_assert(v == vc);
+				msl::check_assert(v == vc); // check if correct
 				for (auto & s : v)
 					std::cout << s << '\n';
 			}
