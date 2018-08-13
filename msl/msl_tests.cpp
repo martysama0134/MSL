@@ -15,6 +15,19 @@ int main()
 		std::cout << "### string_replace tests" << '\n';
 		if (false)
 		{
+			msl::bench([] { auto r = msl::string_replace("a b c d", ' ', '.'); }); //53ms
+			msl::bench([] { auto r = msl::string_replace("a b c d", " ", "."); }); //127ms
+			msl::bench([] {
+				auto r = "a b c d"s;
+				msl::string_replace_in_place(r, ' ', '.');
+			}); //27ms
+			msl::bench([] {
+				auto r = "a b c d"s;
+				msl::string_replace_in_place(r, " ", ".");
+			}); //100ms
+		}
+		if (false)
+		{
 			{
 				auto s = "omae wa mou shindeiru"s;
 				auto from = ' ';
