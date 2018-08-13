@@ -1,5 +1,5 @@
 # MSL
-Marty(Sama0134) Support Library for C++17
+Marty(Sama0134) Support Library for C++17 (C++14 backward-compatible)
 
 ### What it contains
 It includes:
