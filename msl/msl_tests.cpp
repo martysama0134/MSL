@@ -18,8 +18,10 @@ int main()
 		if (false)
 		{
 			auto s1 = msl::string_join({"1", "22", "333", "4444"}, ' ');
+			msl::check_assert(s1 == "1 22 333 4444"s);
 			std::cout << s1 << '\n';
 			auto s2 = msl::string_join({"1", "22", "333", "4444"}, ";;;");
+			msl::check_assert(s2 == "1;;;22;;;333;;;4444"s);
 			std::cout << s2 << '\n';
 		}
 	}
@@ -35,18 +37,34 @@ int main()
 		}
 		if (false)
 		{
-			auto v1 = msl::string_split("this is sentence number 1", ' ');
-			for (auto & s : v1)
-				std::cout << s << '\n';
-			auto v2a = msl::string_split("this;;;is;;;sentence;;;number;;;2;;;;;;asd", ";;;");
-			for (auto & s : v2a)
-				std::cout << s << '\n';
-			auto v2b = msl::string_split("this;;;is;;;sentence;;;number;;;2;;;;;;;;", ";;;");
-			for (auto & s : v2b)
-				std::cout << s << '\n';
-			auto v3 = msl::string_split_any("this;is,big.boss", ";,.");
-			for (auto & s : v3)
-				std::cout << s << '\n';
+			{
+				auto v = msl::string_split("this is sentence number 1", ' ');
+				std::vector<std::string> vc = {"this", "is", "sentence", "number", "1"};
+				msl::check_assert(v == vc);
+				for (auto & s : v)
+					std::cout << s << '\n';
+			}
+			{
+				auto v = msl::string_split("this;;;is;;;sentence;;;number;;;2;;;;;;asd", ";;;");
+				std::vector<std::string> vc = {"this", "is", "sentence", "number", "2", "", "asd"};
+				msl::check_assert(v == vc);
+				for (auto & s : v)
+					std::cout << s << '\n';
+			}
+			{
+				auto v = msl::string_split("this;;;is;;;sentence;;;number;;;2;;;;;;;;", ";;;");
+				std::vector<std::string> vc = {"this", "is", "sentence", "number", "2", "", ";;"};
+				msl::check_assert(v == vc);
+				for (auto & s : v)
+					std::cout << s << '\n';
+			}
+			{
+				auto v = msl::string_split_any("this;is,big.boss", ";,.");
+				std::vector<std::string> vc = {"this", "is", "big", "boss"};
+				msl::check_assert(v == vc);
+				for (auto & s : v)
+					std::cout << s << '\n';
+			}
 		}
 	}
 	// range tests
