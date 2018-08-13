@@ -287,7 +287,8 @@ int main()
 			std::cout << "### normal for loop test to 100" << '\n'; // 2ms
 			msl::bench([] {
 				for (int i = 0; i < 100; i++)
-					i;
+				{
+				}
 			});
 		}
 	}
