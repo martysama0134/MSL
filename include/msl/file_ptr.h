@@ -117,6 +117,16 @@ public:
 	//! @brief return the file size from the current position; alias of size(true)
 	std::size_t remain_size() const { return size(true); }
 
+	//! @brief write into the file from byte vector
+	void write(const std::vector<char> & vec) { fwrite(vec.data(), vec.size(), 1, m_ptr); }
+	//! @brief write into the file from c array
+	void write(const char str[], size_t size) { fwrite(str, size, 1, m_ptr); }
+
+	//! @brief write into the file from string
+	void string_write(const std::string & str) { fwrite(str.data(), str.size(), 1, m_ptr); }
+	//! @brief write into the file from zstring
+	void string_write(const char * str) { fwrite(str, strlen(str), 1, m_ptr); }
+
 	//! @brief read the file from the current position as byte stream
 	std::vector<char> read(std::size_t n = 0)
 	{
