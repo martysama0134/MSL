@@ -46,11 +46,11 @@ public:
 	//! @brief *ptr
 	std::FILE * operator*() const { return m_ptr; }
 	//! @brief if (!ptr)
-	bool operator!() const { return is_open(); }
+	bool operator!() const { return !m_ptr; }
 	//! @brief ptr->elem
 	std::FILE * operator->() const { return m_ptr; }
 	//! @brief if (ptr)
-	operator bool() const { return get(); }
+	operator bool() const { return m_ptr; }
 
 	//! @brief get the file ptr
 	std::FILE * get() const { return m_ptr; }
