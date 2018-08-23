@@ -31,10 +31,15 @@ public:
 	explicit file_ptr(const char * filename, const char * mode = "r") { open(filename, mode); }
 	explicit file_ptr(std::FILE * ptr) { m_ptr_ = ptr; }
 	// move constructor
-	file_ptr(file_ptr && fp) noexcept { m_ptr_ = fp.m_ptr_; }
+	file_ptr(file_ptr && fp) noexcept
+	{
+		reset(fp.m_ptr_);
+		fp.m_ptr_ = nullptr;
+	}
 	file_ptr & operator=(file_ptr && fp) noexcept
 	{
 		reset(fp.m_ptr_);
+		fp.m_ptr_ = nullptr;
 		return *this;
 	}
 	// copy constructor

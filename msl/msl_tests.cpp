@@ -280,6 +280,13 @@ int main()
 
 		std::cout << p.remain_size() << '\n';
 		msl::check_assert(p.remain_size() == 0); // check its remaining size after read
+		if constexpr (false)
+		{
+			msl::file_ptr p1("test.txt");
+			msl::file_ptr p2(std::move(p1));
+			std::cout << p1.get() << '\n';
+			std::cout << p2.get() << '\n';
+		}
 	}
 	// inherit_cast tests
 	if constexpr (false)
