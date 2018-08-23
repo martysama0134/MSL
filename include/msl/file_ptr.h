@@ -28,6 +28,7 @@ class file_ptr
 public:
 	// constructor
 	file_ptr() = default;
+	explicit file_ptr(const std::string & fn, const char * mode = "r") : file_ptr(fn.c_str(), mode){};
 	explicit file_ptr(const char * filename, const char * mode = "r") { open(filename, mode); }
 	explicit file_ptr(std::FILE * ptr) { m_ptr_ = ptr; }
 	// move constructor
@@ -71,6 +72,9 @@ public:
 	std::FILE ** get_ptr() { return &m_ptr_; }
 
 	//! @brief close the file ptr and reset it
+	void open(const std::string & fn, const char * mode = "r") { open(fn.c_str(), mode); }
+
+	//! @brief close the file ptr and reset it
 	void open(const char * filename, const char * mode = "r")
 	{
 #ifdef _WIN32
@@ -84,6 +88,9 @@ public:
 
 	//! @brief swap two file_ptr
 	void swap(file_ptr & fp) noexcept { std::swap(m_ptr_, fp.m_ptr_); }
+
+	//! @brief reset and reopen new file
+	void reset(const std::string & fn, const char * mode = "r") { reset(fn.c_str(), mode); }
 
 	//! @brief reset and reopen new file
 	void reset(const char * filename, const char * mode = "r")
