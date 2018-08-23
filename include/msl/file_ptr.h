@@ -29,10 +29,10 @@ public:
 	// constructor
 	file_ptr() = default;
 	file_ptr(const char * filename, const char * mode = "r") { open(filename, mode); }
-	file_ptr(std::FILE * ptr) { m_ptr = ptr; }
+	explicit file_ptr(std::FILE * ptr) { m_ptr = ptr; }
 	// move constructor
-	file_ptr(file_ptr && fp) { m_ptr = std::move(fp.m_ptr); }
-	file_ptr & operator=(file_ptr && fp)
+	file_ptr(file_ptr && fp) noexcept { m_ptr = std::move(fp.m_ptr); }
+	file_ptr & operator=(file_ptr && fp) noexcept
 	{
 		reset(std::move(fp.m_ptr));
 		return *this;
@@ -51,11 +51,19 @@ public:
 	std::FILE * operator->() const { return m_ptr; }
 	//! @brief if (ptr)
 	operator bool() const { return m_ptr; }
+#ifdef MSL_FILE_PTR_ENABLE_IMPLICIT_CONVERSION
 	//! @brief implicit FILE ptr conversion
 	operator std::FILE *() const { return m_ptr; }
+#endif
 
 	//! @brief get the file ptr
 	std::FILE * get() const { return m_ptr; }
+
+	//! @brief get the file ptr ref
+	std::FILE *& get_ref() { return m_ptr; }
+
+	//! @brief get the file ptr pointer
+	std::FILE ** get_ptr() { return &m_ptr; }
 
 	//! @brief close the file ptr and reset it
 	void open(const char * filename, const char * mode = "r")
