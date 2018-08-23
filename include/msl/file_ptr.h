@@ -51,6 +51,8 @@ public:
 	std::FILE * operator->() const { return m_ptr; }
 	//! @brief if (ptr)
 	operator bool() const { return m_ptr; }
+	//! @brief implicit FILE ptr conversion
+	operator std::FILE *() const { return m_ptr; }
 
 	//! @brief get the file ptr
 	std::FILE * get() const { return m_ptr; }
