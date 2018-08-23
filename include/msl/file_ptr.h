@@ -142,7 +142,7 @@ public:
 	//! @brief write into the file from zstring
 	void string_write(const char * str) const { fwrite(str, strlen(str), 1, m_ptr_); }
 
-	//! @brief read the file from the current position as byte stream
+	//! @brief read the file from the current position as byte stream returning a vector
 	std::vector<char> read(std::size_t n = 0) const
 	{
 		if (n == 0) // 0 implies reading the whole remaining file
@@ -152,13 +152,29 @@ public:
 		return buf;
 	}
 
-	//! @brief read the file from the current position as null-terminated string
-	std::string string_read(std::size_t n = 0) const
+	//! @brief read the file from the current position as byte stream using a buffer
+	void read(char buf[], std::size_t n = 0) const
+	{
+		if (n == 0) // 0 implies reading the whole remaining file
+			n = this->remain_size();
+		std::fread(buf, 1, n, m_ptr_);
+	}
+
+	//! @brief read the file from the current position returning null-terminated string
+	std::string string_read(const std::size_t n = 0) const
 	{
 		auto vec = this->read(n);
 		if (!vec.empty() && vec[vec.size() - 1] != '\0') // append EOS at the end of vector
 			vec.emplace_back('\0');
 		return std::string(vec.begin(), vec.end()); // convert vector to string
+	}
+
+	//! @brief read the file from the current position using a null-terminated string buffer
+	void string_read(char buf[], const std::size_t n = 0) const
+	{
+		this->read(buf, n);
+		if (buf[n - 1] != '\0')
+			buf[n - 1] = '\0';
 	}
 };
 } // namespace msl
