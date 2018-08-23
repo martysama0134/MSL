@@ -15,7 +15,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include <algorithm>
 #include <string>
 #include <vector>
 
@@ -26,7 +25,7 @@ template <class T = std::vector<std::string>> T string_split(const std::string &
 {
 	T vec;
 	std::size_t prev = 0;
-	std::size_t cur = str.find(tok);
+	auto cur = str.find(tok);
 	while (cur != std::string::npos)
 	{
 		vec.emplace_back(str.substr(prev, cur - prev));
@@ -42,7 +41,7 @@ template <class T = std::vector<std::string>> T string_split(const std::string &
 {
 	T vec;
 	std::size_t prev = 0;
-	std::size_t cur = str.find(tok);
+	auto cur = str.find(tok);
 	while (cur != std::string::npos)
 	{
 		vec.emplace_back(str.substr(prev, cur - prev));
@@ -58,7 +57,7 @@ template <class T = std::vector<std::string>> T string_split_any(const std::stri
 {
 	T vec;
 	std::size_t prev = 0;
-	std::size_t cur = str.find_first_of(toks);
+	auto cur = str.find_first_of(toks);
 	while (cur != std::string::npos)
 	{
 		vec.emplace_back(str.substr(prev, cur - prev));

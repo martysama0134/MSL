@@ -23,18 +23,18 @@ namespace msl
 {
 class file_ptr
 {
-	std::FILE * m_ptr{nullptr};
+	std::FILE * m_ptr_{nullptr};
 
 public:
 	// constructor
 	file_ptr() = default;
-	file_ptr(const char * filename, const char * mode = "r") { open(filename, mode); }
-	explicit file_ptr(std::FILE * ptr) { m_ptr = ptr; }
+	explicit file_ptr(const char * filename, const char * mode = "r") { open(filename, mode); }
+	explicit file_ptr(std::FILE * ptr) { m_ptr_ = ptr; }
 	// move constructor
-	file_ptr(file_ptr && fp) noexcept { m_ptr = std::move(fp.m_ptr); }
+	file_ptr(file_ptr && fp) noexcept { m_ptr_ = fp.m_ptr_; }
 	file_ptr & operator=(file_ptr && fp) noexcept
 	{
-		reset(std::move(fp.m_ptr));
+		reset(fp.m_ptr_);
 		return *this;
 	}
 	// copy constructor
@@ -44,41 +44,41 @@ public:
 	~file_ptr() { reset(); }
 
 	//! @brief *ptr
-	std::FILE * operator*() const { return m_ptr; }
+	std::FILE * operator*() const { return m_ptr_; }
 	//! @brief if (!ptr)
-	bool operator!() const { return !m_ptr; }
+	bool operator!() const { return !m_ptr_; }
 	//! @brief ptr->elem
-	std::FILE * operator->() const { return m_ptr; }
+	std::FILE * operator->() const { return m_ptr_; }
 	//! @brief if (ptr)
-	operator bool() const { return m_ptr; }
+	explicit operator bool() const { return m_ptr_; }
 #ifdef MSL_FILE_PTR_ENABLE_IMPLICIT_CONVERSION
-	//! @brief implicit FILE ptr conversion
-	operator std::FILE *() const { return m_ptr; }
+	//! @brief implicit std::FILE ptr conversion
+	operator std::FILE *() const { return m_ptr_; }
 #endif
 
 	//! @brief get the file ptr
-	std::FILE * get() const { return m_ptr; }
+	std::FILE * get() const { return m_ptr_; }
 
 	//! @brief get the file ptr ref
-	std::FILE *& get_ref() { return m_ptr; }
+	std::FILE *& get_ref() { return m_ptr_; }
 
 	//! @brief get the file ptr pointer
-	std::FILE ** get_ptr() { return &m_ptr; }
+	std::FILE ** get_ptr() { return &m_ptr_; }
 
 	//! @brief close the file ptr and reset it
 	void open(const char * filename, const char * mode = "r")
 	{
 #ifdef _WIN32
-		fopen_s(&m_ptr, filename, mode);
+		fopen_s(&m_ptr_, filename, mode);
 #else
-		m_ptr = std::fopen(filename, mode);
+		m_ptr_ = std::fopen(filename, mode);
 #endif
 	}
 	//! @brief alias of reset()
 	void close() { reset(); }
 
 	//! @brief swap two file_ptr
-	void swap(file_ptr & fp) { std::swap(m_ptr, fp.m_ptr); }
+	void swap(file_ptr & fp) noexcept { std::swap(m_ptr_, fp.m_ptr_); }
 
 	//! @brief reset and reopen new file
 	void reset(const char * filename, const char * mode = "r")
@@ -91,64 +91,64 @@ public:
 	void reset(std::FILE * ptr)
 	{
 		reset();
-		m_ptr = ptr;
+		m_ptr_ = ptr;
 	}
 
 	//! @brief close the file and reset the ptr
 	void reset()
 	{
-		if (m_ptr)
+		if (m_ptr_)
 		{
-			std::fclose(m_ptr);
-			m_ptr = nullptr;
+			std::fclose(m_ptr_);
+			m_ptr_ = nullptr;
 		}
 	}
 
 	//! @brief release the file ptr
-	FILE * release()
+	std::FILE * release()
 	{
-		auto ptr = m_ptr;
-		m_ptr = nullptr;
+		const auto ptr = m_ptr_;
+		m_ptr_ = nullptr;
 		return ptr;
 	}
 
 	//! @brief return whether or not the file is open
-	bool is_open() const { return m_ptr; }
+	bool is_open() const { return m_ptr_; }
 
 	//! @brief return the file size whether from the current position or from beginning
 	std::size_t size(bool from_current = false) const
 	{
-		auto cur = std::ftell(m_ptr); // get current pos
-		std::fseek(m_ptr, 0, SEEK_END); // go to EOF
-		std::size_t filesize = std::ftell(m_ptr); // get filesize
-		std::fseek(m_ptr, cur, SEEK_SET); // go to current pos
-		return (from_current) ? filesize - cur : filesize;
+		const auto cur = std::ftell(m_ptr_); // get current pos
+		std::fseek(m_ptr_, 0, SEEK_END); // go to EOF
+		const auto filesize = std::ftell(m_ptr_); // get filesize
+		std::fseek(m_ptr_, cur, SEEK_SET); // go to current pos
+		return from_current ? filesize - cur : filesize;
 	}
 	//! @brief return the file size from the current position; alias of size(true)
 	std::size_t remain_size() const { return size(true); }
 
 	//! @brief write into the file from byte vector
-	void write(const std::vector<char> & vec) { fwrite(vec.data(), vec.size(), 1, m_ptr); }
+	void write(const std::vector<char> & vec) const { fwrite(vec.data(), vec.size(), 1, m_ptr_); }
 	//! @brief write into the file from c array
-	void write(const char str[], size_t size) { fwrite(str, size, 1, m_ptr); }
+	void write(const char str[], size_t size) const { fwrite(str, size, 1, m_ptr_); }
 
 	//! @brief write into the file from string
-	void string_write(const std::string & str) { fwrite(str.data(), str.size(), 1, m_ptr); }
+	void string_write(const std::string & str) const { fwrite(str.data(), str.size(), 1, m_ptr_); }
 	//! @brief write into the file from zstring
-	void string_write(const char * str) { fwrite(str, strlen(str), 1, m_ptr); }
+	void string_write(const char * str) const { fwrite(str, strlen(str), 1, m_ptr_); }
 
 	//! @brief read the file from the current position as byte stream
-	std::vector<char> read(std::size_t n = 0)
+	std::vector<char> read(std::size_t n = 0) const
 	{
 		if (n == 0) // 0 implies reading the whole remaining file
 			n = this->remain_size();
 		std::vector<char> buf(n);
-		std::fread(buf.data(), 1, buf.size(), m_ptr);
+		std::fread(buf.data(), 1, buf.size(), m_ptr_);
 		return buf;
 	}
 
 	//! @brief read the file from the current position as null-terminated string
-	std::string string_read(std::size_t n = 0)
+	std::string string_read(std::size_t n = 0) const
 	{
 		auto vec = this->read(n);
 		if (!vec.empty() && vec[vec.size() - 1] != '\0') // append EOS at the end of vector

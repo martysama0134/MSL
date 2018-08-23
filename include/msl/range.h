@@ -23,50 +23,50 @@ namespace msl
 //! @brief range_iterator used for range
 template <class T> class range_iterator
 {
-	T m_value{};
+	T m_value_{};
 
 public:
-	range_iterator(T value) : m_value{value} {}
-	T operator*() { return m_value; }
+	explicit range_iterator(T value) : m_value_{value} {}
+	T operator*() { return m_value_; }
 	range_iterator<T> & operator++()
 	{
-		++m_value;
+		++m_value_;
 		return *this;
 	}
 	range_iterator<T> & operator--()
 	{
-		--m_value;
+		--m_value_;
 		return *this;
 	}
 	range_iterator<T> operator++(int)
 	{
-		++m_value;
+		++m_value_;
 		return *this;
 	}
 	range_iterator<T> operator--(int)
 	{
-		--m_value;
+		--m_value_;
 		return *this;
 	}
-	bool operator!=(range_iterator<T> & r) { return m_value != *r; }
+	bool operator!=(range_iterator<T> & r) { return m_value_ != *r; }
 };
 
 //! @brief range mostly used in for-range (no memory allocation)
 template <class T> class range
 {
-	range_iterator<T> m_min{0};
-	range_iterator<T> m_max;
+	range_iterator<T> m_min_{0};
+	range_iterator<T> m_max_;
 
 public:
-	range(T max) : m_max{max} {}
-	range(T min, T max) : m_min{min}, m_max{max} {}
+	explicit range(T max) : m_max_{max} {}
+	range(T min, T max) : m_min_{min}, m_max_{max} {}
 	range_iterator<T> begin()
 	{
-		if (*m_min == *m_max)
-			return m_max;
-		return m_min;
+		if (*m_min_ == *m_max_)
+			return m_max_;
+		return m_min_;
 	}
-	range_iterator<T> end() { return m_max; }
+	range_iterator<T> end() { return m_max_; }
 };
 
 using crange = range<char>;
@@ -78,10 +78,10 @@ using drange = range<double>;
 //! @brief xrange mostly used in for-range (it uses std::vector with n=((max-min)/diff) elements)
 template <class T> class xrange
 {
-	std::vector<T> m_vec;
+	std::vector<T> m_vec_;
 
 public:
-	xrange(T max) : xrange(0, max, 1) {}
+	explicit xrange(T max) : xrange(0, max, 1) {}
 	xrange(T min, T max) : xrange(min, max, 1) {}
 	xrange(T min, T max, T diff)
 	{
@@ -90,15 +90,15 @@ public:
 		if (diff <= 0)
 			throw std::runtime_error("xrange diff <= 0");
 		// 4x faster than emplace_back
-		m_vec.resize(static_cast<std::size_t>((max - min) / diff));
-		for (auto & e : m_vec)
+		m_vec_.resize(static_cast<std::size_t>((max - min) / diff));
+		for (auto & e : m_vec_)
 		{
 			e += min;
 			min += diff;
 		}
 	}
-	auto begin() { return std::begin(m_vec); }
-	auto end() { return std::end(m_vec); }
+	auto begin() { return std::begin(m_vec_); }
+	auto end() { return std::end(m_vec_); }
 };
 
 using xcrange = xrange<char>;

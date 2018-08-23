@@ -25,10 +25,10 @@ using namespace std::string_literals;
 int main()
 {
 	// string_replace
-	if (false)
+	if constexpr (false)
 	{
 		std::cout << "### string_replace tests" << '\n';
-		if (false)
+		if constexpr (false)
 		{
 			msl::bench([] { auto r = msl::string_replace("a b c d", ' ', '.'); }); //53ms
 			msl::bench([] { auto r = msl::string_replace("a b c d", " ", "."); }); //127ms
@@ -41,7 +41,7 @@ int main()
 				msl::string_replace_in_place(r, " ", ".");
 			}); //100ms
 		}
-		if (false)
+		if constexpr (false)
 		{
 			{
 				auto s = "omae wa mou shindeiru"s;
@@ -66,7 +66,7 @@ int main()
 				msl::check_assert(s == r); // check the inverse as well
 			}
 		}
-		if (false)
+		if constexpr (false)
 		{
 			{
 				auto s = "what is this a crossover episode?"s;
@@ -146,15 +146,15 @@ int main()
 		}
 	}
 	// string_join
-	if (false)
+	if constexpr (false)
 	{
 		std::cout << "### string_join tests" << '\n';
-		if (false)
+		if constexpr (false)
 		{
 			msl::bench([] { auto a = msl::string_join({"1", "22", "333", "4444"}, ' '); });
 			msl::bench([] { auto a = msl::string_join({"1", "22", "333", "4444"}, " "); });
 		}
-		if (false)
+		if constexpr (false)
 		{
 			{
 				std::vector<std::string> v = {"1", "22", "333", "4444"};
@@ -190,16 +190,16 @@ int main()
 		}
 	}
 	// string_split
-	if (false)
+	if constexpr (false)
 	{
 		std::cout << "### string_split tests" << '\n';
-		if (false)
+		if constexpr (false)
 		{
 			msl::bench([] { auto a = msl::string_split("this is sentence number 1", ' '); });
 			msl::bench([] { auto a = msl::string_split("this is sentence number 1", " "); });
 			msl::bench([] { auto a = msl::string_split_any("this is sentence number 1", " "); });
 		}
-		if (false)
+		if constexpr (false)
 		{
 			{
 				auto s = "this is sentence number 1"s;
@@ -207,8 +207,8 @@ int main()
 				auto v = msl::string_split(s, t);
 				std::vector<std::string> vc = {"this", "is", "sentence", "number", "1"};
 				msl::check_assert(v == vc); // check if correct
-				for (auto & s : v)
-					std::cout << s << '\n';
+				for (auto & s2 : v)
+					std::cout << s2 << '\n';
 				msl::check_assert(s == msl::string_join(v, t)); // check the inverse as well
 			}
 			{
@@ -217,8 +217,8 @@ int main()
 				auto v = msl::string_split(s, t);
 				std::vector<std::string> vc = {"this", "is", "sentence", "number", "2", "", "asd"};
 				msl::check_assert(v == vc); // check if correct
-				for (auto & s : v)
-					std::cout << s << '\n';
+				for (auto & s2 : v)
+					std::cout << s2 << '\n';
 				msl::check_assert(s == msl::string_join(v, t)); // check the inverse as well
 			}
 			{
@@ -227,8 +227,8 @@ int main()
 				auto v = msl::string_split(s, t);
 				std::vector<std::string> vc = {"this", "is", "sentence", "number", "2", "", ";;"};
 				msl::check_assert(v == vc); // check if correct
-				for (auto & s : v)
-					std::cout << s << '\n';
+				for (auto & s2 : v)
+					std::cout << s2 << '\n';
 				msl::check_assert(s == msl::string_join(v, t)); // check the inverse as well
 			}
 			{
@@ -241,7 +241,7 @@ int main()
 		}
 	}
 	// range tests
-	if (false)
+	if constexpr (false)
 	{
 		std::cout << "### range tests" << '\n';
 		for (auto i : msl::range<int>(5))
@@ -260,10 +260,10 @@ int main()
 			std::cout << i << '\n';
 		std::cout << "### xcrange test 3 to 5" << '\n';
 		for (auto i : msl::xcrange(3, 5))
-			std::cout << (int) i << '\n';
+			std::cout << static_cast<int>(i) << '\n';
 	}
 	// file_ptr tests
-	if (false)
+	if constexpr (false)
 	{
 		std::cout << "### file_ptr tests" << '\n';
 		msl::file_ptr p("test.txt"); // open test.txt on read-mode
@@ -282,7 +282,7 @@ int main()
 		msl::check_assert(p.remain_size() == 0); // check its remaining size after read
 	}
 	// inherit_cast tests
-	if (false)
+	if constexpr (false)
 	{
 		std::cout << "### inherit_cast tests" << '\n';
 		auto res = msl::inherit_cast<int>(3.4);
@@ -290,7 +290,7 @@ int main()
 		msl::check_assert(res == 3);
 	}
 	// truncate_cast tests
-	if (false)
+	if constexpr (false)
 	{
 		std::cout << "### truncate_cast tests" << '\n';
 		{
@@ -320,7 +320,7 @@ int main()
 		}
 	}
 	// bench tests
-	if (false)
+	if constexpr (false)
 	{
 		msl::bench([] {
 			std::vector<double> m_vec;
@@ -355,7 +355,7 @@ int main()
 				m_vec.emplace_back(n);
 		});
 	}
-	if (false)
+	if constexpr (false)
 	{
 		std::cout << "### range tests with bench" << '\n';
 		std::cout << "### xirange test to 5" << '\n';
@@ -408,7 +408,7 @@ int main()
 			for (auto i : msl::drange(3, 5))
 				i;
 		});
-		if (false)
+		if constexpr (false)
 		{
 			std::cout << "### xirange test to 100" << '\n'; // 370ms
 			msl::bench([] {
@@ -422,7 +422,7 @@ int main()
 			});
 			std::cout << "### normal for loop test to 100" << '\n'; // 2ms
 			msl::bench([] {
-				for (int i = 0; i < 100; i++)
+				for (auto i = 0; i < 100; i++)
 				{
 				}
 			});
