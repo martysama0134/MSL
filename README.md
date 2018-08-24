@@ -28,8 +28,8 @@ It includes:
 	- `msl::string_replace(str, string from, string to)`; replace all occurrences of 'from' to 'to' returning a new string
 	- `msl::string_replace_in_place(str, char from, char to)`; replace all occurrences of 'from' to 'to' in the input str
 	- `msl::string_replace_in_place(str, string from, string to)`; replace all occurrences of 'from' to 'to' in the input str (3x faster than string version, 4x faster than copied replace)
-	- `msl::refill(array, value=default())`; default-initialize the specific c array
-	- `msl::refill(container, value=default())`; default-initialize the specific std container
+	- `msl::refill(array, value=default())`; default/custom-initialize the specific c array
+	- `msl::refill(container, value=default())`; default/custom-initialize the specific std container
 
 ### How to use it
 ```cpp
