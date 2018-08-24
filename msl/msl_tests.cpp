@@ -435,6 +435,69 @@ int main()
 			});
 		}
 	}
+	if constexpr (false)
+	{
+		if constexpr (false)
+		{
+			int a[10]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+			msl::refill(a);
+			for (auto & c : a)
+				std::cout << c << '\n';
+		}
+		if constexpr (false)
+		{
+			char a[4]{'a', 'b', 'c', 'd'};
+			msl::refill(a, 'e');
+			for (auto & c : a)
+				std::cout << c << '\n';
+		}
+		if constexpr (false)
+		{
+			struct AA
+			{
+				char a[20]{};
+				int b{-1};
+			};
+			AA a[5]{
+				{{}, 1}, {{}, 21}, {{}, 31}, {{}, 41}, {{}, 51},
+			};
+			for (auto & c : a)
+				std::cout << c.b << '\n';
+			msl::refill(a, AA());
+			for (auto & c : a)
+				std::cout << c.b << '\n';
+		}
+		if constexpr (false)
+		{
+			std::vector<char> a{'a', 'b', 'c', 'd'};
+			msl::refill(a, '1');
+			for (auto & c : a)
+				std::cout << c << '\n';
+		}
+		if constexpr (false)
+		{
+			std::vector<int> a{1, 2, 3, 4};
+			msl::refill(a, -1);
+			for (auto & c : a)
+				std::cout << c << '\n';
+		}
+		if constexpr (false)
+		{
+			std::array<int, 4> a{1, 2, 3, 4};
+			msl::refill(a, -1);
+			for (auto & c : a)
+				std::cout << c << '\n';
+		}
+		if constexpr (false)
+		{
+			std::vector<std::string> a{"aaa", "bbb", "ccc", "ddd"};
+			for (auto & c : a)
+				std::cout << c << '\n';
+			msl::refill(a, "eee");
+			for (auto & c : a)
+				std::cout << c << '\n';
+		}
+	}
 
 	std::cout << "All tests passed." << '\n';
 	getchar();

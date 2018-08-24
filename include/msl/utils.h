@@ -142,4 +142,27 @@ inline void string_replace_in_place(std::string & str, const std::string & from,
 	}
 }
 
+//! @brief refill for c arrays (set default value)
+template <class _Ty, std::size_t _Size> constexpr void refill(_Ty (&_Array)[_Size]) noexcept
+{
+	std::fill(std::begin(_Array), std::end(_Array), _Ty());
+}
+
+//! @brief refill for c arrays (set custom value)
+template <class _Ty, std::size_t _Size> constexpr void refill(_Ty (&_Array)[_Size], _Ty _Elem) noexcept
+{
+	std::fill(std::begin(_Array), std::end(_Array), _Elem);
+}
+
+//! @brief refill for std containers (set default value)
+template <class _Container> constexpr void refill(_Container & _Cont)
+{
+	std::fill(_Cont.begin(), _Cont.end(), _Container::value_type());
+}
+
+//! @brief refill for std containers (set custom value)
+template <class _Container, class _Ty> constexpr void refill(_Container & _Cont, _Ty _Elem)
+{
+	std::fill(_Cont.begin(), _Cont.end(), _Elem);
+}
 } // namespace msl
