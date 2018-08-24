@@ -469,6 +469,17 @@ int main()
 		}
 		if constexpr (false)
 		{
+			typedef struct AA
+			{
+				char a[20]{};
+				int b{-1};
+			} BB;
+			BB a[3];
+			msl::refill(a);
+			std::cout << a[0].b << '\n';
+		}
+		if constexpr (false)
+		{
 			std::vector<char> a{'a', 'b', 'c', 'd'};
 			msl::refill(a, '1');
 			for (auto & c : a)
@@ -491,6 +502,15 @@ int main()
 		if constexpr (false)
 		{
 			std::vector<std::string> a{"aaa", "bbb", "ccc", "ddd"};
+			for (auto & c : a)
+				std::cout << c << '\n';
+			msl::refill(a, "eee");
+			for (auto & c : a)
+				std::cout << c << '\n';
+		}
+		if constexpr (false)
+		{
+			std::string a[4]{"aaa", "bbb", "ccc", "ddd"};
 			for (auto & c : a)
 				std::cout << c << '\n';
 			msl::refill(a, "eee");
