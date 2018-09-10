@@ -140,14 +140,14 @@ public:
 	std::size_t remain_size() const { return size(true); }
 
 	//! @brief write into the file from byte vector
-	void write(const std::vector<char> & vec) const { fwrite(vec.data(), vec.size(), 1, m_ptr_); }
+	void write(const std::vector<char> & vec) const { std::fwrite(vec.data(), vec.size(), 1, m_ptr_); }
 	//! @brief write into the file from c array
-	void write(const char str[], size_t size) const { fwrite(str, size, 1, m_ptr_); }
+	void write(const void * buf, size_t size) const { std::fwrite(buf, size, 1, m_ptr_); }
 
 	//! @brief write into the file from string
-	void string_write(const std::string & str) const { fwrite(str.data(), str.size(), 1, m_ptr_); }
+	void string_write(const std::string & str) const { std::fwrite(str.data(), str.size(), 1, m_ptr_); }
 	//! @brief write into the file from zstring
-	void string_write(const char * str) const { fwrite(str, strlen(str), 1, m_ptr_); }
+	void string_write(const char * str) const { std::fwrite(str, std::strlen(str), 1, m_ptr_); }
 
 	//! @brief read the file from the current position as byte stream returning a vector
 	std::vector<char> read(std::size_t n = 0) const
@@ -160,7 +160,7 @@ public:
 	}
 
 	//! @brief read the file from the current position as byte stream using a buffer
-	void read(char buf[], std::size_t n = 0) const
+	void read(void * buf, std::size_t n = 0) const
 	{
 		if (n == 0) // 0 implies reading the whole remaining file
 			n = this->remain_size();

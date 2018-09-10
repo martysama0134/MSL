@@ -157,7 +157,7 @@ template <class _Ty, std::size_t _Size> constexpr void refill(_Ty (&_Array)[_Siz
 //! @brief refill for std containers (set default value)
 template <class _Container> constexpr void refill(_Container & _Cont)
 {
-	std::fill(std::begin(_Cont), std::end(_Cont), _Container::value_type());
+	std::fill(std::begin(_Cont), std::end(_Cont), typename _Container::value_type());
 }
 
 //! @brief refill for std containers (set custom value)
