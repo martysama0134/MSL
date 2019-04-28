@@ -39,6 +39,16 @@ int main()
 			std::cout << '"' << msl::trim_in_place(s) << '"' << '\n';
 		}
 		{
+			auto s = " a"s;
+			std::cout << '"' << msl::trim(s) << '"' << '\n';
+			std::cout << '"' << msl::trim_in_place(s) << '"' << '\n';
+		}
+		{
+			auto s = "b "s;
+			std::cout << '"' << msl::trim(s) << '"' << '\n';
+			std::cout << '"' << msl::trim_in_place(s) << '"' << '\n';
+		}
+		{
 			auto s = "  aaa bbb ccc        "s;
 			std::cout << '"' << msl::trim(s) << '"' << '\n';
 			std::cout << '"' << msl::trim_in_place(s) << '"' << '\n';
@@ -51,11 +61,11 @@ int main()
 		msl::bench([] {
 			auto s = "\n\n \n aaa  bbb  ccc  \t\t  \t   \t \n"s;
 			auto r = msl::trim(s);
-		}); //146ms
+		}); //142ms
 		msl::bench([] {
 			auto s = "\n\n \n aaa  bbb  ccc  \t\t  \t   \t \n"s;
 			auto r = msl::trim_in_place(s);
-		}); //101ms
+		}); //99ms
 	}
 	// string_replace
 	if constexpr (false)

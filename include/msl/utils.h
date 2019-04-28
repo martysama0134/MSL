@@ -151,16 +151,14 @@ inline const char * whitespaces()
 //! @brief ltrim_in_place left trims in place 'str' of any of the 'chars' characters
 inline std::string & ltrim_in_place(std::string & str, const char * chars = whitespaces())
 {
-	if (!str.empty())
-		str.erase(0, str.find_first_not_of(chars));
+	str.erase(0, str.find_first_not_of(chars));
 	return str;
 }
 
 //! @brief rtrim_in_place right trims in place 'str' of any of the 'chars' characters
 inline std::string & rtrim_in_place(std::string & str, const char * chars = whitespaces())
 {
-	if (!str.empty())
-		str.erase(str.find_last_not_of(chars) + 1);
+	str.erase(str.find_last_not_of(chars) + 1);
 	return str;
 }
 
