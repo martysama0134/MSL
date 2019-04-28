@@ -14,8 +14,10 @@ It includes:
 - `<msl/check_assert.h>`
 	- `msl::check_assert(condition)`; inline function for asserts (instead of macros)
 - `<msl/file_ptr.h>` Smart pointer (wrapper) for FILE.
-	- `msl::file_ptr(filename, mode = "r")`; open filename and take ownership.
-	- `msl::file_ptr(FILE * f)`; take ownership of another FILE.
+	- `file_ptr(filename, mode = "r")`; open filename and take ownership.
+	- `file_ptr(FILE * f)`; take ownership of another FILE.
+	- `operator*()`, `operator->()`, `get()`, `get_ptr()`, `get_ref()`; returns the ptr of file
+	- `operator!()`, `operator bool()`; returns true if file ptr is not null
 - `<msl/range.h>`
 	- `msl::range<T>(&min = 0, max)`; perform for-range loop with no memory allocation (10x faster than xrange!)
 	- `msl::xrange<T>(&min = 0, max, &diff = 1.0)`; perform for-range loop using a runtime generated vector
