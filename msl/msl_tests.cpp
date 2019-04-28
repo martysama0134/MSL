@@ -24,6 +24,39 @@ using namespace std::string_literals;
 
 int main()
 {
+	// trim
+	if constexpr (true)
+	{
+		std::cout << "### trim tests" << '\n';
+		{
+			auto s = "aa a a a "s;
+			std::cout << '"' << msl::trim(s) << '"' << '\n';
+			std::cout << '"' << msl::trim_in_place(s) << '"' << '\n';
+		}
+		{
+			auto s = ""s;
+			std::cout << '"' << msl::trim(s) << '"' << '\n';
+			std::cout << '"' << msl::trim_in_place(s) << '"' << '\n';
+		}
+		{
+			auto s = "  aaa bbb ccc        "s;
+			std::cout << '"' << msl::trim(s) << '"' << '\n';
+			std::cout << '"' << msl::trim_in_place(s) << '"' << '\n';
+		}
+		{
+			auto s = "\n\n \n aaa  bbb  ccc  \t\t  \t   \t \n"s;
+			std::cout << '"' << msl::trim(s) << '"' << '\n';
+			std::cout << '"' << msl::trim_in_place(s) << '"' << '\n';
+		}
+		msl::bench([] {
+			auto s = "\n\n \n aaa  bbb  ccc  \t\t  \t   \t \n"s;
+			auto r = msl::trim(s);
+		}); //156ms
+		msl::bench([] {
+			auto s = "\n\n \n aaa  bbb  ccc  \t\t  \t   \t \n"s;
+			auto r = msl::trim_in_place(s);
+		}); //103ms
+	}
 	// string_replace
 	if constexpr (false)
 	{
