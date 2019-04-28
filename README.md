@@ -29,6 +29,10 @@ It includes:
 		- `write(buf, size)`; write buffer data into file
 		- `string_write(string str)`; write string into file
 		- `string_write(char * str)`; write zstring into file
+		- `read(void * buf, &n = 0)`; read n bytes (0=all remaining) from file and store into buf
+		- `vector<char> read(&n = 0)`; read n bytes (0=all remaining) from file and return it as vector
+		- `string_read(void * buf, &n = 0)`; read n bytes (0=all remaining) from file and store into a null-terminated buf
+		- `string string_read(&n = 0)`; read n bytes (0=all remaining) from file and return it as string
 - `<msl/range.h>`
 	- `msl::range<T>(&min = 0, max)`; perform for-range loop with no memory allocation (10x faster than xrange!)
 	- `msl::xrange<T>(&min = 0, max, &diff = 1.0)`; perform for-range loop using a runtime generated vector
