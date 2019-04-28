@@ -21,6 +21,9 @@ It includes:
 	- `close()`, `reset()`; close the file and reset the ptr
 	- `reset(filename, mode = "r")`; reset and open a new file
 	- `reset(FILE * f)`; reset and take ownership of a new file
+	- `release()`; release the file ptr
+	- `size()`; return the whole file size
+	- `remain_size()`; return the remaining file size to read
 - `<msl/range.h>`
 	- `msl::range<T>(&min = 0, max)`; perform for-range loop with no memory allocation (10x faster than xrange!)
 	- `msl::xrange<T>(&min = 0, max, &diff = 1.0)`; perform for-range loop using a runtime generated vector
