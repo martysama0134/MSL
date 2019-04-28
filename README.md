@@ -25,6 +25,10 @@ It includes:
 		- `release()`; release the file ptr
 		- `size()`; return the whole file size
 		- `remain_size()`; return the remaining file size to read
+		- `write(vector<char> vec)`; write vector data into file
+		- `write(buf, size)`; write buffer data into file
+		- `string_write(string str)`; write string into file
+		- `string_write(char * str)`; write string into file
 - `<msl/range.h>`
 	- `msl::range<T>(&min = 0, max)`; perform for-range loop with no memory allocation (10x faster than xrange!)
 	- `msl::xrange<T>(&min = 0, max, &diff = 1.0)`; perform for-range loop using a runtime generated vector
