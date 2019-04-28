@@ -17,7 +17,10 @@ It includes:
 	- `file_ptr(string filename, mode = "r")`, `open(string filename, mode = "r")`; open filename and take ownership.
 	- `file_ptr(FILE * f)`, `open(FILE * f, mode = "r")`; take ownership of another FILE.
 	- `operator*()`, `operator->()`, `get()`, `get_ptr()`, `get_ref()`; returns the ptr of file
-	- `operator!()`, `operator bool()`; returns true if file ptr is not null
+	- `operator!()`, `operator bool()`, `is_open()`; returns true if file ptr is not null
+	- `close()`, `reset()`; close the file and reset the ptr
+	- `reset(filename, mode = "r")`; reset and open a new file
+	- `reset(FILE * f)`; reset and take ownership of a new file
 - `<msl/range.h>`
 	- `msl::range<T>(&min = 0, max)`; perform for-range loop with no memory allocation (10x faster than xrange!)
 	- `msl::xrange<T>(&min = 0, max, &diff = 1.0)`; perform for-range loop using a runtime generated vector
