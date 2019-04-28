@@ -25,7 +25,7 @@ using namespace std::string_literals;
 int main()
 {
 	// trim
-	if constexpr (true)
+	if constexpr (false)
 	{
 		std::cout << "### trim tests" << '\n';
 		{
@@ -51,11 +51,11 @@ int main()
 		msl::bench([] {
 			auto s = "\n\n \n aaa  bbb  ccc  \t\t  \t   \t \n"s;
 			auto r = msl::trim(s);
-		}); //156ms
+		}); //146ms
 		msl::bench([] {
 			auto s = "\n\n \n aaa  bbb  ccc  \t\t  \t   \t \n"s;
 			auto r = msl::trim_in_place(s);
-		}); //103ms
+		}); //101ms
 	}
 	// string_replace
 	if constexpr (false)

@@ -143,14 +143,13 @@ inline void string_replace_in_place(std::string & str, const std::string & from,
 }
 
 //! @brief whitespaces returns a string containing the default ascii spaces
-inline const std::string & whitespaces()
+inline const char * whitespaces()
 {
-	static std::string ws = " \f\n\r\t\v";
-	return ws;
+	return " \f\n\r\t\v";
 }
 
 //! @brief ltrim_in_place left trims in place 'str' of any of the 'chars' characters
-inline std::string & ltrim_in_place(std::string & str, const std::string & chars = whitespaces())
+inline std::string & ltrim_in_place(std::string & str, const char * chars = whitespaces())
 {
 	if (!str.empty())
 		str.erase(0, str.find_first_not_of(chars));
@@ -158,7 +157,7 @@ inline std::string & ltrim_in_place(std::string & str, const std::string & chars
 }
 
 //! @brief rtrim_in_place right trims in place 'str' of any of the 'chars' characters
-inline std::string & rtrim_in_place(std::string & str, const std::string & chars = whitespaces())
+inline std::string & rtrim_in_place(std::string & str, const char * chars = whitespaces())
 {
 	if (!str.empty())
 		str.erase(str.find_last_not_of(chars) + 1);
@@ -166,25 +165,25 @@ inline std::string & rtrim_in_place(std::string & str, const std::string & chars
 }
 
 //! @brief ltrim left trims by copy 'str' of any of the 'chars' characters
-inline std::string ltrim(std::string str, const std::string & chars = whitespaces())
+inline std::string ltrim(std::string str, const char * chars = whitespaces())
 {
 	return ltrim_in_place(str, chars);
 }
 
 //! @brief rtrim right trims by copy 'str' of any of the 'chars' characters
-inline std::string rtrim(std::string str, const std::string & chars = whitespaces())
+inline std::string rtrim(std::string str, const char * chars = whitespaces())
 {
 	return rtrim_in_place(str, chars);
 }
 
 //! @brief trim_in_place right and left trims in place 'str' of any of the 'chars' characters
-inline std::string & trim_in_place(std::string & str, const std::string & chars = whitespaces())
+inline std::string & trim_in_place(std::string & str, const char * chars = whitespaces())
 {
 	return ltrim_in_place(rtrim_in_place(str, chars), chars);
 }
 
 //! @brief trim right and left trims by copy 'str' of any of the 'chars' characters
-inline std::string trim(std::string str, const std::string & chars = whitespaces())
+inline std::string trim(std::string str, const char * chars = whitespaces())
 {
 	return trim_in_place(str, chars);
 }
