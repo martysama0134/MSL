@@ -30,6 +30,7 @@ It includes:
 	- `msl::string_replace_in_place(str, string from, string to)`; replace all occurrences of 'from' to 'to' in the input str (3x faster than string version, 4x faster than copied replace)
 	- `msl::refill(array, value=default())`; default/custom-initialize the specific c array
 	- `msl::refill(container, value=default())`; default/custom-initialize the specific std container
+	- `msl::trim(str, chars)`; also `msl::rtrim` `msl::ltrim` `msl::trim_in_place` `msl::rtrim_in_place` `msl::ltrim_in_place` `msl::whitespaces`
 
 ### How to use it
 ```cpp
