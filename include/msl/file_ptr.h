@@ -30,6 +30,10 @@ public:
 	file_ptr() = default;
 	explicit file_ptr(const std::string & fn, const char * mode = "r") : file_ptr(fn.c_str(), mode){};
 	explicit file_ptr(const char * filename, const char * mode = "r") { open(filename, mode); }
+#ifdef _WIN32
+	explicit file_ptr(const std::wstring& fn, const wchar_t* mode = L"r") : file_ptr(fn.c_str(), mode) {};
+	explicit file_ptr(const wchar_t * filename, const wchar_t * mode = L"r") { open(filename, mode); }
+#endif
 	explicit file_ptr(std::FILE * ptr) { m_ptr_ = ptr; }
 	// move constructor
 	file_ptr(file_ptr && fp) noexcept
@@ -83,6 +87,29 @@ public:
 		m_ptr_ = std::fopen(filename, mode);
 #endif
 	}
+
+#ifdef _WIN32
+	//! @brief close the file ptr and reset it
+	void open(const std::wstring& fn, const wchar_t* mode = L"r") { open(fn.c_str(), mode); }
+
+	//! @brief close the file ptr and reset it
+	void open(const wchar_t* filename, const wchar_t* mode = L"r")
+	{
+		_wfopen_s(&m_ptr_, filename, mode);
+	}
+
+	//! @brief reset and reopen new file
+	void reset(const std::wstring& fn, const wchar_t* mode = L"r") { reset(fn.c_str(), mode); }
+
+	//! @brief reset and reopen new file
+	void reset(const wchar_t* filename, const wchar_t* mode = L"r")
+	{
+		reset();
+		open(filename, mode);
+	}
+
+#endif
+
 	//! @brief alias of reset()
 	void close() { reset(); }
 
