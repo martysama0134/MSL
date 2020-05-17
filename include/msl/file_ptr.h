@@ -19,6 +19,10 @@
 #include <string>
 #include <vector>
 
+#ifdef _WIN32
+#include <cwchar>
+#endif
+
 namespace msl
 {
 class file_ptr
@@ -175,6 +179,13 @@ public:
 	void string_write(const std::string & str) const { std::fwrite(str.data(), str.size(), 1, m_ptr_); }
 	//! @brief write into the file from zstring
 	void string_write(const char * str) const { std::fwrite(str, std::strlen(str), 1, m_ptr_); }
+
+#ifdef _WIN32
+	//! @brief write into the file from wstring
+	void string_write(const std::wstring& str) const { std::fwrite(str.data(), str.size(), 1, m_ptr_); }
+	//! @brief write into the file from wchar
+	void string_write(const wchar_t* str) const { std::fwrite(str, std::wcslen(str), 1, m_ptr_); }
+#endif
 
 	//! @brief read the file from the current position as byte stream returning a vector
 	std::vector<char> read(std::size_t n = 0) const
