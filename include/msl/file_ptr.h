@@ -17,11 +17,8 @@
 
 #include <cstdio>
 #include <string>
+#include <cstring>
 #include <vector>
-
-#ifdef _WIN32
-#include <cwchar>
-#endif
 
 namespace msl
 {
