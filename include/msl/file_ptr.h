@@ -17,11 +17,8 @@
 
 #include <cstdio>
 #include <string>
+#include <cstring>
 #include <vector>
-
-#ifdef _WIN32
-#include <cwchar>
-#endif
 
 namespace msl
 {
@@ -170,6 +167,9 @@ public:
 	//! @brief return the file size from the current position; alias of size(true)
 	std::size_t remain_size() const { return size(true); }
 
+	//! @brief write into the file from stream
+	template<class... Args>
+	void write(const char* _Format, Args&&... args) const { std::fprintf(m_ptr_, _Format, std::forward<Args>(args)...); }
 	//! @brief write into the file from byte vector
 	void write(const std::vector<char> & vec) const { std::fwrite(vec.data(), vec.size(), 1, m_ptr_); }
 	//! @brief write into the file from c array
@@ -197,12 +197,18 @@ public:
 		return buf;
 	}
 
+	//! @brief read the file as std::fread as does
+	std::size_t fread(void* buf, std::size_t n) const
+	{
+		return std::fread(buf, 1, n, m_ptr_);
+	}
+
 	//! @brief read the file from the current position as byte stream using a buffer
 	void read(void * buf, std::size_t n = 0) const
 	{
 		if (n == 0) // 0 implies reading the whole remaining file
 			n = this->remain_size();
-		std::fread(buf, 1, n, m_ptr_);
+		this->fread(buf, n);
 	}
 
 	//! @brief read the file from the current position returning null-terminated string
@@ -221,5 +227,11 @@ public:
 		if (buf[n - 1] != '\0')
 			buf[n - 1] = '\0';
 	}
+
+	//! @brief move unwritten memory buffer data to the target file.
+    void flush() const
+    {
+        std::fflush(m_ptr_);
+    }
 };
 } // namespace msl
