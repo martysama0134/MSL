@@ -158,10 +158,10 @@ public:
 	//! @brief return the file size whether from the current position or from beginning
 	std::size_t size(bool from_current = false) const
 	{
-		const auto cur = std::ftell(m_ptr_); // get current pos
-		std::fseek(m_ptr_, 0, SEEK_END); // go to EOF
-		const auto filesize = std::ftell(m_ptr_); // get filesize
-		std::fseek(m_ptr_, cur, SEEK_SET); // go to current pos
+		const auto cur = tell(); // get current pos
+		seek(0, SEEK_END); // go to EOF
+		const auto filesize = tell(); // get filesize
+		seek(cur, SEEK_SET); // go to current pos
 		return from_current ? filesize - cur : filesize;
 	}
 	//! @brief return the file size from the current position; alias of size(true)
@@ -171,14 +171,14 @@ public:
 	template<class... Args>
 	void write(const char* _Format, Args&&... args) const { std::fprintf(m_ptr_, _Format, std::forward<Args>(args)...); }
 	//! @brief write into the file from byte vector
-	void write(const std::vector<char> & vec) const { std::fwrite(vec.data(), vec.size(), 1, m_ptr_); }
+	std::size_t write(const std::vector<char> & vec) const { return std::fwrite(vec.data(), vec.size(), 1, m_ptr_); }
 	//! @brief write into the file from c array
-	void write(const void * buf, size_t size) const { std::fwrite(buf, size, 1, m_ptr_); }
+	std::size_t write(const void * buf, size_t size) const { return std::fwrite(buf, size, 1, m_ptr_); }
 
 	//! @brief write into the file from string
-	void string_write(const std::string & str) const { std::fwrite(str.data(), str.size(), 1, m_ptr_); }
+	std::size_t string_write(const std::string & str) const { return std::fwrite(str.data(), str.size(), 1, m_ptr_); }
 	//! @brief write into the file from zstring
-	void string_write(const char * str) const { std::fwrite(str, std::strlen(str), 1, m_ptr_); }
+	std::size_t string_write(const char * str) const { return std::fwrite(str, std::strlen(str), 1, m_ptr_); }
 
 #ifdef _WIN32
 	//! @brief write into the file from wstring
@@ -204,11 +204,23 @@ public:
 	}
 
 	//! @brief read the file from the current position as byte stream using a buffer
-	void read(void * buf, std::size_t n = 0) const
+	std::size_t read(void * buf, std::size_t n = 0) const
 	{
 		if (n == 0) // 0 implies reading the whole remaining file
 			n = this->remain_size();
-		this->fread(buf, n);
+		return std::fread(buf, 1, n, m_ptr_);
+	}
+
+	//! @brief tell the file
+	std::size_t tell() const
+	{
+		return std::ftell(m_ptr_);
+	}
+
+	//! @brief seek the file
+	void seek(std::size_t offset, int origin = SEEK_SET) const
+	{
+		fseek(m_ptr_, offset, origin);
 	}
 
 	//! @brief read the file from the current position returning null-terminated string
