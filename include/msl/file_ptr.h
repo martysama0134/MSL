@@ -220,7 +220,7 @@ public:
 	//! @brief seek the file
 	void seek(std::size_t offset, int origin = SEEK_SET) const
 	{
-		fseek(m_ptr_, offset, origin);
+		std::fseek(m_ptr_, offset, origin);
 	}
 
 	//! @brief read the file from the current position returning null-terminated string
