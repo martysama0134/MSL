@@ -15,31 +15,29 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\msl\check_assert.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\msl\file_ptr.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\msl\msl.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\msl\range.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\msl\bench.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\msl\cast.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\msl\utils.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="msl_tests.cpp">
       <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\msl\bench.h">
+      <Filter>File di intestazione</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\msl\cast.h">
+      <Filter>File di intestazione</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\msl\check_assert.h">
+      <Filter>File di intestazione</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\msl\file_ptr.h">
+      <Filter>File di intestazione</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\msl\msl.h">
+      <Filter>File di intestazione</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\msl\range.h">
+      <Filter>File di intestazione</Filter>
+    </ClCompile>
+    <ClCompile Include="..\include\msl\utils.h">
+      <Filter>File di intestazione</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

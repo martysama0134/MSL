@@ -17,10 +17,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "bench.h"
-#include "cast.h"
-#include "check_assert.h"
-#include "file_ptr.h"
-#include "range.h"
-#include "utils.h"
+import "bench.h";
+import "cast.h";
+import "check_assert.h";
+import "file_ptr.h";
+import "range.h";
+import "utils.h";
 #endif

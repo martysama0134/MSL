@@ -17,8 +17,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include <chrono>
-#include <iostream>
+import <chrono>;
+import <iostream>;
 namespace msl
 {
 template <class F> auto evaluate(F && func, const std::size_t tries = 1)

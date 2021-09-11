@@ -17,10 +17,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include <cstdio>
-#include <string>
-#include <cstring>
-#include <vector>
+import <cstdio>;
+import <string>;
+import <cstring>;
+import <vector>;
 
 namespace msl
 {

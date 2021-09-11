@@ -15,12 +15,20 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include <array>
 #include <deque>
-#include <iostream>
-#include <string>
-#include <vector>
+import <iostream>;
+import <string>;
+import <vector>;
 using namespace std::string_literals;
 
-#include "../include/msl/msl.h" // instead of <msl/msl.h> for non-system headers analysing
+//import "../include/msl/msl.h"; // instead of <msl/msl.h> for non-system headers analysing
+
+import "../include/msl/bench.h";
+import "../include/msl/cast.h";
+import "../include/msl/check_assert.h";
+import "../include/msl/file_ptr.h";
+import "../include/msl/range.h";
+import "../include/msl/utils.h";
+
 
 constexpr bool EnableAllTests = true;
 int main()

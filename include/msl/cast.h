@@ -17,8 +17,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include <cmath>
-#include <exception>
+import <cmath>;
+import <exception>;
 namespace msl
 {
 //! @brief msl::truncate_error struct

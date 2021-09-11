@@ -17,8 +17,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include <algorithm>
-#include <vector>
+import <algorithm>;
+import <vector>;
+//import <stdexcept>
 
 namespace msl
 {
@@ -88,9 +89,9 @@ public:
 	xrange(T min, T max, T diff)
 	{
 		if (min >= max)
-			throw std::runtime_error("xrange min >= max");
+			return; //	throw std::runtime_error("xrange min >= max");
 		if (diff <= 0)
-			throw std::runtime_error("xrange diff <= 0");
+			return; //	throw std::runtime_error("xrange diff <= 0");
 		// 4x faster than emplace_back
 		m_vec_.resize(static_cast<std::size_t>((max - min) / diff));
 		for (auto & e : m_vec_)
