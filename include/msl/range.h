@@ -1,3 +1,5 @@
+#ifndef __MSL_RANGE_H__
+#define __MSL_RANGE_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2018 martysama0134. All rights reserved.
@@ -107,3 +109,4 @@ using xllrange = xrange<long long>;
 using xfrange = xrange<float>;
 using xdrange = xrange<double>;
 } // namespace msl
+#endif

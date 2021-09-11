@@ -1,3 +1,5 @@
+#ifndef __MSL_MSL_H__
+#define __MSL_MSL_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2018 martysama0134. All rights reserved.
@@ -21,3 +23,4 @@
 #include "file_ptr.h"
 #include "range.h"
 #include "utils.h"
+#endif

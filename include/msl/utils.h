@@ -1,3 +1,5 @@
+#ifndef __MSL_UTILS_H__
+#define __MSL_UTILS_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2018 martysama0134. All rights reserved.
@@ -199,3 +201,4 @@ template <class _Container, class _Ty> constexpr void refill(_Container & _Cont,
 	std::fill(std::begin(_Cont), std::end(_Cont), _Elem);
 }
 } // namespace msl
+#endif

@@ -1,3 +1,5 @@
+#ifndef __MSL_BENCH_H__
+#define __MSL_BENCH_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2018 martysama0134. All rights reserved.
@@ -33,3 +35,4 @@ template <class F> void bench(F && func, const std::size_t tries = 10000)
 }
 
 } // namespace msl
+#endif

@@ -1,3 +1,5 @@
+#ifndef __MSL_CAST_H__
+#define __MSL_CAST_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2018 martysama0134. All rights reserved.
@@ -51,3 +53,4 @@ template <class T, class U> constexpr T inherit_cast(U && u) noexcept
 	return static_cast<T>(std::forward<U>(u));
 }
 } // namespace msl
+#endif

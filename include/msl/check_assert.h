@@ -1,3 +1,5 @@
+#ifndef __MSL_CAST_ASSERT_H__
+#define __MSL_CAST_ASSERT_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2018 martysama0134. All rights reserved.
@@ -25,3 +27,4 @@ inline void check_assert(bool condition)
 		std::abort();
 }
 } // namespace msl
+#endif

@@ -1,3 +1,5 @@
+#ifndef __MSL_FILE_PTR_H__
+#define __MSL_FILE_PTR_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2018 martysama0134. All rights reserved.
@@ -247,3 +249,4 @@ public:
     }
 };
 } // namespace msl
+#endif
