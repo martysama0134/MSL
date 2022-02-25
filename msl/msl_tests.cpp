@@ -300,8 +300,14 @@ int main()
 		for (auto i : msl::xrange<int>(3, 5))
 			std::cout << i << '\n';
 		std::cout << "### xrange test 2 to 5 by 0.5" << '\n';
-		for (auto i : msl::xrange<double>(2, 5, 0.5))
+		for (auto i : msl::xrange<double>(2.0, 5.0, 0.5))
 			std::cout << i << '\n';
+		std::cout << "### xrange test 5 to 10 by 2" << '\n';
+		for (auto i : msl::xrange<int>(5, 10, 2))
+			std::cout << i << '\n';
+		std::cout << "### xllrange test 3 to 5" << '\n';
+		for (auto i : msl::xllrange(3, 5))
+			std::cout << static_cast<long long>(i) << '\n';
 		std::cout << "### xcrange test 3 to 5" << '\n';
 		for (auto i : msl::xcrange(3, 5))
 			std::cout << static_cast<int>(i) << '\n';
@@ -421,7 +427,7 @@ int main()
 		});
 		std::cout << "### xdrange test 2 to 5 by 0.5" << '\n';
 		msl::bench([] {
-			for (auto i : msl::xdrange(2, 5, 0.5))
+			for (auto i : msl::xdrange(2.0, 5.0, 0.5))
 				i;
 		});
 		std::cout << "### xdrange test 2 to 5 by 1.0" << '\n';
@@ -434,6 +440,11 @@ int main()
 			for (auto i : msl::xirange(2, 5, 1))
 				i;
 		});
+		std::cout << "### xllrange test 2 to 5 by 1" << '\n';
+		msl::bench([] {
+			for (auto i : msl::xllrange(2, 5, 1))
+				i;
+			});
 		std::cout << "### xcrange test 2 to 5 by 1" << '\n';
 		msl::bench([] {
 			for (auto i : msl::xcrange(2, 5, 1))

@@ -83,22 +83,45 @@ template <class T> class xrange
 	std::vector<T> m_vec_;
 
 public:
-	explicit xrange(T max) : xrange(0, max, 1) {}
-	xrange(T min, T max) : xrange(min, max, 1) {}
-	xrange(T min, T max, T diff)
+	explicit xrange(T max) : xrange(static_cast<T>(0), static_cast<T>(max), static_cast<T>(1)) {}
+	xrange(T min, T max) : xrange(static_cast<T>(min), static_cast<T>(max), static_cast<T>(1)) {}
+
+	template <typename Floating,
+		std::enable_if_t<std::is_floating_point<Floating>::value, bool> = true
+	>
+	xrange(Floating min, Floating max, Floating diff)
 	{
 		if (min >= max)
-			throw std::runtime_error("xrange min >= max");
+			return; //	throw std::runtime_error("xrange min >= max");
 		if (diff <= 0)
-			throw std::runtime_error("xrange diff <= 0");
+			return; //	throw std::runtime_error("xrange diff <= 0");
 		// 4x faster than emplace_back
 		m_vec_.resize(static_cast<std::size_t>((max - min) / diff));
+		for (auto& e : m_vec_)
+		{
+			e += min;
+			min += diff;
+		}
+	}
+
+	template <typename Integer,
+		std::enable_if_t<std::is_integral<Integer>::value, bool> = true
+	>
+	xrange(Integer min, Integer max, Integer diff)
+	{
+		if (min >= max)
+			return; //	throw std::runtime_error("xrange min >= max");
+		if (diff <= 0)
+			return; //	throw std::runtime_error("xrange diff <= 0");
+		// 4x faster than emplace_back
+		m_vec_.resize(static_cast<std::size_t>((max - min) / diff) + ((max - min) % diff ? 1 : 0));
 		for (auto & e : m_vec_)
 		{
 			e += min;
 			min += diff;
 		}
 	}
+
 	auto begin() { return std::begin(m_vec_); }
 	auto end() { return std::end(m_vec_); }
 };
