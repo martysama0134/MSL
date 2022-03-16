@@ -88,7 +88,10 @@ public:
 	xrange(T min, T max, T diff) {
 		init(min, max, diff);
 	};
+	auto begin() { return std::begin(m_vec_); }
+	auto end() { return std::end(m_vec_); }
 
+private:
 	template<typename T>
 	std::enable_if_t<std::is_floating_point_v<T>>
 	init(T min, T max, T diff)
@@ -122,9 +125,6 @@ public:
 			min += diff;
 		}
 	}
-
-	auto begin() { return std::begin(m_vec_); }
-	auto end() { return std::end(m_vec_); }
 };
 
 using xcrange = xrange<char>;
