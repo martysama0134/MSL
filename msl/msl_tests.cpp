@@ -575,33 +575,33 @@ int main()
 		if constexpr (EnableAllTests)
 		{
 			std::cout << "### random_int test 10 to 20" << '\n';
-			auto rr = msl::random_int(10, 20);
+			auto rr = msl::gen_random_int(10, 20);
 			std::cout << rr() << '\n';
 			std::cout << rr() << '\n';
 			std::cout << rr() << '\n';
 			std::cout << rr() << '\n';
 			std::cout << rr() << '\n';
-			std::cout << msl::random_int(10, 20)() << '\n';
-			std::cout << msl::random_int(10, 20)() << '\n';
-			std::cout << msl::random_int(10, 20)() << '\n';
-			std::cout << msl::random_int(10, 20)() << '\n';
-			std::cout << msl::random_int(10, 20)() << '\n';
-			std::cout << msl::random_int(10, 20)() << '\n';
-			std::cout << msl::random_int(10, 20)() << '\n';
-			std::cout << msl::random_int(10, 20)() << '\n';
-			std::cout << msl::random_int(10, 20)() << '\n';
-			std::cout << msl::random_int(10, 20)() << '\n';
-			std::cout << msl::random_int(10, 20)() << '\n';
-			std::cout << msl::random_int(10, 20)() << '\n';
-			std::cout << msl::random_int(10, 20)() << '\n';
+			std::cout << msl::random_int(10, 20) << '\n';
+			std::cout << msl::random_int(10, 20) << '\n';
+			std::cout << msl::random_int(10, 20) << '\n';
+			std::cout << msl::random_int(10, 20) << '\n';
+			std::cout << msl::random_int(10, 20) << '\n';
+			std::cout << msl::random_int(10, 20) << '\n';
+			std::cout << msl::random_int(10, 20) << '\n';
+			std::cout << msl::random_int(10, 20) << '\n';
+			std::cout << msl::random_int(10, 20) << '\n';
+			std::cout << msl::random_int(10, 20) << '\n';
+			std::cout << msl::random_int(10, 20) << '\n';
+			std::cout << msl::random_int(10, 20) << '\n';
+			std::cout << msl::random_int(10, 20) << '\n';
 			std::cout << "### random_real test 10 to 20" << '\n';
-			std::cout << msl::random_real(10, 20)() << '\n';
-			std::cout << msl::random_real(10, 20)() << '\n';
-			std::cout << msl::random_real(10, 20)() << '\n';
-			std::cout << msl::random_real(10, 20)() << '\n';
-			std::cout << msl::random_real(10, 20)() << '\n';
-			std::cout << msl::random_real(10, 20)() << '\n';
-			std::cout << msl::random_real(10, 20)() << '\n';
+			std::cout << msl::random_real<double>(10, 20) << '\n';
+			std::cout << msl::random_real<double>(10, 20) << '\n';
+			std::cout << msl::random_real<double>(10, 20) << '\n';
+			std::cout << msl::random_real<double>(10, 20) << '\n';
+			std::cout << msl::random_real<double>(10, 20) << '\n';
+			std::cout << msl::random_real<double>(10, 20) << '\n';
+			std::cout << msl::random_real(10.0, 20.0) << '\n';
 		}
 	}
 

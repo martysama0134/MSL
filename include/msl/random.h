@@ -17,12 +17,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#include <cstdint>
+#include <chrono>
 #include <random>
 #include <type_traits>
 
 namespace msl
 {
-	template <class T> class random_number
+	//! @brief gen_random_number(min, max)
+	template <class T> class gen_random_number
 	{
 	private:
 		template <typename U, typename V = void> struct distribution_deduce;
@@ -36,9 +39,12 @@ namespace msl
 		};
 
 	public:
-		explicit random_number(T max) : random_number(0, max) {}
-		random_number(T min, T max) : m_dist(min, max) {
-			m_re.seed(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
+		explicit gen_random_number(T max) : gen_random_number(0, max) {}
+		gen_random_number(T min, T max) : m_dist(min, max) {
+			set_seed(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
+		}
+		void set_seed(unsigned int seed) {
+			m_re.seed(seed);
 		}
 
 		T operator()() { return m_dist(m_re); }
@@ -47,9 +53,38 @@ namespace msl
 		std::default_random_engine m_re;
 		typename distribution_deduce<T>::dist_type m_dist;
 	};
+	using gen_random_int = gen_random_number<int>;
+	using gen_random_real = gen_random_number<double>;
 
-	using random_int = random_number<int>;
-	using random_real = random_number<double>;
+	//! @brief random_int(min, max)
+	template<typename T> std::enable_if_t<std::is_integral_v<T>, T>
+	random_int(T min, T max)
+	{
+		thread_local bool init = false;
+		thread_local std::default_random_engine re;
+		if (!init)
+		{
+			init = true;
+			re.seed(static_cast<uint32_t>(time(nullptr)));
+		}
+		std::uniform_int_distribution<T> d(min, max);
+		return d(re);
+	}
+
+	//! @brief random_real(min, max)
+	template<typename T> std::enable_if_t<std::is_floating_point_v<T>, T>
+	random_real(T min, T max)
+	{
+		thread_local bool init = false;
+		thread_local std::default_random_engine re;
+		if (!init)
+		{
+			init = true;
+			re.seed(static_cast<uint32_t>(time(nullptr)));
+		}
+		std::uniform_real_distribution<T> d(min, max);
+		return d(re);
+	}
 } // namespace msl
 
 #endif
