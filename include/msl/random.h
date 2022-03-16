@@ -18,26 +18,38 @@
 #pragma once
 
 #include <random>
+#include <type_traits>
 
 namespace msl
 {
 	template <class T> class random_number
 	{
+	private:
+		template <typename U, typename V = void> struct distribution_deduce;
+		template <typename U> struct distribution_deduce<U, typename std::enable_if_t<std::is_integral_v<U>>>
+		{
+			using dist_type = std::uniform_int_distribution<U>;
+		};
+		template <typename U> struct distribution_deduce<U, typename std::enable_if_t<std::is_floating_point_v<U>>>
+		{
+			using dist_type = std::uniform_real_distribution<U>;
+		};
+
 	public:
 		explicit random_number(T max) : random_number(0, max) {}
-		random_number(T min, T max) : m_dist(min, max)
-		{
+		random_number(T min, T max) : m_dist(min, max) {
+			m_re.seed(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
 		}
 
-		T operator()()
-		{
-			return m_dist(m_rd);
-		}
+		T operator()() { return m_dist(m_re); }
+
 	private:
-		std::random_device m_rd;
-		std::uniform_int_distribution<T> m_dist;
+		std::default_random_engine m_re;
+		typename distribution_deduce<T>::dist_type m_dist;
 	};
 
 	using random_int = random_number<int>;
+	using random_real = random_number<double>;
 } // namespace msl
+
 #endif
