@@ -92,8 +92,8 @@ public:
 	auto end() { return std::end(m_vec_); }
 
 private:
-	template<typename T>
-	std::enable_if_t<std::is_floating_point_v<T>>
+	template<typename U=T>
+	std::enable_if_t<std::is_floating_point_v<U>>
 	init(T min, T max, T diff)
 	{
 		if (min >= max)
@@ -109,8 +109,8 @@ private:
 		}
 	}
 
-	template<typename T>
-	std::enable_if_t<std::is_integral_v<T>>
+	template<typename U=T>
+	std::enable_if_t<std::is_integral_v<U>>
 	init(T min, T max, T diff)
 	{
 		if (min >= max)
