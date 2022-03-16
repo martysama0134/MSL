@@ -214,13 +214,13 @@ public:
 	}
 
 	//! @brief tell the file
-	std::size_t tell() const
+	long tell() const
 	{
 		return std::ftell(m_ptr_);
 	}
 
 	//! @brief seek the file
-	void seek(std::size_t offset, int origin = SEEK_SET) const
+	void seek(long offset, int origin = SEEK_SET) const
 	{
 		std::fseek(m_ptr_, offset, origin);
 	}
