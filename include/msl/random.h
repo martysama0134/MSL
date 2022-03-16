@@ -1,8 +1,8 @@
-#ifndef __MSL_MSL_H__
-#define __MSL_MSL_H__
+#ifndef __MSL_RANDOM_H__
+#define __MSL_RANDOM_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 2018 martysama0134. All rights reserved.
+// Copyright (c) 2022 martysama0134. All rights reserved.
 //
 // This code is licensed under the MIT License (MIT).
 //
@@ -17,11 +17,27 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "bench.h"
-#include "cast.h"
-#include "check_assert.h"
-#include "file_ptr.h"
-#include "random.h"
-#include "range.h"
-#include "utils.h"
+#include <random>
+
+namespace msl
+{
+	template <class T> class random_number
+	{
+	public:
+		explicit random_number(T max) : random_number(0, max) {}
+		random_number(T min, T max) : m_dist(min, max)
+		{
+		}
+
+		T operator()()
+		{
+			return m_dist(m_rd);
+		}
+	private:
+		std::random_device m_rd;
+		std::uniform_int_distribution<T> m_dist;
+	};
+
+	using random_int = random_number<int>;
+} // namespace msl
 #endif

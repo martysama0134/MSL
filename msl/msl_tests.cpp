@@ -572,6 +572,29 @@ int main()
 			for (auto & c : a)
 				std::cout << c << '\n';
 		}
+		if constexpr (EnableAllTests)
+		{
+			std::cout << "### random_int test 10 to 20" << '\n';
+			auto rr = msl::random_int(10, 20);
+			std::cout << rr() << '\n';
+			std::cout << msl::random_int(10, 20)() << '\n';
+			std::cout << msl::random_int(10, 20)() << '\n';
+			std::cout << msl::random_int(10, 20)() << '\n';
+			std::cout << msl::random_int(10, 20)() << '\n';
+			std::cout << msl::random_int(10, 20)() << '\n';
+			std::cout << msl::random_int(10, 20)() << '\n';
+			std::cout << msl::random_int(10, 20)() << '\n';
+			std::cout << msl::random_int(10, 20)() << '\n';
+			std::cout << msl::random_int(10, 20)() << '\n';
+			std::cout << msl::random_int(10, 20)() << '\n';
+			std::cout << msl::random_int(10, 20)() << '\n';
+			std::cout << msl::random_int(10, 20)() << '\n';
+			std::cout << msl::random_int(10, 20)() << '\n';
+			std::cout << msl::random_int(10, 20)() << '\n';
+			std::cout << msl::random_int(10, 20)() << '\n';
+			std::cout << msl::random_int(10, 20)() << '\n';
+			std::cout << msl::random_int(10, 20)() << '\n';
+		}
 	}
 
 	std::cout << "All tests passed." << '\n';
