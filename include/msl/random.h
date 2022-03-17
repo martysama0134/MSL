@@ -24,6 +24,21 @@
 
 namespace msl
 {
+	namespace details
+	{
+		std::default_random_engine& get_def_random_engine()
+		{
+			thread_local std::default_random_engine re;
+			thread_local bool init = false;
+			if (!init)
+			{
+				init = true;
+				re.seed(static_cast<uint32_t>(time(nullptr)));
+			}
+			return re;
+		}
+	}
+
 	//! @brief gen_random_number(min, max)
 	template <class T> class gen_random_number
 	{
@@ -40,17 +55,10 @@ namespace msl
 
 	public:
 		explicit gen_random_number(T max) : gen_random_number(0, max) {}
-		gen_random_number(T min, T max) : m_dist(min, max) {
-			set_seed(static_cast<uint32_t>(std::chrono::system_clock::now().time_since_epoch().count()));
-		}
-		void set_seed(unsigned int seed) {
-			m_re.seed(seed);
-		}
-
-		T operator()() { return m_dist(m_re); }
+		gen_random_number(T min, T max) : m_dist(min, max) {}
+		T operator()() { return m_dist(details::get_def_random_engine()); }
 
 	private:
-		std::default_random_engine m_re;
 		typename distribution_deduce<T>::dist_type m_dist;
 	};
 	using gen_random_int = gen_random_number<int>;
@@ -60,30 +68,16 @@ namespace msl
 	template<typename T> std::enable_if_t<std::is_integral_v<T>, T>
 	random_int(T min, T max)
 	{
-		thread_local bool init = false;
-		thread_local std::default_random_engine re;
-		if (!init)
-		{
-			init = true;
-			re.seed(static_cast<uint32_t>(time(nullptr)));
-		}
 		std::uniform_int_distribution<T> d(min, max);
-		return d(re);
+		return d(details::get_def_random_engine());
 	}
 
 	//! @brief random_real(min, max)
 	template<typename T> std::enable_if_t<std::is_floating_point_v<T>, T>
 	random_real(T min, T max)
 	{
-		thread_local bool init = false;
-		thread_local std::default_random_engine re;
-		if (!init)
-		{
-			init = true;
-			re.seed(static_cast<uint32_t>(time(nullptr)));
-		}
 		std::uniform_real_distribution<T> d(min, max);
-		return d(re);
+		return d(details::get_def_random_engine());
 	}
 } // namespace msl
 
