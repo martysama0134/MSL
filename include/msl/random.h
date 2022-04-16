@@ -26,7 +26,7 @@ namespace msl
 {
 	namespace details
 	{
-		std::default_random_engine& get_def_random_engine()
+		inline std::default_random_engine& get_def_random_engine()
 		{
 			thread_local std::default_random_engine re;
 			thread_local bool init = false;
@@ -79,6 +79,7 @@ namespace msl
 		std::uniform_real_distribution<T> d(min, max);
 		return d(details::get_def_random_engine());
 	}
+
 } // namespace msl
 
 #endif
