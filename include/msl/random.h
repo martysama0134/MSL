@@ -2,7 +2,7 @@
 #define __MSL_RANDOM_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 2022 martysama0134. All rights reserved.
+// Copyright (c) 2022 martysama0134 & IkarusDeveloper. All rights reserved.
 //
 // This code is licensed under the MIT License (MIT).
 //
@@ -37,6 +37,25 @@ namespace msl
 			}
 			return re;
 		}
+
+		template <typename U, typename V = void> struct distribution_deduce;
+		template <typename U> struct distribution_deduce<U, typename std::enable_if_t<std::is_integral_v<U>>>
+		{
+			using dist_type = std::uniform_int_distribution<U>;
+		};
+		template <typename U> struct distribution_deduce<U, typename std::enable_if_t<std::is_floating_point_v<U>>>
+		{
+			using dist_type = std::uniform_real_distribution<U>;
+		};
+
+		template <typename T>
+		inline constexpr T max_val = std::numeric_limits<T>::max();
+
+		template <typename T>
+		inline constexpr T min_val = std::numeric_limits<T>::min();
+
+		template <typename T>
+		inline constexpr bool is_number_v = std::is_integral_v<T> || std::is_floating_point_v<T>;
 	}
 
 	//! @brief gen_random_number(min, max)
@@ -66,7 +85,7 @@ namespace msl
 
 	//! @brief random_int(min, max)
 	template<typename T> std::enable_if_t<std::is_integral_v<T>, T>
-	random_int(T min, T max)
+	random_int(T min = details::min_val<T>, T max = details::max_val<T>)
 	{
 		std::uniform_int_distribution<T> d(min, max);
 		return d(details::get_def_random_engine());
@@ -74,12 +93,24 @@ namespace msl
 
 	//! @brief random_real(min, max)
 	template<typename T> std::enable_if_t<std::is_floating_point_v<T>, T>
-	random_real(T min, T max)
+	random_real(T min = details::min_val<T>, T max = details::max_val<T>)
 	{
 		std::uniform_real_distribution<T> d(min, max);
 		return d(details::get_def_random_engine());
 	}
 
+	template<typename T, typename = std::enable_if_t<details::is_number_v<T>>>
+	T random_number(T min = details::min_val<T>, T max = details::max_val<T>)
+	{
+		typename details::distribution_deduce<T>::dist_type dist(min, max);
+		return dist(details::get_def_random_engine());
+	}
+
+	template<typename T>
+	decltype(auto) random_from(const T& container) {
+		using size_type = decltype(std::size(container));
+		return std::begin(container) + random_int<size_type>(0, std::size(container) - 1);
+	}
 } // namespace msl
 
 #endif

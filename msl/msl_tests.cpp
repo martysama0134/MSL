@@ -602,6 +602,35 @@ int main()
 			std::cout << msl::random_real<double>(10, 20) << '\n';
 			std::cout << msl::random_real<double>(10, 20) << '\n';
 			std::cout << msl::random_real(10.0, 20.0) << '\n';
+			std::cout << "### random_number test 10 to 20" << '\n';
+			std::cout << msl::random_number<int>(10, 20) << " int " << '\n';
+			std::cout << msl::random_number<double>(10, 20) << " double " << '\n';
+			std::cout << msl::random_number<int>(10, 20) << " int " << '\n';
+			std::cout << msl::random_number<double>(10, 20) << " double " << '\n';
+			std::cout << msl::random_number<int>(10, 20) << " int " << '\n';
+			std::cout << msl::random_number<double>(10, 20) << " double " << '\n';
+			std::cout << msl::random_number(10, 20) << " int " << '\n';
+			std::cout << msl::random_number(10, 20) << " int " << '\n';
+			std::cout << msl::random_number(10.0, 20.0) << " double " << '\n';
+			std::cout << msl::random_number(10.0, 20.0) << " double " << '\n';
+			std::cout << "### random_from test (dog,cat,frog,bird,fish,squirrel) (vector)" << '\n';
+			std::vector<std::string> vekku{
+				"dog","cat","frog","bird","fish","squirrel"
+			};
+			std::cout << msl::random_from(vekku)->c_str() << '\n';
+			std::cout << msl::random_from(vekku)->c_str() << '\n';
+			std::cout << msl::random_from(vekku)->c_str() << '\n';
+			std::cout << msl::random_from(vekku)->c_str() << '\n';
+			std::cout << msl::random_from(vekku)->c_str() << '\n';
+			std::cout << msl::random_from(vekku)->c_str() << '\n';
+			std::cout << "### random_from test (dog,cat,frog,bird,fish,squirrel) (carray)" << '\n';
+			const char* vekku2[]{
+				"dog","cat","frog","bird","fish","squirrel"
+			};
+			std::cout << *msl::random_from(vekku2) << '\n';
+			std::cout << *msl::random_from(vekku2) << '\n';
+			std::cout << *msl::random_from(vekku2) << '\n';
+			std::cout << *msl::random_from(vekku2) << '\n';
 		}
 	}
 
