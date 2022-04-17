@@ -37,6 +37,11 @@ It includes:
 	- `msl::gen_random_number<T>(min = 0, max)`; it returns an instance to return random integral/real numbers between min and max
 	- `msl::random_int<T>(min = 0, max)`; it returns a random integral number between min and max
 	- `msl::random_real<T>(min = 0, max)`; it returns a random floating point number between min and max
+- `<msl/random.h>`
+	- `msl::random_int<T>(min=<T>::min_value, max=<T>::max_value)`; pick a random integral number between min and max (min max included)
+	- `msl::random_real<T>(min=<T>::min_value, max=<T>::max_value)`; pick a random floating point number between min and max (min max included)
+	- `msl::random_number<T>(min=<T>::min_value, max=<T>::max_value)`; pick a random number (real/integral autodetected) a between min and max (min max included)
+	- `msl::random_from<T>(container)`; picks a random element from container (both std container and c-array are supported)
 - `<msl/range.h>`
 	- `msl::range<T>(&min = 0, max)`; perform for-range loop with no memory allocation (10x faster than xrange!)
 	- `msl::xrange<T>(&min = 0, max, &diff = 1.0)`; perform for-range loop using a runtime generated vector
