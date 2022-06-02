@@ -18,6 +18,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 using namespace std::string_literals;
 
 #include "../include/msl/msl.h" // instead of <msl/msl.h> for non-system headers analysing
@@ -631,6 +632,25 @@ int main()
 			std::cout << *msl::random_from(vekku2) << '\n';
 			std::cout << *msl::random_from(vekku2) << '\n';
 			std::cout << *msl::random_from(vekku2) << '\n';
+			std::cout << "### random_from test (dog,cat,frog,bird,fish,squirrel) (map)" << '\n';
+			std::map<int, std::string> mappu1{
+				{0, "dog"},
+				{1, "cat"},
+				{2, "frog"},
+				{3, "bird"},
+				{4, "fish"},
+				{5, "squirrel"},
+			};
+			std::cout << msl::random_from(mappu1)->second << '\n';
+			std::cout << msl::random_from(mappu1)->second << '\n';
+			std::cout << msl::random_from(mappu1)->second << '\n';
+			std::cout << msl::random_from(mappu1)->second << '\n';
+			std::cout << "### random_from test (empty map)" << '\n';
+			std::map<int, std::string> mappu2;
+			if (auto it = msl::random_from(mappu2); it != mappu2.end())
+				std::cout << it->second << '\n';
+			else
+				std::cout << "(empty)" << '\n';
 		}
 	}
 

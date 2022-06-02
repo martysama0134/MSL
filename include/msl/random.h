@@ -108,8 +108,12 @@ namespace msl
 
 	template<typename T>
 	decltype(auto) random_from(const T& container) {
+		if (std::empty(container))
+			return std::end(container);
 		using size_type = decltype(std::size(container));
-		return std::begin(container) + random_int<size_type>(0, std::size(container) - 1);
+		auto iter = std::begin(container);
+		std::advance(iter, random_number<size_type>(0, std::size(container) - 1));
+		return iter;
 	}
 } // namespace msl
 
