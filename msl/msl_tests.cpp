@@ -74,7 +74,6 @@ void RunTests()
 	if constexpr (EnableAllTests)
 	{
 		std::cout << "### string_replace tests" << '\n';
-		if constexpr (EnableAllTests)
 		{
 			msl::named_bench("Replace Char", [] { auto r = msl::string_replace("a b c d", ' ', '.'); }); //53ms
 			msl::named_bench("Replace String", [] { auto r = msl::string_replace("a b c d", " ", "."); }); //127ms
@@ -87,7 +86,6 @@ void RunTests()
 				msl::string_replace_in_place(r, " ", ".");
 			}); //100ms
 		}
-		if constexpr (EnableAllTests)
 		{
 			{
 				auto s = "omae wa mou shindeiru"s;
@@ -112,7 +110,6 @@ void RunTests()
 				MSL_TEST_ASSERT_WN(s == r); // check the inverse as well
 			}
 		}
-		if constexpr (EnableAllTests)
 		{
 			{
 				auto s = "what is this a crossover episode?"s;
@@ -183,95 +180,84 @@ void RunTests()
 	if constexpr (EnableAllTests)
 	{
 		std::cout << "### string_join tests" << '\n';
-		if constexpr (EnableAllTests)
+		msl::bench([] { auto a = msl::string_join({"1", "22", "333", "4444"}, ' '); });
+		msl::bench([] { auto a = msl::string_join({"1", "22", "333", "4444"}, " "); });
+
 		{
-			msl::bench([] { auto a = msl::string_join({"1", "22", "333", "4444"}, ' '); });
-			msl::bench([] { auto a = msl::string_join({"1", "22", "333", "4444"}, " "); });
+			std::vector<std::string> v = {"1", "22", "333", "4444"};
+			auto t = ' ';
+			auto s = msl::string_join(v, t);
+			MSL_TEST_ASSERT_WN(s == "1 22 333 4444"s); // check if correct
+			std::cout << s << '\n';
+			MSL_TEST_ASSERT_WN(v == msl::string_split(s, t)); // check the inverse as well
 		}
-		if constexpr (EnableAllTests)
 		{
-			{
-				std::vector<std::string> v = {"1", "22", "333", "4444"};
-				auto t = ' ';
-				auto s = msl::string_join(v, t);
-				MSL_TEST_ASSERT_WN(s == "1 22 333 4444"s); // check if correct
-				std::cout << s << '\n';
-				MSL_TEST_ASSERT_WN(v == msl::string_split(s, t)); // check the inverse as well
-			}
-			{
-				std::vector<std::string> v = {"1", "22", "333", "4444"};
-				auto t = ";;;";
-				auto s = msl::string_join(v, t);
-				MSL_TEST_ASSERT_WN(s == "1;;;22;;;333;;;4444"s); // check if correct
-				std::cout << s << '\n';
-				MSL_TEST_ASSERT_WN(v == msl::string_split(s, t)); // check the inverse as well
-			}
-			{
-				std::deque<std::string> v = {"1", "22", "333", "4444"};
-				auto t = ".";
-				auto s = msl::string_join(v, t);
-				MSL_TEST_ASSERT_WN(s == "1.22.333.4444"s); // check if correct
-				std::cout << s << '\n';
-				MSL_TEST_ASSERT_WN(v == msl::string_split<std::deque<std::string>>(s, t)); // check the inverse as well
-			}
-			{
-				std::array<std::string, 4> v = {"1", "22", "333", "4444"};
-				auto t = "v";
-				auto s = msl::string_join(v, t);
-				MSL_TEST_ASSERT_WN(s == "1v22v333v4444"s); // check if correct
-				std::cout << s << '\n';
-			}
+			std::vector<std::string> v = {"1", "22", "333", "4444"};
+			auto t = ";;;";
+			auto s = msl::string_join(v, t);
+			MSL_TEST_ASSERT_WN(s == "1;;;22;;;333;;;4444"s); // check if correct
+			std::cout << s << '\n';
+			MSL_TEST_ASSERT_WN(v == msl::string_split(s, t)); // check the inverse as well
+		}
+		{
+			std::deque<std::string> v = {"1", "22", "333", "4444"};
+			auto t = ".";
+			auto s = msl::string_join(v, t);
+			MSL_TEST_ASSERT_WN(s == "1.22.333.4444"s); // check if correct
+			std::cout << s << '\n';
+			MSL_TEST_ASSERT_WN(v == msl::string_split<std::deque<std::string>>(s, t)); // check the inverse as well
+		}
+		{
+			std::array<std::string, 4> v = {"1", "22", "333", "4444"};
+			auto t = "v";
+			auto s = msl::string_join(v, t);
+			MSL_TEST_ASSERT_WN(s == "1v22v333v4444"s); // check if correct
+			std::cout << s << '\n';
 		}
 	}
 	// string_split
 	if constexpr (EnableAllTests)
 	{
 		std::cout << "### string_split tests" << '\n';
-		if constexpr (EnableAllTests)
+		msl::bench([] { auto a = msl::string_split("this is sentence number 1", ' '); });
+		msl::bench([] { auto a = msl::string_split("this is sentence number 1", " "); });
+		msl::bench([] { auto a = msl::string_split_any("this is sentence number 1", " "); });
 		{
-			msl::bench([] { auto a = msl::string_split("this is sentence number 1", ' '); });
-			msl::bench([] { auto a = msl::string_split("this is sentence number 1", " "); });
-			msl::bench([] { auto a = msl::string_split_any("this is sentence number 1", " "); });
+			auto s = "this is sentence number 1"s;
+			auto t = ' ';
+			auto v = msl::string_split(s, t);
+			std::vector<std::string> vc = {"this", "is", "sentence", "number", "1"};
+			MSL_TEST_ASSERT_WN(v == vc); // check if correct
+			for (auto & s2 : v)
+				std::cout << s2 << '\n';
+			MSL_TEST_ASSERT_WN(s == msl::string_join(v, t)); // check the inverse as well
 		}
-		if constexpr (EnableAllTests)
 		{
-			{
-				auto s = "this is sentence number 1"s;
-				auto t = ' ';
-				auto v = msl::string_split(s, t);
-				std::vector<std::string> vc = {"this", "is", "sentence", "number", "1"};
-				MSL_TEST_ASSERT_WN(v == vc); // check if correct
-				for (auto & s2 : v)
-					std::cout << s2 << '\n';
-				MSL_TEST_ASSERT_WN(s == msl::string_join(v, t)); // check the inverse as well
-			}
-			{
-				auto s = "this;;;is;;;sentence;;;number;;;2;;;;;;asd";
-				auto t = ";;;";
-				auto v = msl::string_split(s, t);
-				std::vector<std::string> vc = {"this", "is", "sentence", "number", "2", "", "asd"};
-				MSL_TEST_ASSERT_WN(v == vc); // check if correct
-				for (auto & s2 : v)
-					std::cout << s2 << '\n';
-				MSL_TEST_ASSERT_WN(s == msl::string_join(v, t)); // check the inverse as well
-			}
-			{
-				auto s = "this;;;is;;;sentence;;;number;;;2;;;;;;;;";
-				auto t = ";;;";
-				auto v = msl::string_split(s, t);
-				std::vector<std::string> vc = {"this", "is", "sentence", "number", "2", "", ";;"};
-				MSL_TEST_ASSERT_WN(v == vc); // check if correct
-				for (auto & s2 : v)
-					std::cout << s2 << '\n';
-				MSL_TEST_ASSERT_WN(s == msl::string_join(v, t)); // check the inverse as well
-			}
-			{
-				auto v = msl::string_split_any("this;is,big.boss", ";,.");
-				std::vector<std::string> vc = {"this", "is", "big", "boss"};
-				MSL_TEST_ASSERT_WN(v == vc); // check if correct
-				for (auto & s : v)
-					std::cout << s << '\n';
-			}
+			auto s = "this;;;is;;;sentence;;;number;;;2;;;;;;asd";
+			auto t = ";;;";
+			auto v = msl::string_split(s, t);
+			std::vector<std::string> vc = {"this", "is", "sentence", "number", "2", "", "asd"};
+			MSL_TEST_ASSERT_WN(v == vc); // check if correct
+			for (auto & s2 : v)
+				std::cout << s2 << '\n';
+			MSL_TEST_ASSERT_WN(s == msl::string_join(v, t)); // check the inverse as well
+		}
+		{
+			auto s = "this;;;is;;;sentence;;;number;;;2;;;;;;;;";
+			auto t = ";;;";
+			auto v = msl::string_split(s, t);
+			std::vector<std::string> vc = {"this", "is", "sentence", "number", "2", "", ";;"};
+			MSL_TEST_ASSERT_WN(v == vc); // check if correct
+			for (auto & s2 : v)
+				std::cout << s2 << '\n';
+			MSL_TEST_ASSERT_WN(s == msl::string_join(v, t)); // check the inverse as well
+		}
+		{
+			auto v = msl::string_split_any("this;is,big.boss", ";,.");
+			std::vector<std::string> vc = {"this", "is", "big", "boss"};
+			MSL_TEST_ASSERT_WN(v == vc); // check if correct
+			for (auto & s : v)
+				std::cout << s << '\n';
 		}
 	}
 	// range tests
@@ -320,7 +306,7 @@ void RunTests()
 
 		std::cout << p.remain_size() << '\n';
 		MSL_TEST_ASSERT_WN(p.remain_size() == 0); // check its remaining size after read
-		if constexpr (EnableAllTests)
+
 		{
 			msl::file_ptr p1("test.txt");
 			msl::file_ptr p2(std::move(p1));
@@ -376,9 +362,7 @@ void RunTests()
 			auto n = (max - min);
 			m_vec.resize(static_cast<std::size_t>(n));
 			for (auto & e : m_vec)
-			{
 				e += min++;
-			}
 		});
 		msl::bench([] {
 			std::vector<double> m_vec;
@@ -460,64 +444,57 @@ void RunTests()
 			for (auto i : msl::drange(3, 5))
 				i;
 		});
-		if constexpr (EnableAllTests)
-		{
-			std::cout << "### xirange test to 100" << '\n'; // 370ms
-			msl::bench([] {
-				for (auto i : msl::xirange(100))
-					i;
-			});
-			std::cout << "### irange test to 100" << '\n'; // 93ms
-			msl::bench([] {
-				for (auto i : msl::irange(100))
-					i;
-			});
-			std::cout << "### normal for loop test to 100" << '\n'; // 2ms
-			msl::bench([] {
-				for (auto i = 0; i < 100; i++)
-				{
-				}
-			});
-		}
-		if constexpr (EnableAllTests)
-		{
-			std::cout << "### MSL_FOR_LOOP test to 100" << '\n'; // 370ms
-			msl::bench([] {
-				MSL_FOR_LOOP(100) {
-					i;
-				}
-			});
-			std::cout << "### MSL_FOR_LOOP_VAR test to 100" << '\n'; // 93ms
-			msl::bench([] {
-				MSL_FOR_LOOP_VAR(100, l) {
-					l;
-				}
-			});
-			std::cout << "### MSL_FOR_LOOP_VAR_START test to 100" << '\n'; // 2ms
-			msl::bench([] {
-				MSL_FOR_LOOP_VAR_START(100 - 1, j, -1) {
-					j;
-				}
-			});
-		}
+
+		std::cout << "### xirange test to 100" << '\n'; // 370ms
+		msl::bench([] {
+			for (auto i : msl::xirange(100))
+				i;
+		});
+		std::cout << "### irange test to 100" << '\n'; // 93ms
+		msl::bench([] {
+			for (auto i : msl::irange(100))
+				i;
+		});
+		std::cout << "### normal for loop test to 100" << '\n'; // 2ms
+		msl::bench([] {
+			for (auto i = 0; i < 100; i++)
+			{
+			}
+		});
+
+		std::cout << "### MSL_FOR_LOOP test to 100" << '\n'; // 370ms
+		msl::bench([] {
+			MSL_FOR_LOOP(100) {
+				i;
+			}
+		});
+		std::cout << "### MSL_FOR_LOOP_VAR test to 100" << '\n'; // 93ms
+		msl::bench([] {
+			MSL_FOR_LOOP_VAR(100, l) {
+				l;
+			}
+		});
+		std::cout << "### MSL_FOR_LOOP_VAR_START test to 100" << '\n'; // 2ms
+		msl::bench([] {
+			MSL_FOR_LOOP_VAR_START(100 - 1, j, -1) {
+				j;
+			}
+		});
 	}
 	if constexpr (EnableAllTests)
 	{
-		if constexpr (EnableAllTests)
 		{
 			int a[10]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 			msl::refill(a);
 			for (auto & c : a)
 				std::cout << c << '\n';
 		}
-		if constexpr (EnableAllTests)
 		{
 			char a[4]{'a', 'b', 'c', 'd'};
 			msl::refill(a, 'e');
 			for (auto & c : a)
 				std::cout << c << '\n';
 		}
-		if constexpr (EnableAllTests)
 		{
 			struct AA
 			{
@@ -533,7 +510,6 @@ void RunTests()
 			for (auto & c : a)
 				std::cout << c.b << '\n';
 		}
-		if constexpr (EnableAllTests)
 		{
 			std::cout << "### refill test struct AA" << '\n';
 			typedef struct AA
@@ -545,7 +521,6 @@ void RunTests()
 			msl::refill(a);
 			std::cout << a[0].b << '\n';
 		}
-		if constexpr (EnableAllTests)
 		{
 			std::cout << "### refill test vector char a,b,c,d" << '\n';
 			std::vector<char> a{'a', 'b', 'c', 'd'};
@@ -553,7 +528,6 @@ void RunTests()
 			for (auto & c : a)
 				std::cout << c << '\n';
 		}
-		if constexpr (EnableAllTests)
 		{
 			std::cout << "### refill test vector 1,2,3,4" << '\n';
 			std::vector<int> a{1, 2, 3, 4};
@@ -561,7 +535,6 @@ void RunTests()
 			for (auto & c : a)
 				std::cout << c << '\n';
 		}
-		if constexpr (EnableAllTests)
 		{
 			std::cout << "### refill test std::array 1,2,3,4" << '\n';
 			std::array<int, 4> a{1, 2, 3, 4};
@@ -569,7 +542,6 @@ void RunTests()
 			for (auto & c : a)
 				std::cout << c << '\n';
 		}
-		if constexpr (EnableAllTests)
 		{
 			std::cout << "### refill test vector aaa,bbb,ccc,ddd" << '\n';
 			std::vector<std::string> a{"aaa", "bbb", "ccc", "ddd"};
@@ -579,7 +551,6 @@ void RunTests()
 			for (auto & c : a)
 				std::cout << c << '\n';
 		}
-		if constexpr (EnableAllTests)
 		{
 			std::cout << "### refill test carray aaa,bbb,ccc,ddd" << '\n';
 			std::string a[4]{"aaa", "bbb", "ccc", "ddd"};
@@ -589,7 +560,9 @@ void RunTests()
 			for (auto & c : a)
 				std::cout << c << '\n';
 		}
-		if constexpr (EnableAllTests)
+	}
+	if constexpr (EnableAllTests)
+	{
 		{
 			std::cout << "### random_int test 10 to 20" << '\n';
 			auto rr = msl::gen_random_int(10, 20);
