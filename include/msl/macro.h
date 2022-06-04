@@ -17,8 +17,31 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#include <iostream>
+
+//! @brief MSL_FOR_LOOP wrapper for the common for incremental loop
 #define MSL_FOR_LOOP(count) for (decltype(count) i = 0; i < (count); i++)
 #define MSL_FOR_LOOP_VAR(count, varname) for (decltype(count) varname = 0; varname < (count); varname++)
 #define MSL_FOR_LOOP_VAR_START(count, varname, start) for (decltype(count) varname = start; varname < (count); varname++)
+
+//! @brief MSL_RUN_TEST runs the whole test case by passing a function / lambda
+#define MSL_RUN_TEST(fnc) \
+	try {\
+		{(fnc)();}\
+		std::cout << "All tests passed." << '\n';\
+	}\
+	catch (msl::test_error& e) {\
+		std::cout << e.what() << " test failed." << '\n';\
+	}
+
+//! @brief MSL_TEST_ASSERT check and print condition
+#define MSL_TEST_ASSERT(name, condition) \
+	if (!(condition)) \
+		throw msl::test_error((std::string("Test Assert: ") + (name) + " Condition: " + #condition).c_str());
+
+//! @brief MSL_TEST_ASSERT_WN check and print condition without name
+#define MSL_TEST_ASSERT_WN(condition) \
+	if (!(condition)) \
+		throw msl::test_error((std::string("Test Condition: " + #condition).c_str());
 
 #endif

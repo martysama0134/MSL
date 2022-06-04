@@ -685,20 +685,33 @@ void RunTests()
 				std::cout << it->second << '\n';
 			else
 				std::cout << "(empty)" << '\n';
-			msl::test_assert("mappu2", mappu2.empty());
+			MSL_TEST_ASSERT("mappu2", mappu2.empty());
+			//msl::test_assert("mappu2", mappu2.empty()); // inline alternative
+			//MSL_TEST_ASSERT("!mappu2", !mappu2.empty()); //force fail
 		}
 	}
 }
 
+void RunFailedTests() {
+	MSL_TEST_ASSERT("ForceFail1", 1 == 2);
+}
+
 int main()
 {
-	try {
-		RunTests();
-		std::cout << "All tests passed." << '\n';
+	// MSL_RUN_TEST unwrapped code:
+	if constexpr (false)
+	{
+		try {
+			RunTests();
+			std::cout << "All tests passed." << '\n';
+		} catch (msl::test_error& e) {
+			std::cout << e.what() << " test failed." << '\n';
+		}
 	}
-	catch (msl::test_error & e) {
-		std::cout << e.what() << " test failed." << '\n';
-	}
+	MSL_RUN_TEST(RunTests);
+
+	MSL_RUN_TEST(RunFailedTests);
+	MSL_RUN_TEST([]() { MSL_TEST_ASSERT("ForceFail2", 1 == 2); });
 
 	std::ignore = getchar();
 	std::ignore = getchar();

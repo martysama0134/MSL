@@ -22,25 +22,25 @@
 
 namespace msl
 {
+//! @brief msl::check_assert struct
 inline void check_assert(bool condition)
 {
 	if (!condition)
 		std::abort();
 }
 
-
 //! @brief msl::test_error struct
-struct test_error : std::exception
+struct test_error : std::runtime_error
 {
-	std::string testName;
-	test_error(const std::string & name) : testName(name) {}
-	const char* what() const noexcept override { return testName.c_str(); }
+	test_error(const char * message) : std::runtime_error(message) {}
 };
 
+//! @brief msl::test_assert inline version that doesn't print the condition
 inline void test_assert(const std::string & name, bool condition)
 {
 	if (!condition)
-		throw test_error(name);
+		throw msl::test_error(name.c_str());
 }
+
 } // namespace msl
 #endif
