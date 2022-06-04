@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\msl\check_assert.h">
-      <Filter>File di intestazione</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\msl\file_ptr.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
@@ -40,6 +37,9 @@
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="..\include\msl\macro.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\msl\assert.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
   </ItemGroup>

@@ -18,6 +18,7 @@
 #pragma once
 
 #include <cstdlib>
+#include <string>
 
 namespace msl
 {
@@ -31,13 +32,15 @@ inline void check_assert(bool condition)
 //! @brief msl::test_error struct
 struct test_error : std::exception
 {
-	const char* what() const noexcept override { return "MSL::Test Fail Exception"; }
+	std::string testName;
+	test_error(const std::string & name) : testName(name) {}
+	const char* what() const noexcept override { return testName.c_str(); }
 };
 
-inline void test_assert(bool condition)
+inline void test_assert(const std::string & name, bool condition)
 {
 	if (!condition)
-		throw test_error();
+		throw test_error(name);
 }
 } // namespace msl
 #endif

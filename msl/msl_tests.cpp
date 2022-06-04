@@ -685,6 +685,7 @@ void RunTests()
 				std::cout << it->second << '\n';
 			else
 				std::cout << "(empty)" << '\n';
+			msl::test_assert("mappu2", mappu2.empty());
 		}
 	}
 }
@@ -696,7 +697,7 @@ int main()
 		std::cout << "All tests passed." << '\n';
 	}
 	catch (msl::test_error & e) {
-		std::cout << "Some tests failed." << '\n';
+		std::cout << e.what() << " test failed." << '\n';
 	}
 
 	std::ignore = getchar();

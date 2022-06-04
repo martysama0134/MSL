@@ -19,7 +19,7 @@
 
 #include "bench.h"
 #include "cast.h"
-#include "check_assert.h"
+#include "assert.h"
 #include "file_ptr.h"
 #include "macro.h"
 #include "random.h"
