@@ -95,10 +95,10 @@ void RunTests()
 				auto to = '.';
 				auto r = s;
 				msl::string_replace_in_place(r, from, to);
-				msl::check_assert(r == "omae.wa.mou.shindeiru"s); // check if correct
+				MSL_TEST_ASSERT_WN(r == "omae.wa.mou.shindeiru"s); // check if correct
 				std::cout << r << '\n';
 				msl::string_replace_in_place(r, to, from);
-				msl::check_assert(s == r); // check the inverse as well
+				MSL_TEST_ASSERT_WN(s == r); // check the inverse as well
 			}
 			{
 				auto s = "shinde kudasai"s;
@@ -106,10 +106,10 @@ void RunTests()
 				auto to = ',';
 				auto r = s;
 				msl::string_replace_in_place(r, from, to);
-				msl::check_assert(r == "shinde,kudasai"s); // check if correct
+				MSL_TEST_ASSERT_WN(r == "shinde,kudasai"s); // check if correct
 				std::cout << r << '\n';
 				msl::string_replace_in_place(r, to, from);
-				msl::check_assert(s == r); // check the inverse as well
+				MSL_TEST_ASSERT_WN(s == r); // check the inverse as well
 			}
 		}
 		if constexpr (EnableAllTests)
@@ -119,75 +119,63 @@ void RunTests()
 				auto from = ' ';
 				auto to = '.';
 				auto r = msl::string_replace(s, from, to);
-				msl::check_assert(r == "what.is.this.a.crossover.episode?"s); // check if correct
+				MSL_TEST_ASSERT_WN(r == "what.is.this.a.crossover.episode?"s); // check if correct
 				std::cout << r << '\n';
-				msl::check_assert(s == msl::string_replace(s, to, from)); // check the inverse as well
+				MSL_TEST_ASSERT_WN(s == msl::string_replace(s, to, from)); // check the inverse as well
 			}
 			{
 				auto s = "what is this a crossover episode?"s;
 				auto from = " "s;
 				auto to = ","s;
 				auto r = msl::string_replace(s, from, to);
-				msl::check_assert(r == "what,is,this,a,crossover,episode?"s); // check if correct
+				MSL_TEST_ASSERT_WN(r == "what,is,this,a,crossover,episode?"s); // check if correct
 				std::cout << r << '\n';
-				msl::check_assert(s == msl::string_replace(s, to, from)); // check the inverse as well
+				MSL_TEST_ASSERT_WN(s == msl::string_replace(s, to, from)); // check the inverse as well
 			}
 			{
 				auto s = "what is this a crossover episode?"s;
 				auto from = " "s;
 				auto to = ";;;"s;
 				auto r = msl::string_replace(s, from, to);
-				msl::check_assert(r == "what;;;is;;;this;;;a;;;crossover;;;episode?"s); // check if correct
+				MSL_TEST_ASSERT_WN(r == "what;;;is;;;this;;;a;;;crossover;;;episode?"s); // check if correct
 				std::cout << r << '\n';
-				msl::check_assert(s == msl::string_replace(s, to, from)); // check the inverse as well
+				MSL_TEST_ASSERT_WN(s == msl::string_replace(s, to, from)); // check the inverse as well
 			}
 			{
 				auto s = "what;;;is;;;this;;;a;;;crossover;;;episode?"s;
 				auto from = ";;;"s;
 				auto to = ":::"s;
 				auto r = msl::string_replace(s, from, to);
-				msl::check_assert(r == "what:::is:::this:::a:::crossover:::episode?"s); // check if correct
+				MSL_TEST_ASSERT_WN(r == "what:::is:::this:::a:::crossover:::episode?"s); // check if correct
 				std::cout << r << '\n';
-				msl::check_assert(s == msl::string_replace(s, to, from)); // check the inverse as well
+				MSL_TEST_ASSERT_WN(s == msl::string_replace(s, to, from)); // check the inverse as well
 			}
 			{
 				auto s = "whatOOOOisOOOOthisOOOOaOOOOcrossoverOOOOepisode?"s;
 				auto from = "OOOO"s;
 				auto to = "@@"s;
 				auto r = msl::string_replace(s, from, to);
-				msl::check_assert(r == "what@@is@@this@@a@@crossover@@episode?"s); // check if correct
+				MSL_TEST_ASSERT_WN(r == "what@@is@@this@@a@@crossover@@episode?"s); // check if correct
 				std::cout << r << '\n';
-				msl::check_assert(s == msl::string_replace(s, to, from)); // check the inverse as well
+				MSL_TEST_ASSERT_WN(s == msl::string_replace(s, to, from)); // check the inverse as well
 			}
 			{
 				auto s = "what is this a crossover episode?"s;
 				auto from = " "s;
 				auto to = ""s;
 				auto r = msl::string_replace(s, from, to);
-				msl::check_assert(r == "whatisthisacrossoverepisode?"s); // check if correct
+				MSL_TEST_ASSERT_WN(r == "whatisthisacrossoverepisode?"s); // check if correct
 				std::cout << r << '\n';
-				try
-				{
-					msl::check_assert(s == msl::string_replace(s, to, from)); // check the inverse as well
-				}
-				catch (const std::runtime_error &)
-				{
-				}
+				MSL_TEST_ASSERT_WN(s == msl::string_replace(s, to, from)); // check the inverse as well
 			}
 			{
 				auto s = "what is this a crossover episode?"s;
 				auto from = " "s;
 				auto to = ""s;
-				try
-				{
-					auto r = msl::string_replace(s, from, to);
-					msl::check_assert(r == "whatisthisacrossoverepisode?"s); // check if correct
-					std::cout << r << '\n';
-					msl::check_assert(s == msl::string_replace(s, to, from)); // check the inverse as well
-				}
-				catch (const std::runtime_error &)
-				{
-				}
+				auto r = msl::string_replace(s, from, to);
+				MSL_TEST_ASSERT_WN(r == "whatisthisacrossoverepisode?"s); // check if correct
+				std::cout << r << '\n';
+				MSL_TEST_ASSERT_WN(s == msl::string_replace(s, to, from)); // check the inverse as well
 			}
 		}
 	}
@@ -206,31 +194,31 @@ void RunTests()
 				std::vector<std::string> v = {"1", "22", "333", "4444"};
 				auto t = ' ';
 				auto s = msl::string_join(v, t);
-				msl::check_assert(s == "1 22 333 4444"s); // check if correct
+				MSL_TEST_ASSERT_WN(s == "1 22 333 4444"s); // check if correct
 				std::cout << s << '\n';
-				msl::check_assert(v == msl::string_split(s, t)); // check the inverse as well
+				MSL_TEST_ASSERT_WN(v == msl::string_split(s, t)); // check the inverse as well
 			}
 			{
 				std::vector<std::string> v = {"1", "22", "333", "4444"};
 				auto t = ";;;";
 				auto s = msl::string_join(v, t);
-				msl::check_assert(s == "1;;;22;;;333;;;4444"s); // check if correct
+				MSL_TEST_ASSERT_WN(s == "1;;;22;;;333;;;4444"s); // check if correct
 				std::cout << s << '\n';
-				msl::check_assert(v == msl::string_split(s, t)); // check the inverse as well
+				MSL_TEST_ASSERT_WN(v == msl::string_split(s, t)); // check the inverse as well
 			}
 			{
 				std::deque<std::string> v = {"1", "22", "333", "4444"};
 				auto t = ".";
 				auto s = msl::string_join(v, t);
-				msl::check_assert(s == "1.22.333.4444"s); // check if correct
+				MSL_TEST_ASSERT_WN(s == "1.22.333.4444"s); // check if correct
 				std::cout << s << '\n';
-				msl::check_assert(v == msl::string_split<std::deque<std::string>>(s, t)); // check the inverse as well
+				MSL_TEST_ASSERT_WN(v == msl::string_split<std::deque<std::string>>(s, t)); // check the inverse as well
 			}
 			{
 				std::array<std::string, 4> v = {"1", "22", "333", "4444"};
 				auto t = "v";
 				auto s = msl::string_join(v, t);
-				msl::check_assert(s == "1v22v333v4444"s); // check if correct
+				MSL_TEST_ASSERT_WN(s == "1v22v333v4444"s); // check if correct
 				std::cout << s << '\n';
 			}
 		}
@@ -252,35 +240,35 @@ void RunTests()
 				auto t = ' ';
 				auto v = msl::string_split(s, t);
 				std::vector<std::string> vc = {"this", "is", "sentence", "number", "1"};
-				msl::check_assert(v == vc); // check if correct
+				MSL_TEST_ASSERT_WN(v == vc); // check if correct
 				for (auto & s2 : v)
 					std::cout << s2 << '\n';
-				msl::check_assert(s == msl::string_join(v, t)); // check the inverse as well
+				MSL_TEST_ASSERT_WN(s == msl::string_join(v, t)); // check the inverse as well
 			}
 			{
 				auto s = "this;;;is;;;sentence;;;number;;;2;;;;;;asd";
 				auto t = ";;;";
 				auto v = msl::string_split(s, t);
 				std::vector<std::string> vc = {"this", "is", "sentence", "number", "2", "", "asd"};
-				msl::check_assert(v == vc); // check if correct
+				MSL_TEST_ASSERT_WN(v == vc); // check if correct
 				for (auto & s2 : v)
 					std::cout << s2 << '\n';
-				msl::check_assert(s == msl::string_join(v, t)); // check the inverse as well
+				MSL_TEST_ASSERT_WN(s == msl::string_join(v, t)); // check the inverse as well
 			}
 			{
 				auto s = "this;;;is;;;sentence;;;number;;;2;;;;;;;;";
 				auto t = ";;;";
 				auto v = msl::string_split(s, t);
 				std::vector<std::string> vc = {"this", "is", "sentence", "number", "2", "", ";;"};
-				msl::check_assert(v == vc); // check if correct
+				MSL_TEST_ASSERT_WN(v == vc); // check if correct
 				for (auto & s2 : v)
 					std::cout << s2 << '\n';
-				msl::check_assert(s == msl::string_join(v, t)); // check the inverse as well
+				MSL_TEST_ASSERT_WN(s == msl::string_join(v, t)); // check the inverse as well
 			}
 			{
 				auto v = msl::string_split_any("this;is,big.boss", ";,.");
 				std::vector<std::string> vc = {"this", "is", "big", "boss"};
-				msl::check_assert(v == vc); // check if correct
+				MSL_TEST_ASSERT_WN(v == vc); // check if correct
 				for (auto & s : v)
 					std::cout << s << '\n';
 			}
@@ -321,17 +309,17 @@ void RunTests()
 		msl::file_ptr p("test.txt"); // open test.txt on read-mode
 
 		std::cout << ((p.is_open()) ? "OPEN"s : "CLOSE"s) << '\n';
-		msl::check_assert(p.is_open()); // check if open
+		MSL_TEST_ASSERT_WN(p.is_open()); // check if open
 
 		std::cout << p.size() << '\n';
-		msl::check_assert(p.size() == 3); // check its size
+		MSL_TEST_ASSERT_WN(p.size() == 3); // check its size
 
 		std::cout << p.string_read() << '\n';
 		std::cout << p.size() << '\n';
-		msl::check_assert(p.size() == 3); // check its size after read
+		MSL_TEST_ASSERT_WN(p.size() == 3); // check its size after read
 
 		std::cout << p.remain_size() << '\n';
-		msl::check_assert(p.remain_size() == 0); // check its remaining size after read
+		MSL_TEST_ASSERT_WN(p.remain_size() == 0); // check its remaining size after read
 		if constexpr (EnableAllTests)
 		{
 			msl::file_ptr p1("test.txt");
@@ -346,7 +334,7 @@ void RunTests()
 		std::cout << "### inherit_cast tests" << '\n';
 		auto res = msl::inherit_cast<int>(3.4);
 		std::cout << res << '\n';
-		msl::check_assert(res == 3);
+		MSL_TEST_ASSERT_WN(res == 3);
 	}
 	// truncate_cast tests
 	if constexpr (EnableAllTests)
@@ -355,23 +343,23 @@ void RunTests()
 		{
 			auto res = msl::truncate_cast<int>(3.4);
 			std::cout << res << '\n';
-			msl::check_assert(res == 3);
+			MSL_TEST_ASSERT_WN(res == 3);
 		}
 		{
 			auto res = msl::truncate<unsigned short>(255.55);
 			std::cout << res << '\n';
-			msl::check_assert(res == 255);
+			MSL_TEST_ASSERT_WN(res == 255);
 		}
 		{
 			auto res = msl::truncate<double>(222.44);
 			std::cout << res << '\n';
-			msl::check_assert(res == 222);
+			MSL_TEST_ASSERT_WN(res == 222);
 		}
 		try
 		{
 			auto res = msl::truncate<unsigned short>(100000.66);
 			std::cout << res << '\n';
-			msl::check_assert(res == 100000);
+			MSL_TEST_ASSERT_WN(res == 100000);
 		}
 		catch (msl::truncate_error & e)
 		{

@@ -37,11 +37,11 @@
 //! @brief MSL_TEST_ASSERT check and print condition
 #define MSL_TEST_ASSERT(name, condition) \
 	if (!(condition)) \
-		throw msl::test_error((std::string("Test Assert: ") + (name) + " Condition: " + #condition).c_str());
+		throw msl::test_error((std::string("Test Assert: ") + (name) + " Condition: " + #condition));
 
 //! @brief MSL_TEST_ASSERT_WN check and print condition without name
 #define MSL_TEST_ASSERT_WN(condition) \
 	if (!(condition)) \
-		throw msl::test_error((std::string("Test Condition: " + #condition).c_str());
+		throw msl::test_error((std::string("Test Condition: ") + #condition).c_str());
 
 #endif

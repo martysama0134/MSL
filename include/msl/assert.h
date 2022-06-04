@@ -19,6 +19,7 @@
 
 #include <cstdlib>
 #include <string>
+#include <exception>
 
 namespace msl
 {
@@ -30,16 +31,19 @@ inline void check_assert(bool condition)
 }
 
 //! @brief msl::test_error struct
-struct test_error : std::runtime_error
+struct test_error : std::exception
 {
-	test_error(const char * message) : std::runtime_error(message) {}
+	std::string mMessage;
+	test_error(const char * message) : mMessage(message) {}
+	test_error(const std::string & message) : mMessage(message) {}
+	const char * what() { return mMessage.c_str(); }
 };
 
 //! @brief msl::test_assert inline version that doesn't print the condition
 inline void test_assert(const std::string & name, bool condition)
 {
 	if (!condition)
-		throw msl::test_error(name.c_str());
+		throw msl::test_error(name);
 }
 
 } // namespace msl
