@@ -34,5 +34,11 @@ template <class F> void bench(F && func, const std::size_t tries = 10000)
 	std::cout << "Elapsed time: " << evaluate(func, tries).count() << "ms\n";
 }
 
+template <class F> void named_bench(const std::string& name, F&& func, const std::size_t tries = 10000)
+{
+	std::cout << "Bench name: " << name << ", ";
+	bench(func, tries);
+}
+
 } // namespace msl
 #endif

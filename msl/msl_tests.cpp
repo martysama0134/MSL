@@ -76,13 +76,13 @@ void RunTests()
 		std::cout << "### string_replace tests" << '\n';
 		if constexpr (EnableAllTests)
 		{
-			msl::bench([] { auto r = msl::string_replace("a b c d", ' ', '.'); }); //53ms
-			msl::bench([] { auto r = msl::string_replace("a b c d", " ", "."); }); //127ms
-			msl::bench([] {
+			msl::named_bench("Replace Char", [] { auto r = msl::string_replace("a b c d", ' ', '.'); }); //53ms
+			msl::named_bench("Replace String", [] { auto r = msl::string_replace("a b c d", " ", "."); }); //127ms
+			msl::named_bench("Replace Char InPlace", [] {
 				auto r = "a b c d"s;
 				msl::string_replace_in_place(r, ' ', '.');
 			}); //27ms
-			msl::bench([] {
+			msl::named_bench("Replace String InPlace", [] {
 				auto r = "a b c d"s;
 				msl::string_replace_in_place(r, " ", ".");
 			}); //100ms
