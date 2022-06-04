@@ -1,8 +1,8 @@
-#ifndef __MSL_MSL_H__
-#define __MSL_MSL_H__
+#ifndef __MSL_MACRO_H__
+#define __MSL_MACRO_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
-// Copyright (c) 2018 martysama0134. All rights reserved.
+// Copyright (c) 2022 martysama0134. All rights reserved.
 //
 // This code is licensed under the MIT License (MIT).
 //
@@ -17,12 +17,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include "bench.h"
-#include "cast.h"
-#include "check_assert.h"
-#include "file_ptr.h"
-#include "macro.h"
-#include "random.h"
-#include "range.h"
-#include "utils.h"
+#define MSL_FOR_LOOP(count) for (decltype(count) i = 0; i < (count); i++)
+#define MSL_FOR_LOOP_VAR(count, varname) for (decltype(count) varname = 0; varname < (count); varname++)
+#define MSL_FOR_LOOP_VAR_START(count, varname, start) for (decltype(count) varname = start; varname < (count); varname++)
+
 #endif

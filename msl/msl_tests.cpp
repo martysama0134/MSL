@@ -24,7 +24,8 @@ using namespace std::string_literals;
 #include "../include/msl/msl.h" // instead of <msl/msl.h> for non-system headers analysing
 
 constexpr bool EnableAllTests = true;
-int main()
+
+void RunTests()
 {
 	// trim
 	if constexpr (EnableAllTests)
@@ -445,7 +446,7 @@ int main()
 		msl::bench([] {
 			for (auto i : msl::xllrange(2, 5, 1))
 				i;
-			});
+		});
 		std::cout << "### xcrange test 2 to 5 by 1" << '\n';
 		msl::bench([] {
 			for (auto i : msl::xcrange(2, 5, 1))
@@ -490,6 +491,27 @@ int main()
 				}
 			});
 		}
+		if constexpr (EnableAllTests)
+		{
+			std::cout << "### MSL_FOR_LOOP test to 100" << '\n'; // 370ms
+			msl::bench([] {
+				MSL_FOR_LOOP(100) {
+					i;
+				}
+			});
+			std::cout << "### MSL_FOR_LOOP_VAR test to 100" << '\n'; // 93ms
+			msl::bench([] {
+				MSL_FOR_LOOP_VAR(100, l) {
+					l;
+				}
+			});
+			std::cout << "### MSL_FOR_LOOP_VAR_START test to 100" << '\n'; // 2ms
+			msl::bench([] {
+				MSL_FOR_LOOP_VAR_START(100 - 1, j, -1) {
+					j;
+				}
+			});
+		}
 	}
 	if constexpr (EnableAllTests)
 	{
@@ -525,6 +547,7 @@ int main()
 		}
 		if constexpr (EnableAllTests)
 		{
+			std::cout << "### refill test struct AA" << '\n';
 			typedef struct AA
 			{
 				char a[20]{};
@@ -536,6 +559,7 @@ int main()
 		}
 		if constexpr (EnableAllTests)
 		{
+			std::cout << "### refill test vector char a,b,c,d" << '\n';
 			std::vector<char> a{'a', 'b', 'c', 'd'};
 			msl::refill(a, '1');
 			for (auto & c : a)
@@ -543,6 +567,7 @@ int main()
 		}
 		if constexpr (EnableAllTests)
 		{
+			std::cout << "### refill test vector 1,2,3,4" << '\n';
 			std::vector<int> a{1, 2, 3, 4};
 			msl::refill(a, -1);
 			for (auto & c : a)
@@ -550,6 +575,7 @@ int main()
 		}
 		if constexpr (EnableAllTests)
 		{
+			std::cout << "### refill test std::array 1,2,3,4" << '\n';
 			std::array<int, 4> a{1, 2, 3, 4};
 			msl::refill(a, -1);
 			for (auto & c : a)
@@ -557,6 +583,7 @@ int main()
 		}
 		if constexpr (EnableAllTests)
 		{
+			std::cout << "### refill test vector aaa,bbb,ccc,ddd" << '\n';
 			std::vector<std::string> a{"aaa", "bbb", "ccc", "ddd"};
 			for (auto & c : a)
 				std::cout << c << '\n';
@@ -566,6 +593,7 @@ int main()
 		}
 		if constexpr (EnableAllTests)
 		{
+			std::cout << "### refill test carray aaa,bbb,ccc,ddd" << '\n';
 			std::string a[4]{"aaa", "bbb", "ccc", "ddd"};
 			for (auto & c : a)
 				std::cout << c << '\n';
@@ -595,6 +623,7 @@ int main()
 			std::cout << msl::random_int(10, 20) << '\n';
 			std::cout << msl::random_int(10, 20) << '\n';
 			std::cout << msl::random_int(10, 20) << '\n';
+
 			std::cout << "### random_real test 10 to 20" << '\n';
 			std::cout << msl::random_real<double>(10, 20) << '\n';
 			std::cout << msl::random_real<double>(10, 20) << '\n';
@@ -603,6 +632,7 @@ int main()
 			std::cout << msl::random_real<double>(10, 20) << '\n';
 			std::cout << msl::random_real<double>(10, 20) << '\n';
 			std::cout << msl::random_real(10.0, 20.0) << '\n';
+
 			std::cout << "### random_number test 10 to 20" << '\n';
 			std::cout << msl::random_number<int>(10, 20) << " int " << '\n';
 			std::cout << msl::random_number<double>(10, 20) << " double " << '\n';
@@ -614,6 +644,7 @@ int main()
 			std::cout << msl::random_number(10, 20) << " int " << '\n';
 			std::cout << msl::random_number(10.0, 20.0) << " double " << '\n';
 			std::cout << msl::random_number(10.0, 20.0) << " double " << '\n';
+
 			std::cout << "### random_from test (dog,cat,frog,bird,fish,squirrel) (vector)" << '\n';
 			std::vector<std::string> vekku{
 				"dog","cat","frog","bird","fish","squirrel"
@@ -624,6 +655,7 @@ int main()
 			std::cout << msl::random_from(vekku)->c_str() << '\n';
 			std::cout << msl::random_from(vekku)->c_str() << '\n';
 			std::cout << msl::random_from(vekku)->c_str() << '\n';
+
 			std::cout << "### random_from test (dog,cat,frog,bird,fish,squirrel) (carray)" << '\n';
 			const char* vekku2[]{
 				"dog","cat","frog","bird","fish","squirrel"
@@ -632,6 +664,7 @@ int main()
 			std::cout << *msl::random_from(vekku2) << '\n';
 			std::cout << *msl::random_from(vekku2) << '\n';
 			std::cout << *msl::random_from(vekku2) << '\n';
+
 			std::cout << "### random_from test (dog,cat,frog,bird,fish,squirrel) (map)" << '\n';
 			std::map<int, std::string> mappu1{
 				{0, "dog"},
@@ -645,6 +678,7 @@ int main()
 			std::cout << msl::random_from(mappu1)->second << '\n';
 			std::cout << msl::random_from(mappu1)->second << '\n';
 			std::cout << msl::random_from(mappu1)->second << '\n';
+
 			std::cout << "### random_from test (empty map)" << '\n';
 			std::map<int, std::string> mappu2;
 			if (auto it = msl::random_from(mappu2); it != mappu2.end())
@@ -653,9 +687,19 @@ int main()
 				std::cout << "(empty)" << '\n';
 		}
 	}
+}
 
-	std::cout << "All tests passed." << '\n';
-	getchar();
-	getchar();
+int main()
+{
+	try {
+		RunTests();
+		std::cout << "All tests passed." << '\n';
+	}
+	catch (msl::test_error & e) {
+		std::cout << "Some tests failed." << '\n';
+	}
+
+	std::ignore = getchar();
+	std::ignore = getchar();
 	return 0;
 }

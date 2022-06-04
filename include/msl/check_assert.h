@@ -26,5 +26,18 @@ inline void check_assert(bool condition)
 	if (!condition)
 		std::abort();
 }
+
+
+//! @brief msl::test_error struct
+struct test_error : std::exception
+{
+	const char* what() const noexcept override { return "MSL::Test Fail Exception"; }
+};
+
+inline void test_assert(bool condition)
+{
+	if (!condition)
+		throw test_error();
+}
 } // namespace msl
 #endif
