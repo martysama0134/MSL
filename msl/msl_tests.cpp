@@ -664,6 +664,15 @@ void RunTests()
 			MSL_TEST_ASSERT("mappu2", mappu2.empty());
 			//msl::test_assert("mappu2", mappu2.empty()); // inline alternative
 			//MSL_TEST_ASSERT("!mappu2", !mappu2.empty()); //force fail
+
+			std::cout << "### random distribution test (dog,cat,frog,bird,fish,squirrel)" << '\n';
+			std::map<std::string, uint32_t> vekkuDist;
+			MSL_FOR_LOOP(10000) {
+				vekkuDist[*msl::random_from(vekku)]++;
+			}
+			for (auto& elem : vekkuDist) {
+				std::cout << elem.first << ": " << elem.second << '\n';
+			}
 		}
 	}
 }
