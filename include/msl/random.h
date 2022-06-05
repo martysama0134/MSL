@@ -26,16 +26,14 @@ namespace msl
 {
 	namespace details
 	{
-		inline uint32_t reverse_nibbles(uint32_t x)
-		{
-			uint32_t out = 0u;
-			for (uint32_t i = 0; i < sizeof(uint32_t); ++i)
-			{
-				const uint32_t byte = (x >> 8 * i) & 0xff;
-				out |= byte << (24 - 8 * i);
-			}
-			return out;
-		}
+		template <typename T>
+		inline constexpr T max_val = std::numeric_limits<T>::max();
+
+		template <typename T>
+		inline constexpr T min_val = std::numeric_limits<T>::min();
+
+		template <typename T>
+		inline constexpr bool is_number_v = std::is_integral_v<T> || std::is_floating_point_v<T>;
 
 		inline std::default_random_engine& get_def_random_engine()
 		{
@@ -44,11 +42,9 @@ namespace msl
 			if (!init)
 			{
 				init = true;
-				auto seed = static_cast<uint32_t>(time(nullptr));
-				// swaps the bytes to prevent the same first result every time
-				// source: https://stackoverflow.com/questions/26475595/
-				seed = reverse_nibbles(seed);
-				re.seed(seed);
+				std::random_device rd;
+				std::uniform_int_distribution<uint32_t> dist(min_val<uint32_t>, max_val<uint32_t>);
+				re.seed(dist(rd));
 			}
 			return re;
 		}
@@ -62,15 +58,6 @@ namespace msl
 		{
 			using dist_type = std::uniform_real_distribution<U>;
 		};
-
-		template <typename T>
-		inline constexpr T max_val = std::numeric_limits<T>::max();
-
-		template <typename T>
-		inline constexpr T min_val = std::numeric_limits<T>::min();
-
-		template <typename T>
-		inline constexpr bool is_number_v = std::is_integral_v<T> || std::is_floating_point_v<T>;
 	}
 
 	//! @brief gen_random_number(min, max)
