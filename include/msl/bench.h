@@ -29,12 +29,12 @@ template <class F> auto evaluate(F && func, const std::size_t tries = 1)
 	return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start);
 }
 
-template <class F> void bench(F && func, const std::size_t tries = 10000)
+template <class F> void bench(F && func, const std::size_t tries = 100000)
 {
 	std::cout << "Elapsed time: " << evaluate(func, tries).count() << "ms\n";
 }
 
-template <class F> void named_bench(const std::string& name, F&& func, const std::size_t tries = 10000)
+template <class F> void named_bench(const std::string& name, F&& func, const std::size_t tries = 100000)
 {
 	std::cout << "Bench name: " << name << ", ";
 	bench(func, tries);

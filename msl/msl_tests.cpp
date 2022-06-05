@@ -219,9 +219,9 @@ void RunTests()
 	if constexpr (EnableAllTests)
 	{
 		std::cout << "### string_split tests" << '\n';
-		msl::bench([] { auto a = msl::string_split("this is sentence number 1", ' '); });
-		msl::bench([] { auto a = msl::string_split("this is sentence number 1", " "); });
-		msl::bench([] { auto a = msl::string_split_any("this is sentence number 1", " "); });
+		msl::named_bench("Split by Char", [] { auto a = msl::string_split("this is sentence number 1", ' '); });
+		msl::named_bench("Split by String", [] { auto a = msl::string_split("this is sentence number 1", " "); });
+		msl::named_bench("Split Any by String", [] { auto a = msl::string_split_any("this is sentence number 1", " "); });
 		{
 			auto s = "this is sentence number 1"s;
 			auto t = ' ';
@@ -355,7 +355,7 @@ void RunTests()
 	// bench tests
 	if constexpr (EnableAllTests)
 	{
-		msl::bench([] {
+		msl::named_bench("Vec Iter by 1", [] {
 			std::vector<double> m_vec;
 			double min = 2;
 			double max = 5;
@@ -364,7 +364,7 @@ void RunTests()
 			for (auto & e : m_vec)
 				e += min++;
 		});
-		msl::bench([] {
+		msl::named_bench("Vec Iter by 0.5", [] {
 			std::vector<double> m_vec;
 			double min = 2;
 			double max = 5;
@@ -377,7 +377,7 @@ void RunTests()
 				min += diff;
 			}
 		});
-		msl::bench([] {
+		msl::named_bench("Vec Emplace by 0.5", [] {
 			std::vector<double> m_vec;
 			double min = 2;
 			double max = 5;
@@ -484,18 +484,23 @@ void RunTests()
 	if constexpr (EnableAllTests)
 	{
 		{
+			std::cout << "### refill test a[10]" << '\n';
 			int a[10]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 			msl::refill(a);
 			for (auto & c : a)
-				std::cout << c << '\n';
+				std::cout << c << ',';
+			std::cout << '\n';
 		}
 		{
+			std::cout << "### refill test a[4] with 'e'" << '\n';
 			char a[4]{'a', 'b', 'c', 'd'};
 			msl::refill(a, 'e');
 			for (auto & c : a)
-				std::cout << c << '\n';
+				std::cout << c << ',';
+			std::cout << '\n';
 		}
 		{
+			std::cout << "### refill test AA[5] struct" << '\n';
 			struct AA
 			{
 				char a[20]{};
@@ -505,13 +510,15 @@ void RunTests()
 				{{}, 1}, {{}, 21}, {{}, 31}, {{}, 41}, {{}, 51},
 			};
 			for (auto & c : a)
-				std::cout << c.b << '\n';
+				std::cout << c.b << ',';
+			std::cout << '\n';
 			msl::refill(a, AA());
 			for (auto & c : a)
-				std::cout << c.b << '\n';
+				std::cout << c.b << ',';
+			std::cout << '\n';
 		}
 		{
-			std::cout << "### refill test struct AA" << '\n';
+			std::cout << "### refill test single struct AA.b" << '\n';
 			typedef struct AA
 			{
 				char a[20]{};
@@ -519,46 +526,54 @@ void RunTests()
 			} BB;
 			BB a[3];
 			msl::refill(a);
-			std::cout << a[0].b << '\n';
+			std::cout << a[0].b << ',';
+			std::cout << '\n';
 		}
 		{
 			std::cout << "### refill test vector char a,b,c,d" << '\n';
 			std::vector<char> a{'a', 'b', 'c', 'd'};
 			msl::refill(a, '1');
 			for (auto & c : a)
-				std::cout << c << '\n';
+				std::cout << c << ',';
+			std::cout << '\n';
 		}
 		{
 			std::cout << "### refill test vector 1,2,3,4" << '\n';
 			std::vector<int> a{1, 2, 3, 4};
 			msl::refill(a, -1);
 			for (auto & c : a)
-				std::cout << c << '\n';
+				std::cout << c << ',';
+			std::cout << '\n';
 		}
 		{
 			std::cout << "### refill test std::array 1,2,3,4" << '\n';
 			std::array<int, 4> a{1, 2, 3, 4};
 			msl::refill(a, -1);
 			for (auto & c : a)
-				std::cout << c << '\n';
+				std::cout << c << ',';
+			std::cout << '\n';
 		}
 		{
 			std::cout << "### refill test vector aaa,bbb,ccc,ddd" << '\n';
 			std::vector<std::string> a{"aaa", "bbb", "ccc", "ddd"};
 			for (auto & c : a)
-				std::cout << c << '\n';
+				std::cout << c << ',';
+			std::cout << '\n';
 			msl::refill(a, "eee");
 			for (auto & c : a)
-				std::cout << c << '\n';
+				std::cout << c << ',';
+			std::cout << '\n';
 		}
 		{
 			std::cout << "### refill test carray aaa,bbb,ccc,ddd" << '\n';
 			std::string a[4]{"aaa", "bbb", "ccc", "ddd"};
 			for (auto & c : a)
-				std::cout << c << '\n';
+				std::cout << c << ',';
+			std::cout << '\n';
 			msl::refill(a, "eee");
 			for (auto & c : a)
-				std::cout << c << '\n';
+				std::cout << c << ',';
+			std::cout << '\n';
 		}
 	}
 	if constexpr (EnableAllTests)
