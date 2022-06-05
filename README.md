@@ -37,7 +37,7 @@ It includes:
 		- `string_read(void * buf, &n = 0)`; read n bytes (0=all remaining) from file and store into a null-terminated buf
 		- `string string_read(&n = 0)`; read n bytes (0=all remaining) from file and return it as string
 - `<msl/macro.h>`
-	- `MSL_FOR_LOOP(count)`; wrapper of `for (auto i = 0; i < count; i++)`
+	- `MSL_FOR_LOOP(count)`; wrapper of `for (auto i = 0; i < count; ++i)`
 	- `MSL_FOR_LOOP_VAR(count, varname)`; like MSL_FOR_LOOP but with `varname` instead of `i`
 	- `MSL_FOR_LOOP_VAR_START(count, varname, start)`; like MSL_FOR_LOOP_VAR but with custom defalt `i` initialization
 	- `MSL_RUN_TEST(func)`; it runs the whole test case by passing a function / lambda

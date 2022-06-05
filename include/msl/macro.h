@@ -20,7 +20,7 @@
 #include <iostream>
 
 //! @brief MSL_FOR_LOOP wrapper for the common for incremental loop
-#define MSL_FOR_LOOP(count) for (decltype(count) i = 0; i < (count); i++)
+#define MSL_FOR_LOOP(count) for (decltype(count) i = 0; i < (count); ++i)
 #define MSL_FOR_LOOP_VAR(count, varname) for (decltype(count) varname = 0; varname < (count); varname++)
 #define MSL_FOR_LOOP_VAR_START(count, varname, start) for (decltype(count) varname = start; varname < (count); varname++)
 
