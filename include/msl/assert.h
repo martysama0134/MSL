@@ -40,11 +40,11 @@ struct test_error : std::exception
 };
 
 //! @brief msl::test_assert inline version that doesn't print the condition
-inline void test_assert(const std::string & name, bool condition)
-{
-	if (!condition)
-		throw msl::test_error(name);
-}
+//inline void test_assert(const std::string & name, bool condition)
+//{
+//	if (!condition)
+//		throw msl::test_error(name);
+//}
 
 } // namespace msl
 #endif
