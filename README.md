@@ -4,9 +4,12 @@ Marty(Sama0134) Support Library for C++17 (C++14 backward-compatible)
 ### What it contains
 It includes:
 - `<msl/bench.h>`
-	- `msl::bench(func, tries = 10000)`; perform easy benchmark tests and print the result
-	- `msl::evaluate(func, tries = 1)`; perform easy benchmark tests and return the ms
-	- `msl::named_bench(name, func, tries = 10000)`; same as bench, but with a name
+	- `msl::avg_bench(func, tries = 10000, retries = 100)`; perform easy benchmark tests and print the result by average
+	- `msl::avg_evaluate(func, tries = 10000, retries = 100)`; perform easy benchmark tests and return the ms by average
+	- `msl::avg_named_bench(name, func, tries = 10000, retries = 100)`; same as bench, but with a name by average
+	- `msl::bench(func, tries = 100000)`; perform easy benchmark tests and print the result
+	- `msl::evaluate(func, tries = 100000)`; perform easy benchmark tests and return the ms
+	- `msl::named_bench(name, func, tries = 100000)`; same as bench, but with a name
 - `<msl/cast.h>`
 	- `msl::truncate_cast<T>`; Truncate floating-point
 	- `msl::truncate<T>`; Truncate floating-point and throw msl::truncate_error exception if check fails.
