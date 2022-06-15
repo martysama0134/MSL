@@ -16,8 +16,19 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
-
 #include <iostream>
+// clang-format on
+
+//! @brief MSL_FORCE_NOMINMAX is a workaround for Windows' min max macro
+#define MSL_FORCE_NOMINMAX
+#ifdef MSL_FORCE_NOMINMAX
+	#if defined(min)
+		#undef min
+	#endif
+	#if defined(max)
+		#undef max
+	#endif
+#endif
 
 //! @brief MSL_FOR_LOOP wrapper for the common for incremental loop
 #define MSL_FOR_LOOP(count) for (decltype(count) i = 0; i < (count); ++i)
@@ -44,4 +55,5 @@
 	if (!(condition)) \
 		throw msl::test_error((std::string("Test Condition: ") + #condition).c_str());
 
+// clang-format off
 #endif
