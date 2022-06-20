@@ -27,10 +27,10 @@ namespace msl
 	namespace details
 	{
 		template <typename T>
-		inline constexpr T max_val = std::numeric_limits<T>::max();
+		inline constexpr T max_val = (std::numeric_limits<T>::max)();
 
 		template <typename T>
-		inline constexpr T min_val = std::numeric_limits<T>::min();
+		inline constexpr T min_val = (std::numeric_limits<T>::min)();
 
 		template <typename T>
 		inline constexpr bool is_number_v = std::is_integral_v<T> || std::is_floating_point_v<T>;

@@ -20,7 +20,7 @@
 // clang-format on
 
 //! @brief MSL_FORCE_NOMINMAX is a workaround for Windows' min max macro
-#define MSL_FORCE_NOMINMAX
+//#define MSL_FORCE_NOMINMAX
 #ifdef MSL_FORCE_NOMINMAX
 	#if defined(min)
 		#undef min
