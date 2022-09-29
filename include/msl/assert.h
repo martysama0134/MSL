@@ -36,7 +36,7 @@ struct test_error : std::exception
 	std::string mMessage;
 	test_error(const char * message) : mMessage(message) {}
 	test_error(const std::string & message) : mMessage(message) {}
-	const char * what() { return mMessage.c_str(); }
+	const char * what() const noexcept override { return mMessage.c_str(); }
 };
 
 //! @brief msl::test_assert inline version that doesn't print the condition
