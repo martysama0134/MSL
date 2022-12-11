@@ -21,22 +21,32 @@
 #include <string>
 #include <cstring>
 #include <vector>
+#include <optional>
+
+// #define MSL_FILE_PTR_ENABLE_IMPLICIT_CONVERSION
+#define MSL_FILE_PTR_ENABLE_STORE_FILENAME
 
 namespace msl
 {
 class file_ptr
 {
 	std::FILE * m_ptr_{nullptr};
+	#ifdef MSL_FILE_PTR_ENABLE_STORE_FILENAME
+	std::string m_filename_;
+	#ifdef _WIN32
+	std::wstring m_wfilename_;
+	#endif
+	#endif
 
 public:
 	// constructor
 	file_ptr() = default;
 	explicit file_ptr(const std::string & fn, const char * mode = "r") : file_ptr(fn.c_str(), mode){};
 	explicit file_ptr(const char * filename, const char * mode = "r") { open(filename, mode); }
-#ifdef _WIN32
+	#ifdef _WIN32
 	explicit file_ptr(const std::wstring& fn, const wchar_t* mode = L"r") : file_ptr(fn.c_str(), mode) {};
 	explicit file_ptr(const wchar_t * filename, const wchar_t * mode = L"r") { open(filename, mode); }
-#endif
+	#endif
 	explicit file_ptr(std::FILE * ptr) { m_ptr_ = ptr; }
 	// move constructor
 	file_ptr(file_ptr && fp) noexcept
@@ -64,10 +74,10 @@ public:
 	std::FILE * operator->() const { return m_ptr_; }
 	//! @brief if (ptr)
 	explicit operator bool() const { return m_ptr_; }
-#ifdef MSL_FILE_PTR_ENABLE_IMPLICIT_CONVERSION
+	#ifdef MSL_FILE_PTR_ENABLE_IMPLICIT_CONVERSION
 	//! @brief implicit std::FILE ptr conversion
 	operator std::FILE *() const { return m_ptr_; }
-#endif
+	#endif
 
 	//! @brief get the file ptr
 	std::FILE * get() const { return m_ptr_; }
@@ -78,20 +88,30 @@ public:
 	//! @brief get the file ptr pointer
 	std::FILE ** get_ptr() { return &m_ptr_; }
 
+	#ifdef MSL_FILE_PTR_ENABLE_STORE_FILENAME
+	std::string filename() { return m_filename_; }
+	#ifdef _WIN32
+	std::wstring wfilename() { return m_wfilename_; }
+	#endif
+	#endif
+
 	//! @brief close the file ptr and reset it
 	void open(const std::string & fn, const char * mode = "r") { open(fn.c_str(), mode); }
 
 	//! @brief close the file ptr and reset it
 	void open(const char * filename, const char * mode = "r")
 	{
-#ifdef _WIN32
+		#ifdef _WIN32
 		fopen_s(&m_ptr_, filename, mode);
-#else
+		#else
 		m_ptr_ = std::fopen(filename, mode);
-#endif
+		#endif
+		#ifdef MSL_FILE_PTR_ENABLE_STORE_FILENAME
+		m_filename_ = filename;
+		#endif
 	}
 
-#ifdef _WIN32
+	#ifdef _WIN32
 	//! @brief close the file ptr and reset it
 	void open(const std::wstring& fn, const wchar_t* mode = L"r") { open(fn.c_str(), mode); }
 
@@ -99,6 +119,9 @@ public:
 	void open(const wchar_t* filename, const wchar_t* mode = L"r")
 	{
 		_wfopen_s(&m_ptr_, filename, mode);
+		#ifdef MSL_FILE_PTR_ENABLE_STORE_FILENAME
+		m_wfilename_ = filename;
+		#endif
 	}
 
 	//! @brief reset and reopen new file
@@ -110,8 +133,7 @@ public:
 		reset();
 		open(filename, mode);
 	}
-
-#endif
+	#endif
 
 	//! @brief alias of reset()
 	void close() { reset(); }
@@ -143,6 +165,12 @@ public:
 		{
 			std::fclose(m_ptr_);
 			m_ptr_ = nullptr;
+			#ifdef MSL_FILE_PTR_ENABLE_STORE_FILENAME
+			m_filename_ = {};
+			#ifdef _WIN32
+			m_wfilename_ = {};
+			#endif
+			#endif
 		}
 	}
 
@@ -182,12 +210,12 @@ public:
 	//! @brief write into the file from zstring
 	std::size_t string_write(const char * str) const { return std::fwrite(str, std::strlen(str), 1, m_ptr_); }
 
-#ifdef _WIN32
+	#ifdef _WIN32
 	//! @brief write into the file from wstring
 	void string_write(const std::wstring& str) const { std::fwrite(str.data(), str.size(), 1, m_ptr_); }
 	//! @brief write into the file from wchar
 	void string_write(const wchar_t* str) const { std::fwrite(str, std::wcslen(str), 1, m_ptr_); }
-#endif
+	#endif
 
 	//! @brief read the file from the current position as byte stream returning a vector
 	std::vector<char> read(std::size_t n = 0) const
@@ -211,6 +239,23 @@ public:
 		if (n == 0) // 0 implies reading the whole remaining file
 			n = this->remain_size();
 		return std::fread(buf, 1, n, m_ptr_);
+	}
+
+	//! @brief read the next line from the current position as string
+	std::optional<std::string> readline() const
+	{
+		std::string ret;
+		int buf;
+		while ((buf = std::fgetc(m_ptr_)) != EOF)
+		{
+			if (buf == '\n') // if newline, return the current line
+				return ret;
+			ret += static_cast<char>(buf);
+		}
+
+		if (!ret.empty())
+			return ret;
+		return {};
 	}
 
 	//! @brief tell the file

@@ -39,6 +39,9 @@ It includes:
 		- `vector<char> read(&n = 0)`; read n bytes (0=all remaining) from file and return it as vector
 		- `string_read(void * buf, &n = 0)`; read n bytes (0=all remaining) from file and store into a null-terminated buf
 		- `string string_read(&n = 0)`; read n bytes (0=all remaining) from file and return it as string
+		- `readline()`; read a line from file and return it as string
+		- `filename()`; return the filename
+		- `wfilename()`; return the filename (windows only)
 - `<msl/macro.h>`
 	- `MSL_FOR_LOOP(count)`; wrapper of `for (auto i = 0; i < count; ++i)`
 	- `MSL_FOR_LOOP_VAR(count, varname)`; like MSL_FOR_LOOP but with `varname` instead of `i`

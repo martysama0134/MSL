@@ -1,0 +1,9 @@
+1 alfa
+2 bravo
+3 charlie
+
+5 delta
+7 gamma
+
+
+11 omega

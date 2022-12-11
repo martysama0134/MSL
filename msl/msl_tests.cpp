@@ -313,6 +313,32 @@ void RunTests()
 			std::cout << p1.get() << '\n';
 			std::cout << p2.get() << '\n';
 		}
+
+		{
+			msl::file_ptr f("test_tabs.txt");
+			#ifdef MSL_FILE_PTR_ENABLE_STORE_FILENAME
+			std::cout << f.filename() << ((f.is_open()) ? " OPEN"s : " CLOSE"s) << '\n';
+			#endif
+			MSL_TEST_ASSERT_WN(f.is_open()); // check if open
+
+			while (auto recvline = f.readline())
+			{
+				auto line = *recvline;
+
+				msl::rtrim_in_place(line);
+				if (line.empty() || line[0] == '/' || line[0] == '#')
+					continue;
+				// puts(line.c_str());
+
+				auto tokens = msl::string_split_any(line, " \t");
+				if (tokens.size() < 2)
+					continue;
+
+				auto mapId = std::stoi(tokens[0]);
+				auto mapName = tokens[1].c_str();
+				printf("id %d, name %s\n", mapId, mapName);
+			}
+		}
 	}
 	// inherit_cast tests
 	if constexpr (EnableAllTests)
@@ -678,7 +704,7 @@ void RunTests()
 }
 
 void RunFailedTests() {
-	MSL_TEST_ASSERT("ForceFail1", 1 == 2);
+	MSL_TEST_ASSERT("ForceFail1", false);
 }
 
 int main()
@@ -696,7 +722,7 @@ int main()
 	MSL_RUN_TEST(RunTests);
 
 	MSL_RUN_TEST(RunFailedTests);
-	MSL_RUN_TEST([]() { MSL_TEST_ASSERT("ForceFail2", 1 == 2); });
+	MSL_RUN_TEST([]() { MSL_TEST_ASSERT("ForceFail2", false); });
 
 	std::ignore = getchar();
 	std::ignore = getchar();
