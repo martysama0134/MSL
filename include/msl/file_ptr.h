@@ -23,7 +23,8 @@
 #include <vector>
 #include <optional>
 
-// #define MSL_FILE_PTR_ENABLE_IMPLICIT_CONVERSION
+//#define MSL_FILE_PTR_ENABLE_IMPLICIT_CONVERSION
+//#define MSL_FILE_PTR_ENABLE_WIDE_STRING
 #define MSL_FILE_PTR_ENABLE_STORE_FILENAME
 
 namespace msl
@@ -33,7 +34,7 @@ class file_ptr
 	std::FILE * m_ptr_{nullptr};
 	#ifdef MSL_FILE_PTR_ENABLE_STORE_FILENAME
 	std::string m_filename_;
-	#ifdef _WIN32
+	#ifdef MSL_FILE_PTR_ENABLE_WIDE_STRING
 	std::wstring m_wfilename_;
 	#endif
 	#endif
@@ -43,7 +44,7 @@ public:
 	file_ptr() = default;
 	explicit file_ptr(const std::string & fn, const char * mode = "r") : file_ptr(fn.c_str(), mode){};
 	explicit file_ptr(const char * filename, const char * mode = "r") { open(filename, mode); }
-	#ifdef _WIN32
+	#ifdef MSL_FILE_PTR_ENABLE_WIDE_STRING
 	explicit file_ptr(const std::wstring& fn, const wchar_t* mode = L"r") : file_ptr(fn.c_str(), mode) {};
 	explicit file_ptr(const wchar_t * filename, const wchar_t * mode = L"r") { open(filename, mode); }
 	#endif
@@ -90,7 +91,7 @@ public:
 
 	#ifdef MSL_FILE_PTR_ENABLE_STORE_FILENAME
 	std::string filename() { return m_filename_; }
-	#ifdef _WIN32
+	#ifdef MSL_FILE_PTR_ENABLE_WIDE_STRING
 	std::wstring wfilename() { return m_wfilename_; }
 	#endif
 	#endif
@@ -111,14 +112,18 @@ public:
 		#endif
 	}
 
-	#ifdef _WIN32
+	#ifdef MSL_FILE_PTR_ENABLE_WIDE_STRING
 	//! @brief close the file ptr and reset it
 	void open(const std::wstring& fn, const wchar_t* mode = L"r") { open(fn.c_str(), mode); }
 
 	//! @brief close the file ptr and reset it
 	void open(const wchar_t* filename, const wchar_t* mode = L"r")
 	{
+#		ifdef _WIN32
 		_wfopen_s(&m_ptr_, filename, mode);
+		#else
+		// m_ptr_ = wfopen(filename, mode); //todo
+		#endif
 		#ifdef MSL_FILE_PTR_ENABLE_STORE_FILENAME
 		m_wfilename_ = filename;
 		#endif
@@ -167,7 +172,7 @@ public:
 			m_ptr_ = nullptr;
 			#ifdef MSL_FILE_PTR_ENABLE_STORE_FILENAME
 			m_filename_ = {};
-			#ifdef _WIN32
+			#ifdef MSL_FILE_PTR_ENABLE_WIDE_STRING
 			m_wfilename_ = {};
 			#endif
 			#endif
@@ -210,7 +215,7 @@ public:
 	//! @brief write into the file from zstring
 	std::size_t string_write(const char * str) const { return std::fwrite(str, std::strlen(str), 1, m_ptr_); }
 
-	#ifdef _WIN32
+	#ifdef MSL_FILE_PTR_ENABLE_WIDE_STRING
 	//! @brief write into the file from wstring
 	void string_write(const std::wstring& str) const { std::fwrite(str.data(), str.size(), 1, m_ptr_); }
 	//! @brief write into the file from wchar
@@ -242,20 +247,17 @@ public:
 	}
 
 	//! @brief read the next line from the current position as string
-	std::optional<std::string> readline() const
+	std::optional<std::string> getline(char delim = '\n') const
 	{
 		std::string ret;
 		int buf;
 		while ((buf = std::fgetc(m_ptr_)) != EOF)
 		{
-			if (buf == '\n') // if newline, return the current line
+			if (buf == delim) // if newline, return the current line
 				return ret;
 			ret += static_cast<char>(buf);
 		}
-
-		if (!ret.empty())
-			return ret;
-		return {};
+		return (ret.empty()) ? std::nullopt : std::optional<std::string>{ret};
 	}
 
 	//! @brief tell the file

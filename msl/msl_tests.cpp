@@ -321,9 +321,9 @@ void RunTests()
 			#endif
 			MSL_TEST_ASSERT_WN(f.is_open()); // check if open
 
-			while (auto recvline = f.readline())
+			while (auto recvline = f.getline())
 			{
-				auto line = *recvline;
+				auto & line = *recvline;
 
 				msl::rtrim_in_place(line);
 				if (line.empty() || line[0] == '/' || line[0] == '#')
