@@ -71,7 +71,7 @@ void RunTests()
 		}); //142ms
 		msl::bench([] {
 			auto s = "\n\n \n aaa  bbb  ccc  \t\t  \t   \t \n"s;
-			auto r = msl::trim_in_place(s);
+			msl::trim_in_place(s);
 		}); //99ms
 	}
 	// string_replace
@@ -310,6 +310,14 @@ void RunTests()
 
 		std::cout << p.remain_size() << '\n';
 		MSL_TEST_ASSERT_WN(p.remain_size() == 0); // check its remaining size after read
+
+		{
+			msl::file_ptr p1("test_write.txt", "w");
+			const char * s1 = "kekw";
+			p1.string_write(s1);
+			const std::string s2 = "rekt";
+			p1.string_write(s2);
+		}
 
 		{
 			msl::file_ptr p1("test.txt");

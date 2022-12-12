@@ -44,9 +44,9 @@ class file_ptr
 public:
 	// constructor
 	file_ptr() = default;
-	explicit file_ptr(const std::string_view & filename, const char * mode = "r") { open(filename, mode); }
+	explicit file_ptr(const std::string_view & filename, const std::string_view & mode = "r") { open(filename, mode); }
 	#ifdef MSL_FILE_PTR_ENABLE_WIDE_STRING
-	explicit file_ptr(const std::wstring_view & filename, const wchar_t * mode = L"r") { open(filename, mode); }
+	explicit file_ptr(const std::wstring_view & filename, const std::wstring_view & mode = L"r") { open(filename, mode); }
 	#endif
 	explicit file_ptr(std::FILE * ptr) { m_ptr_ = ptr; }
 	// move constructor
@@ -97,12 +97,12 @@ public:
 	#endif
 
 	//! @brief close the file ptr and reset it
-	void open(const std::string_view & filename, const char * mode = "r")
+	void open(const std::string_view & filename, const std::string_view & mode = "r")
 	{
 		#ifdef _WIN32
-		fopen_s(&m_ptr_, filename.data(), mode);
+		fopen_s(&m_ptr_, filename.data(), mode.data());
 		#else
-		m_ptr_ = std::fopen(filename.data(), mode);
+		m_ptr_ = std::fopen(filename.data(), mode.data());
 		#endif
 		#ifdef MSL_FILE_PTR_ENABLE_STORE_FILENAME
 		m_filename_ = filename;
@@ -140,7 +140,7 @@ public:
 	}
 
 	//! @brief close the file ptr and reset it
-	void open(const std::wstring_view & filename, const wchar_t* mode = L"r")
+	void open(const std::wstring_view & filename, const std::wstring_view & mode = L"r")
 	{
 		#ifdef _WIN32
 		_wfopen_s(&m_ptr_, filename.data(), mode);
@@ -160,7 +160,7 @@ public:
 	}
 
 	//! @brief reset and reopen new file
-	void reset(const std::wstring_view & filename, const wchar_t* mode = L"r")
+	void reset(const std::wstring_view & filename, const std::wstring_view & mode = L"r")
 	{
 		reset();
 		open(filename, mode);
@@ -174,7 +174,7 @@ public:
 	void swap(file_ptr & fp) noexcept { std::swap(m_ptr_, fp.m_ptr_); }
 
 	//! @brief reset and reopen new file
-	void reset(const std::string_view & filename, const char * mode = "r")
+	void reset(const std::string_view & filename, const std::string_view & mode = "r")
 	{
 		reset();
 		open(filename, mode);
@@ -235,15 +235,11 @@ public:
 	std::size_t write(const void * buf, size_t size) const { return std::fwrite(buf, size, 1, m_ptr_); }
 
 	//! @brief write into the file from string
-	std::size_t string_write(const std::string & str) const { return std::fwrite(str.data(), str.size(), 1, m_ptr_); }
-	//! @brief write into the file from zstring
-	std::size_t string_write(const char * str) const { return std::fwrite(str, std::strlen(str), 1, m_ptr_); }
+	std::size_t string_write(const std::string_view & str) const { return std::fwrite(str.data(), str.size(), 1, m_ptr_); }
 
 	#ifdef MSL_FILE_PTR_ENABLE_WIDE_STRING
 	//! @brief write into the file from wstring
-	void string_write(const std::wstring& str) const { std::fwrite(str.data(), str.size(), 1, m_ptr_); }
-	//! @brief write into the file from wchar
-	void string_write(const wchar_t* str) const { std::fwrite(str, std::wcslen(str), 1, m_ptr_); }
+	void string_write(const std::wstring_view& str) const { std::fwrite(str.data(), str.size(), 1, m_ptr_); }
 	#endif
 
 	//! @brief read the file from the current position as byte stream returning a vector
