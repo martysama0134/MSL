@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
+﻿///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2018 martysama0134. All rights reserved.
 //
@@ -13,6 +13,10 @@
 // THE SOFTWARE.
 //
 ///////////////////////////////////////////////////////////////////////////////
+#ifdef WIN32
+#include <windows.h> // test if there's include instability (e.g. naming collisions)
+#endif
+
 #include <array>
 #include <deque>
 #include <iostream>
@@ -701,6 +705,27 @@ void RunTests()
 			}
 		}
 	}
+	#ifdef MSL_FILE_PTR_ENABLE_WIDE_STRING
+	if constexpr (EnableAllTests)
+	{
+		std::cout << "### file_ptr wide string conversion" << '\n';
+		{
+			const std::wstring ws = L"ħëłlö";
+			auto conv = msl::file_ptr::w2s(ws);
+			printf("%s %s\n", conv->c_str(), (conv) ? "SUCCESS" : "FAILED");
+		}
+		{
+			const std::wstring ws = L"index👌2";
+			auto conv = msl::file_ptr::w2s(ws);
+			printf("%s %s\n", conv->c_str(), (conv) ? "SUCCESS" : "FAILED");
+		}
+		{
+			const std::wstring ws = L"";
+			auto conv = msl::file_ptr::w2s(ws);
+			printf("%s %s\n", conv->c_str(), (conv) ? "SUCCESS" : "FAILED");
+		}
+	}
+	#endif
 }
 
 void RunFailedTests() {

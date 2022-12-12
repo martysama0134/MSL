@@ -18,10 +18,12 @@
 #pragma once
 
 #include <cstdio>
-#include <string>
 #include <cstring>
-#include <vector>
+#include <cwchar>
 #include <optional>
+#include <string>
+#include <string_view>
+#include <vector>
 
 //#define MSL_FILE_PTR_ENABLE_IMPLICIT_CONVERSION
 //#define MSL_FILE_PTR_ENABLE_WIDE_STRING
@@ -108,13 +110,49 @@ public:
 	}
 
 	#ifdef MSL_FILE_PTR_ENABLE_WIDE_STRING
+	inline static std::optional<std::string> w2s(const std::wstring_view & wcstr)
+	{
+		// on Windows, UTF-16 is internal Unicode encoding (UCS2 before WinXP)
+		// on Linux, UCS4 is internal Unicode encoding
+		// on BSD, UCS4 is internal Unicode encoding
+		setlocale(LC_ALL,"en_US.UTF-8");
+		const wchar_t * wcs = wcstr.data(); // implicit conversion for compatibility
+		auto s = std::mbstate_t();
+
+		#if _WIN32
+		size_t target_char_count{};
+		if (wcsrtombs_s(&target_char_count, nullptr, 0, &wcs, 0, &s) != 0)
+			return {};
+		#else
+		auto target_char_count = std::wcsrtombs(nullptr, &wcs, 0, &s);
+		if (target_char_count == static_cast<std::size_t>(-1))
+			return {};
+		target_char_count++; // +1 because std::string adds a null terminator which isn't part of size
+		#endif
+
+		auto str = std::string(target_char_count, '\0');
+		#if _WIN32
+		wcsrtombs_s(&target_char_count, str.data(), str.size(), &wcs, str.size(), &s);
+		#else
+		std::wcsrtombs(str.data(), &wcs, str.size(), &s);
+		#endif
+		return str;
+	}
+
 	//! @brief close the file ptr and reset it
 	void open(const std::wstring_view & filename, const wchar_t* mode = L"r")
 	{
-#		ifdef _WIN32
+		#ifdef _WIN32
 		_wfopen_s(&m_ptr_, filename.data(), mode);
 		#else
-		// m_ptr_ = wfopen(filename.data(), mode); //todo
+		auto fn2 = w2s(filename);
+		auto mode2 = w2s(mode);
+		if (!fn2 || !mode2)
+		{
+			printf("failed open conversion of %ws %ws\n", filename.data(), mode);
+			return;
+		}
+		m_ptr_ = std::fopen(fn2->c_str(), mode2->c_str());
 		#endif
 		#ifdef MSL_FILE_PTR_ENABLE_STORE_FILENAME
 		m_wfilename_ = filename;
@@ -276,10 +314,10 @@ public:
 	}
 
 	//! @brief move unwritten memory buffer data to the target file.
-    void flush() const
-    {
-        std::fflush(m_ptr_);
-    }
+	void flush() const
+	{
+		std::fflush(m_ptr_);
+	}
 };
 } // namespace msl
 #endif
