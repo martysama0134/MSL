@@ -42,11 +42,9 @@ class file_ptr
 public:
 	// constructor
 	file_ptr() = default;
-	explicit file_ptr(const std::string & fn, const char * mode = "r") : file_ptr(fn.c_str(), mode){};
-	explicit file_ptr(const char * filename, const char * mode = "r") { open(filename, mode); }
+	explicit file_ptr(const std::string_view & filename, const char * mode = "r") { open(filename, mode); }
 	#ifdef MSL_FILE_PTR_ENABLE_WIDE_STRING
-	explicit file_ptr(const std::wstring& fn, const wchar_t* mode = L"r") : file_ptr(fn.c_str(), mode) {};
-	explicit file_ptr(const wchar_t * filename, const wchar_t * mode = L"r") { open(filename, mode); }
+	explicit file_ptr(const std::wstring_view & filename, const wchar_t * mode = L"r") { open(filename, mode); }
 	#endif
 	explicit file_ptr(std::FILE * ptr) { m_ptr_ = ptr; }
 	// move constructor
@@ -97,15 +95,12 @@ public:
 	#endif
 
 	//! @brief close the file ptr and reset it
-	void open(const std::string & fn, const char * mode = "r") { open(fn.c_str(), mode); }
-
-	//! @brief close the file ptr and reset it
-	void open(const char * filename, const char * mode = "r")
+	void open(const std::string_view & filename, const char * mode = "r")
 	{
 		#ifdef _WIN32
-		fopen_s(&m_ptr_, filename, mode);
+		fopen_s(&m_ptr_, filename.data(), mode);
 		#else
-		m_ptr_ = std::fopen(filename, mode);
+		m_ptr_ = std::fopen(filename.data(), mode);
 		#endif
 		#ifdef MSL_FILE_PTR_ENABLE_STORE_FILENAME
 		m_filename_ = filename;
@@ -114,15 +109,12 @@ public:
 
 	#ifdef MSL_FILE_PTR_ENABLE_WIDE_STRING
 	//! @brief close the file ptr and reset it
-	void open(const std::wstring& fn, const wchar_t* mode = L"r") { open(fn.c_str(), mode); }
-
-	//! @brief close the file ptr and reset it
-	void open(const wchar_t* filename, const wchar_t* mode = L"r")
+	void open(const std::wstring_view & filename, const wchar_t* mode = L"r")
 	{
 #		ifdef _WIN32
-		_wfopen_s(&m_ptr_, filename, mode);
+		_wfopen_s(&m_ptr_, filename.data(), mode);
 		#else
-		// m_ptr_ = wfopen(filename, mode); //todo
+		// m_ptr_ = wfopen(filename.data(), mode); //todo
 		#endif
 		#ifdef MSL_FILE_PTR_ENABLE_STORE_FILENAME
 		m_wfilename_ = filename;
@@ -130,10 +122,7 @@ public:
 	}
 
 	//! @brief reset and reopen new file
-	void reset(const std::wstring& fn, const wchar_t* mode = L"r") { reset(fn.c_str(), mode); }
-
-	//! @brief reset and reopen new file
-	void reset(const wchar_t* filename, const wchar_t* mode = L"r")
+	void reset(const std::wstring_view & filename, const wchar_t* mode = L"r")
 	{
 		reset();
 		open(filename, mode);
@@ -147,10 +136,7 @@ public:
 	void swap(file_ptr & fp) noexcept { std::swap(m_ptr_, fp.m_ptr_); }
 
 	//! @brief reset and reopen new file
-	void reset(const std::string & fn, const char * mode = "r") { reset(fn.c_str(), mode); }
-
-	//! @brief reset and reopen new file
-	void reset(const char * filename, const char * mode = "r")
+	void reset(const std::string_view & filename, const char * mode = "r")
 	{
 		reset();
 		open(filename, mode);

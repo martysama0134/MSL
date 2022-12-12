@@ -21,12 +21,14 @@ It includes:
 	- `msl::test_error`; exception class for tests
 - `<msl/file_ptr.h>` Smart pointer (wrapper) for FILE.
 	- `msl::file_ptr`:
-		- `file_ptr(string filename, mode = "r")`, `open(string filename, mode = "r")`; open filename and take ownership.
+		- `file_ptr(string_view filename, mode = "r")`, `open(string_view filename, mode = "r")`; open filename and take ownership.
+		- `file_ptr(wstring_view filename, mode = "r")`, `open(wstring_view filename, mode = "r")`; open filename and take ownership.
 		- `file_ptr(FILE * f)`, `open(FILE * f, mode = "r")`; take ownership of another FILE.
 		- `operator*()`, `operator->()`, `get()`, `get_ptr()`, `get_ref()`; returns the ptr of file
 		- `operator!()`, `operator bool()`, `is_open()`; returns true if file ptr is not null
 		- `close()`, `reset()`; close the file and reset the ptr
-		- `reset(filename, mode = "r")`; reset and open a new file
+		- `reset(string_view filename, mode = "r")`; reset and open a new file
+		- `reset(wstring_view filename, mode = "r")`; reset and open a new file
 		- `reset(FILE * f)`; reset and take ownership of a new file
 		- `release()`; release the file ptr
 		- `size()`; return the whole file size
