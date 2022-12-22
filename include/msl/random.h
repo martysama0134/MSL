@@ -85,7 +85,7 @@ namespace msl
 	using gen_random_int = gen_random_number<int>;
 	using gen_random_real = gen_random_number<double>;
 
-	//! @brief random_int(min, max)
+	//! @brief random_int(min, max) for integral type numbers
 	template<typename T> std::enable_if_t<std::is_integral_v<T>, T>
 	random_int(T min = details::min_val<T>, T max = details::max_val<T>)
 	{
@@ -93,7 +93,7 @@ namespace msl
 		return d(details::get_def_random_engine());
 	}
 
-	//! @brief random_real(min, max)
+	//! @brief random_real(min, max) for floating type numbers
 	template<typename T> std::enable_if_t<std::is_floating_point_v<T>, T>
 	random_real(T min = details::min_val<T>, T max = details::max_val<T>)
 	{
@@ -101,6 +101,7 @@ namespace msl
 		return d(details::get_def_random_engine());
 	}
 
+	//! @brief random_number(min, max) autodeducing float/integral type
 	template<typename T, typename = std::enable_if_t<details::is_number_v<T>>>
 	T random_number(T min = details::min_val<T>, T max = details::max_val<T>)
 	{
@@ -108,6 +109,7 @@ namespace msl
 		return dist(details::get_def_random_engine());
 	}
 
+	//! @brief random_from(container) for any standard-supported container
 	template<typename T>
 	decltype(auto) random_from(const T& container) {
 		if (std::empty(container))
