@@ -31,9 +31,24 @@
 #endif
 
 //! @brief MSL_FOR_LOOP wrapper for the common for incremental loop
-#define MSL_FOR_LOOP(count) for (decltype(count) i = 0; i < (count); ++i)
-#define MSL_FOR_LOOP_VAR(count, varname) for (decltype(count) varname = 0; varname < (count); varname++)
-#define MSL_FOR_LOOP_VAR_START(count, varname, start) for (decltype(count) varname = start; varname < (count); varname++)
+#define MSL_FOR_LOOP(count) for (int64_t i = 0; i < (count); ++i)
+#define MSL_FOR_LOOP_VAR(count, varname) for (int64_t varname = 0; varname < (count); ++varname)
+#define MSL_FOR_LOOP_VAR_START(count, varname, start) for (int64_t varname = start; varname < (count); ++varname)
+
+//! @brief MSL_FOR_LOOP_PRE wrapper for the common for incremental loop with pre-initialized var
+#define MSL_FOR_LOOP_PRE(count) int64_t i = 0; for (; i < (count); ++i)
+#define MSL_FOR_LOOP_VAR_PRE(count, varname) int64_t varname = 0; for (; varname < (count); ++varname)
+#define MSL_FOR_LOOP_VAR_START_PRE(count, varname, start) int64_t varname = start; for (; varname < (count); ++varname)
+
+//! @brief MSL_FOR_RLOOP wrapper for the common for reversed incremental loop
+#define MSL_FOR_RLOOP(count) for (int64_t i = (count)-1; i >= 0; --i)
+#define MSL_FOR_RLOOP_VAR(count, varname) for (int64_t varname = (count) - 1; varname >= 0; --varname)
+#define MSL_FOR_RLOOP_VAR_START(count, varname, start) for (int64_t varname = (count); varname >= start; --varname)
+
+//! @brief MSL_FOR_RLOOP_PRE wrapper for the common for reversed incremental loop with pre-initialized var
+#define MSL_FOR_RLOOP_PRE(count) int64_t i = (count)-1; for (; i >= 0; --i)
+#define MSL_FOR_RLOOP_VAR_PRE(count, varname) int64_t varname = (count) - 1; for (; varname >= 0; --varname)
+#define MSL_FOR_RLOOP_VAR_START_PRE(count, varname, start) int64_t varname = (count); for (; varname >= start; --varname)
 
 //! @brief MSL_RUN_TEST runs the whole test case by passing a function / lambda
 #define MSL_RUN_TEST(fnc) \

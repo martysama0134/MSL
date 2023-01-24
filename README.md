@@ -47,7 +47,10 @@ It includes:
 - `<msl/macro.h>`
 	- `MSL_FOR_LOOP(count)`; wrapper of `for (auto i = 0; i < count; ++i)`
 	- `MSL_FOR_LOOP_VAR(count, varname)`; like MSL_FOR_LOOP but with `varname` instead of `i`
-	- `MSL_FOR_LOOP_VAR_START(count, varname, start)`; like MSL_FOR_LOOP_VAR but with custom defalt `i` initialization
+	- `MSL_FOR_LOOP_VAR_START(count, varname, start)`; like MSL_FOR_LOOP_VAR but with custom default `i` initialization
+	- `MSL_FOR_RLOOP(count)`; reverse loop version of MSL_FOR_LOOP
+	- `MSL_FOR_RLOOP_VAR(count, varname)`; reverse loop version of MSL_FOR_LOOP_VAR
+	- `MSL_FOR_RLOOP_VAR_START(count, varname, start)`; reverse loop version of MSL_FOR_LOOP_VAR_START
 	- `MSL_RUN_TEST(func)`; it runs the whole test case by passing a function / lambda
 	- `MSL_TEST_ASSERT(name, condition)`; it checks a named test unit
 	- `MSL_TEST_ASSERT_WN(condition)`; it checks an unnamed test unit

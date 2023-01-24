@@ -518,6 +518,16 @@ void RunTests()
 				j;
 			}
 		});
+		std::cout << "### MSL_FOR_RLOOP test print first 20" << '\n'; // 2ms
+		MSL_FOR_RLOOP(20) {
+			std::cout << i << ",";
+		}
+		std::cout << std::endl;
+		std::cout << "### MSL_FOR_LOOP test print first 5" << '\n'; // 2ms
+		MSL_FOR_LOOP(5llu) {
+			std::cout << i << ",";
+		}
+		std::cout << std::endl;
 	}
 	if constexpr (EnableAllTests)
 	{
