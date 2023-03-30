@@ -28,8 +28,8 @@ template <class T> class range_iterator
 	T m_value_{};
 
 public:
-	explicit range_iterator(T value) : m_value_{value} {}
-	T operator*() { return m_value_; }
+	explicit range_iterator(const T value) : m_value_{value} {}
+	T operator*() const { return m_value_; }
 	range_iterator<T> & operator++()
 	{
 		++m_value_;
@@ -50,7 +50,7 @@ public:
 		--m_value_;
 		return *this;
 	}
-	bool operator!=(range_iterator<T> & r) { return m_value_ != *r; }
+	bool operator!=(const range_iterator<T> & r) const { return m_value_ != *r; }
 };
 
 //! @brief range mostly used in for-range (no memory allocation)
@@ -61,14 +61,14 @@ template <class T> class range
 
 public:
 	explicit range(T max) : m_max_{max} {}
-	range(T min, T max) : m_min_{min}, m_max_{max} {}
-	range_iterator<T> begin()
+	range(const T min, const T max) : m_min_{min}, m_max_{max} {}
+	range_iterator<T> begin() const
 	{
 		if (*m_min_ == *m_max_)
 			return m_max_;
 		return m_min_;
 	}
-	range_iterator<T> end() { return m_max_; }
+	range_iterator<T> end() const { return m_max_; }
 };
 
 using crange = range<char>;
@@ -83,18 +83,18 @@ template <class T> class xrange
 	std::vector<T> m_vec_;
 
 public:
-	explicit xrange(T max) : xrange(0, max, 1) {}
-	xrange(T min, T max) : xrange(min, max, 1) {}
-	xrange(T min, T max, T diff) {
+	explicit xrange(const T max) : xrange(0, max, 1) {}
+	xrange(const T min, const T max) : xrange(min, max, 1) {}
+	xrange(const T min, const T max, const T diff) {
 		init(min, max, diff);
 	};
-	auto begin() { return std::begin(m_vec_); }
-	auto end() { return std::end(m_vec_); }
+	auto begin() const { return std::begin(m_vec_); }
+	auto end() const { return std::end(m_vec_); }
 
 private:
 	template<typename U=T>
 	std::enable_if_t<std::is_floating_point_v<U>>
-	init(T min, T max, T diff)
+	init(T min, const T max, const T diff)
 	{
 		if (min >= max)
 			return;
@@ -111,7 +111,7 @@ private:
 
 	template<typename U=T>
 	std::enable_if_t<std::is_integral_v<U>>
-	init(T min, T max, T diff)
+	init(T min, const T max, const T diff)
 	{
 		if (min >= max)
 			return;
