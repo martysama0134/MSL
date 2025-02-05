@@ -29,28 +29,28 @@ template <class T> class range_iterator
 
 public:
 	explicit range_iterator(const T value) : m_value_{value} {}
-	T operator*() const { return m_value_; }
-	range_iterator<T> & operator++()
+	constexpr T operator*() const noexcept { return m_value_; }
+	constexpr range_iterator<T> & operator++() noexcept
 	{
 		++m_value_;
 		return *this;
 	}
-	range_iterator<T> & operator--()
+	constexpr range_iterator<T> & operator--() noexcept
 	{
 		--m_value_;
 		return *this;
 	}
-	range_iterator<T> operator++(int)
+	constexpr range_iterator<T> operator++(int) noexcept
 	{
 		++m_value_;
 		return *this;
 	}
-	range_iterator<T> operator--(int)
+	constexpr range_iterator<T> operator--(int) noexcept
 	{
 		--m_value_;
 		return *this;
 	}
-	bool operator!=(const range_iterator<T> & r) const { return m_value_ != *r; }
+	constexpr bool operator!=(const range_iterator<T> & r) const noexcept { return m_value_ != *r; }
 };
 
 //! @brief range mostly used in for-range (no memory allocation)
@@ -60,17 +60,14 @@ template <class T> class range
 	range_iterator<T> m_max_;
 
 public:
-	explicit range(T max) : m_max_{max} {}
-	range(const T min, const T max) : m_min_{min}, m_max_{max} {}
-	range_iterator<T> begin() const
-	{
-		if (*m_min_ == *m_max_)
-			return m_max_;
-		return m_min_;
-	}
-	range_iterator<T> end() const { return m_max_; }
+	explicit constexpr range(T max) noexcept : m_min_{0}, m_max_{max} {}
+	constexpr range(const T min, const T max) noexcept : m_min_{min}, m_max_{max} {}
+
+	[[nodiscard]] constexpr range_iterator<T> begin() const noexcept { return *m_min_ >= *m_max_ ? m_max_ : m_min_; }
+	[[nodiscard]] constexpr range_iterator<T> end() const noexcept { return m_max_; }
 };
 
+// Type aliases
 using crange = range<char>;
 using irange = range<int>;
 using llrange = range<long long>;
@@ -85,48 +82,33 @@ template <class T> class xrange
 public:
 	explicit xrange(const T max) : xrange(0, max, 1) {}
 	xrange(const T min, const T max) : xrange(min, max, 1) {}
-	xrange(const T min, const T max, const T diff) {
-		init(min, max, diff);
-	};
-	auto begin() const { return std::begin(m_vec_); }
-	auto end() const { return std::end(m_vec_); }
+	xrange(const T min, const T max, const T diff) { init(min, max, diff); };
+	[[nodiscard]] auto begin() const noexcept { return std::begin(m_vec_); }
+	[[nodiscard]] auto end() const noexcept { return std::end(m_vec_); }
 
 private:
-	template<typename U=T>
-	std::enable_if_t<std::is_floating_point_v<U>>
-	init(T min, const T max, const T diff)
+	void init(T min, const T max, const T diff)
 	{
-		if (min >= max)
+		if (min >= max || diff <= 0)
 			return;
-		if (diff <= 0)
-			return;
-		// 4x faster than emplace_back
-		m_vec_.resize(static_cast<std::size_t>((max - min) / diff));
-		for (auto & e : m_vec_)
-		{
-			e += min;
-			min += diff;
-		}
-	}
 
-	template<typename U=T>
-	std::enable_if_t<std::is_integral_v<U>>
-	init(T min, const T max, const T diff)
-	{
-		if (min >= max)
-			return;
-		if (diff <= 0)
-			return;
 		// 4x faster than emplace_back
-		m_vec_.resize(static_cast<std::size_t>((max - min) / diff) + ((max - min) % diff ? 1 : 0));
-		for (auto & e : m_vec_)
-		{
-			e += min;
-			min += diff;
-		}
+		if constexpr (std::floating_point<T>)
+			m_vec_.resize(static_cast<std::size_t>((max - min) / diff));
+		else
+			m_vec_.resize(static_cast<std::size_t>((max - min) / diff) + ((max - min) % diff ? 1 : 0));
+
+		std::generate(m_vec_.begin(), m_vec_.end(),
+					  [&min, diff]()
+					  {
+						  T current = min;
+						  min += diff;
+						  return current;
+					  });
 	}
 };
 
+// Type aliases for xrange
 using xcrange = xrange<char>;
 using xirange = xrange<int>;
 using xllrange = xrange<long long>;
