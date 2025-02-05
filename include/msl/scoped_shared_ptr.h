@@ -18,6 +18,8 @@
 #pragma once
 #include <memory>
 
+namespace msl
+{
 template <typename T> class scoped_shared_ptr : private std::shared_ptr<T>
 {
 public:
@@ -41,4 +43,6 @@ public:
 	// Prevent explicit deletion
 	~scoped_shared_ptr() = default;
 };
+
+} // namespace msl
 #endif // __MSL_SCOPED_SHARED_PTR_H__

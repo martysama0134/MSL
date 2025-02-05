@@ -7,6 +7,8 @@
 #include <ranges>
 #include <msl/scoped_shared_ptr.h>
 
+using msl::scoped_shared_ptr;
+
 struct Sauce
 {
 	std::string name;
