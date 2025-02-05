@@ -25,7 +25,7 @@
 #include <map>
 using namespace std::string_literals;
 
-#include "../include/msl/msl.h" // instead of <msl/msl.h> for non-system headers analysing
+#include <msl/msl.h> // instead of <msl/msl.h> for non-system headers analysing
 
 constexpr bool EnableAllTests = true;
 
@@ -750,8 +750,10 @@ void RunFailedTests() {
 	MSL_TEST_ASSERT("ForceFail1", false);
 }
 
-int main()
+void TestMixedMsl()
 {
+	std::cout << __FUNCTION__ << " test starting" << '\n';
+
 	// MSL_RUN_TEST unwrapped code:
 	if constexpr (false)
 	{
@@ -767,7 +769,7 @@ int main()
 	MSL_RUN_TEST(RunFailedTests);
 	MSL_RUN_TEST([]() { MSL_TEST_ASSERT("ForceFail2", false); });
 
+	std::cout << std::endl << "Press enter to continue..." << std::endl;
 	std::ignore = getchar();
 	std::ignore = getchar();
-	return 0;
 }

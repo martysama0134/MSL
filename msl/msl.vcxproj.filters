@@ -42,9 +42,21 @@
     <ClInclude Include="..\include\msl\assert.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>File di origine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\msl\scoped_shared_ptr.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="msl_tests.cpp">
+    <ClCompile Include="test_mixed_msl.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="test_scoped_shared_ptr.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
   </ItemGroup>
