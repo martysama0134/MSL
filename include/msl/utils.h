@@ -25,7 +25,7 @@ namespace msl
 //! @brief string_split split a string into a vector by providing a single delim character
 template <class T = std::vector<std::string>> T string_split(const std::string & str, char tok = ' ')
 {
-	T vec;
+	T vec{};
 	std::size_t prev = 0;
 	auto cur = str.find(tok);
 	while (cur != std::string::npos)
@@ -41,7 +41,7 @@ template <class T = std::vector<std::string>> T string_split(const std::string &
 //! @brief string_split split a string into a vector by providing the delim string
 template <class T = std::vector<std::string>> T string_split(const std::string & str, const std::string & tok = " ")
 {
-	T vec;
+	T vec{};
 	std::size_t prev = 0;
 	auto cur = str.find(tok);
 	while (cur != std::string::npos)
@@ -57,7 +57,7 @@ template <class T = std::vector<std::string>> T string_split(const std::string &
 //! @brief string_split_any split a string into a vector by providing any of the single delim characters
 template <class T = std::vector<std::string>> T string_split_any(const std::string & str, const std::string & toks = " ")
 {
-	T vec;
+	T vec{};
 	std::size_t prev = 0;
 	auto cur = str.find_first_of(toks);
 	while (cur != std::string::npos)
