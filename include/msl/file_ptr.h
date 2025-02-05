@@ -24,6 +24,8 @@
 #include <string>
 #include <string_view>
 #include <vector>
+#include <span>
+#include <ios>
 
 //#define MSL_FILE_PTR_ENABLE_IMPLICIT_CONVERSION
 //#define MSL_FILE_PTR_ENABLE_WIDE_STRING
@@ -50,15 +52,27 @@ public:
 	#endif
 	explicit file_ptr(std::FILE * ptr) { m_ptr_ = ptr; }
 	// move constructor
-	file_ptr(file_ptr && fp) noexcept
+	file_ptr(file_ptr && fp) noexcept :
+		m_ptr_(std::exchange(fp.m_ptr_, nullptr))
+		#ifdef MSL_FILE_PTR_ENABLE_STORE_FILENAME
+		, m_filename_(std::move(fp.m_filename_))
+		#ifdef MSL_FILE_PTR_ENABLE_WIDE_STRING
+		, m_wfilename_(std::move(fp.m_wfilename_))
+		#endif
+		#endif
 	{
-		reset(fp.m_ptr_);
-		fp.m_ptr_ = nullptr;
 	}
+	// move assignment
 	file_ptr & operator=(file_ptr && fp) noexcept
 	{
-		reset(fp.m_ptr_);
-		fp.m_ptr_ = nullptr;
+		reset();
+		m_ptr_ = std::exchange(fp.m_ptr_, nullptr);
+		#ifdef MSL_FILE_PTR_ENABLE_STORE_FILENAME
+		m_filename_ = std::move(fp.m_filename_);
+		#ifdef MSL_FILE_PTR_ENABLE_WIDE_STRING
+		m_wfilename_ = std::move(fp.m_wfilename_);
+		#endif
+		#endif
 		return *this;
 	}
 	// copy constructor
@@ -75,9 +89,12 @@ public:
 	std::FILE * operator->() const { return m_ptr_; }
 	//! @brief if (ptr)
 	explicit operator bool() const { return m_ptr_; }
+
 	#ifdef MSL_FILE_PTR_ENABLE_IMPLICIT_CONVERSION
 	//! @brief implicit std::FILE ptr conversion
 	operator std::FILE *() const { return m_ptr_; }
+	#else
+	operator std::FILE *() const = delete;
 	#endif
 
 	//! @brief get the file ptr
@@ -233,6 +250,11 @@ public:
 	std::size_t write(const std::vector<char> & vec) const { return std::fwrite(vec.data(), vec.size(), 1, m_ptr_); }
 	//! @brief write into the file from c array
 	std::size_t write(const void * buf, size_t size) const { return std::fwrite(buf, size, 1, m_ptr_); }
+	//! @brief write into the file from span
+	template <typename T> std::size_t write(std::span<const T> buffer) const
+	{
+		return std::fwrite(buffer.data(), sizeof(T), buffer.size(), m_ptr_);
+	}
 
 	//! @brief write into the file from string
 	std::size_t string_write(const std::string_view & str) const { return std::fwrite(str.data(), str.size(), 1, m_ptr_); }
@@ -266,6 +288,12 @@ public:
 		return std::fread(buf, 1, n, m_ptr_);
 	}
 
+	//! @brief read the file as byte stream using a span
+	template <typename T> std::size_t read(std::span<T> buffer) const
+	{
+		return std::fread(buffer.data(), sizeof(T), buffer.size(), m_ptr_);
+	}
+
 	//! @brief read the next line from the current position as string
 	std::optional<std::string> getline(char delim = '\n') const
 	{
@@ -281,24 +309,24 @@ public:
 	}
 
 	//! @brief tell the file
-	long tell() const
+	std::streamoff tell() const
 	{
 		return std::ftell(m_ptr_);
 	}
 
 	//! @brief seek the file
-	void seek(long offset, int origin = SEEK_SET) const
+	void seek(std::streamoff offset, int origin = SEEK_SET) const
 	{
-		std::fseek(m_ptr_, offset, origin);
+		std::fseek(m_ptr_, static_cast<long>(offset), origin);
 	}
 
 	//! @brief read the file from the current position returning null-terminated string
 	std::string string_read(const std::size_t n = 0) const
 	{
 		auto vec = this->read(n);
-		if (!vec.empty() && vec[vec.size() - 1] != '\0') // append EOS at the end of vector
+		if (!vec.empty() && vec.back() != '\0') // append EOS at the end of vector
 			vec.emplace_back('\0');
-		return std::string(vec.begin(), vec.end()); // convert vector to string
+		return std::string(vec.data()); // convert vector to string
 	}
 
 	//! @brief read the file from the current position using a null-terminated string buffer
@@ -314,6 +342,12 @@ public:
 	{
 		std::fflush(m_ptr_);
 	}
+
+	//! @brief check if the opened file stream has errors
+	[[nodiscard]] bool error() const noexcept { return std::ferror(m_ptr_) != 0; }
+
+	//! @brief check if the opened file reached EOF
+	[[nodiscard]] bool eof() const noexcept { return std::feof(m_ptr_) != 0; }
 };
 } // namespace msl
 #endif
