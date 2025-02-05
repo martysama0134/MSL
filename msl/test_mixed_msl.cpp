@@ -267,10 +267,10 @@ void RunTests()
 	// range tests
 	if constexpr (EnableAllTests)
 	{
-		std::cout << "### range tests" << '\n';
+		std::cout << "### range tests int(5)" << '\n';
 		for (auto i : msl::range<int>(5))
 			std::cout << i << '\n';
-		std::cout << "### range tests" << '\n';
+		std::cout << "### range tests double(5)" << '\n';
 		for (auto i : msl::range<double>(5))
 			std::cout << i << '\n';
 		std::cout << "### xrange test to 5" << '\n';
@@ -291,6 +291,12 @@ void RunTests()
 		std::cout << "### xcrange test 3 to 5" << '\n';
 		for (auto i : msl::xcrange(3, 5))
 			std::cout << static_cast<int>(i) << '\n';
+
+		{
+			std::cout << "### range indexed of {aaa,bbb,ccc,ddd}" << '\n';
+			std::vector<std::string> vc{"aaa", "bbb", "ccc", "ddd"};
+			msl::for_each_indexed(vc, [](size_t i, auto val) { std::cout << "Index " << i << ": " << val << '\n'; });
+		}
 	}
 	// file_ptr tests
 	if constexpr (EnableAllTests)

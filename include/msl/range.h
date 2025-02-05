@@ -114,5 +114,24 @@ using xirange = xrange<int>;
 using xllrange = xrange<long long>;
 using xfrange = xrange<float>;
 using xdrange = xrange<double>;
+
+
+// for_each_indexed (iterator-based)
+template <typename It, typename Func> void for_each_indexed(It begin, It end, Func func)
+{
+	std::size_t index = 0;
+	for (auto it = begin; it != end; ++it, ++index)
+	{
+		func(index, *it);
+	}
+}
+
+// for_each_indexed (container-based)
+template <typename Container, typename Func> void for_each_indexed(Container & c, Func func)
+{
+	for_each_indexed(std::begin(c), std::end(c), func);
+}
+
+
 } // namespace msl
 #endif
