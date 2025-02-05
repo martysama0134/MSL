@@ -729,6 +729,21 @@ void RunTests()
 			}
 		}
 	}
+	if constexpr (EnableAllTests)
+	{
+		{
+			std::cout << std::fixed << std::setprecision(3);
+			std::cout << "### calculate_percentage(1000,1500)=" << msl::calculate_percentage(1000, 1500) << "%" << std::endl;
+			std::cout << "### calculate_percentage(1500,1000)=" << msl::calculate_percentage(1500, 1000) << "%" << std::endl;
+			std::cout << "### calculate_percentage(10000,1500)=" << msl::calculate_percentage(10000, 1500) << "%" << std::endl;
+			std::cout << "### calculate_percentage(1000,15000)=" << msl::calculate_percentage(1000, 15000) << "%" << std::endl;
+			std::cout << "### calculate_percentage(1000,10000)=" << msl::calculate_percentage(1000, 10000) << "%" << std::endl;
+			std::cout << "### calculate_percentage(10000,1000)=" << msl::calculate_percentage(10000, 1000) << "%" << std::endl;
+			std::cout << "### calculate_percentage(10'000'000,1000)=" << msl::calculate_percentage(10'000'000, 1000) << "%" << std::endl;
+			std::cout << "### calculate_percentage(1000,10'000'000)=" << msl::calculate_percentage(1000, 10'000'000) << "%" << std::endl;
+			std::cout << "### value_from_percentage(1000,50%)=" << msl::value_from_percentage(1000, 50) << std::endl;
+		}
+	}
 	#ifdef MSL_FILE_PTR_ENABLE_WIDE_STRING
 	if constexpr (EnableAllTests)
 	{
