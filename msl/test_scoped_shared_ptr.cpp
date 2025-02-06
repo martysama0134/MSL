@@ -39,7 +39,7 @@ void TestScopedSharedPtr()
 	std::cout << __FUNCTION__ << " test starting" << '\n';
 
 	SaucePot pot("Torta");
-	Sauce * bad_sauce{};
+	[[maybe_unused]] Sauce * bad_sauce{};
 	std::shared_ptr<Sauce> bad_sauce2{};
 	std::vector<std::shared_ptr<Sauce>> bad_sausages;
 
@@ -76,7 +76,7 @@ void TestScopedSharedPtr()
 		// std::shared_ptr<Sauce> sauce2 = std::static_pointer_cast<Sauce>(sauce); // compile-error private base constructor
 		// auto shared = static_cast<std::shared_ptr<Sauce>>(sauce); // compile-error private base constructor
 
-		auto sauce2 = sauce.operator->(); // ok - unsafe
+		[[maybe_unused]] auto sauce2 = sauce.operator->(); // ok - unsafe
 		sauce.~scoped_shared_ptr(); // ok - unsafe
 	}
 	std::cout << "All tests passed." << '\n';
