@@ -22,6 +22,7 @@
 #include "assert.h"
 #include "file_ptr.h"
 #include "macro.h"
+#include "ptr.h"
 #include "random.h"
 #include "range.h"
 #include "utils.h"

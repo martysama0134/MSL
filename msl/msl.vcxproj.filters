@@ -45,7 +45,7 @@
     <ClInclude Include="stdafx.h">
       <Filter>File di origine</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\msl\scoped_shared_ptr.h">
+    <ClInclude Include="..\include\msl\ptr.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
   </ItemGroup>

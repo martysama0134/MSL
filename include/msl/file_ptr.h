@@ -309,15 +309,15 @@ public:
 	}
 
 	//! @brief tell the file
-	std::streamoff tell() const
+	long tell() const
 	{
 		return std::ftell(m_ptr_);
 	}
 
 	//! @brief seek the file
-	void seek(std::streamoff offset, int origin = SEEK_SET) const
+	void seek(long offset, int origin = SEEK_SET) const
 	{
-		std::fseek(m_ptr_, static_cast<long>(offset), origin);
+		std::fseek(m_ptr_, offset, origin);
 	}
 
 	//! @brief read the file from the current position returning null-terminated string

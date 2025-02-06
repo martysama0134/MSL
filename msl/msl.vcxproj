@@ -137,7 +137,7 @@
     <ClInclude Include="..\include\msl\msl.h" />
     <ClInclude Include="..\include\msl\random.h" />
     <ClInclude Include="..\include\msl\range.h" />
-    <ClInclude Include="..\include\msl\scoped_shared_ptr.h" />
+    <ClInclude Include="..\include\msl\ptr.h" />
     <ClInclude Include="..\include\msl\utils.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>

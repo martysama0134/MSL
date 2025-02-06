@@ -5,7 +5,7 @@
 #include <format>
 #include <memory>
 #include <ranges>
-#include <msl/scoped_shared_ptr.h>
+#include <msl/ptr.h>
 
 using msl::scoped_shared_ptr;
 
@@ -22,7 +22,7 @@ public:
 		m_sauce = std::make_shared<Sauce>();
 		m_sauce->name = name;
 	}
-	scoped_shared_ptr<Sauce> GetSauce() { return scoped_shared_ptr<Sauce>(m_sauce); }
+	scoped_shared_ptr<Sauce> GetSauce() { return m_sauce; }
 
 private:
 	std::shared_ptr<Sauce> m_sauce;
