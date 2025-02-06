@@ -744,6 +744,16 @@ void RunTests()
 			std::cout << "### value_from_percentage(1000,50%)=" << msl::value_from_percentage(1000, 50) << std::endl;
 		}
 	}
+	if constexpr (EnableAllTests)
+	{
+		{
+			std::vector<std::string> names = {
+				"a1", "a2", "a3", "a4", "a5", "a6", "a7",
+			};
+			for (auto && [i, name] : msl::enumerate(names))
+				std::cout << std::format("i({}) name({})", i, name) << std::endl;
+		}
+	}
 	#ifdef MSL_FILE_PTR_ENABLE_WIDE_STRING
 	if constexpr (EnableAllTests)
 	{

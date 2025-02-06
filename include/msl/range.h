@@ -18,6 +18,8 @@
 #pragma once
 
 #include <algorithm>
+#include <ranges>
+#include <utility>
 #include <vector>
 
 namespace msl
@@ -132,6 +134,23 @@ template <typename Container, typename Func> void for_each_indexed(Container & c
 	for_each_indexed(std::begin(c), std::end(c), func);
 }
 
+template <typename Container> auto enumerate(Container & container)
+{
+	if constexpr (std::ranges::random_access_range<Container>)
+	{
+		// Use direct indexing for random access
+		return std::views::iota(0, static_cast<int>(std::ranges::size(container))) |
+			std::views::transform([&container](int i) { return std::tuple{i, container[i]}; });
+	}
+	else
+	{
+		// Fall back to std::next for other iterator categories
+		auto begin_it = std::begin(container);
+		return std::views::iota(0, static_cast<int>(std::ranges::size(container))) |
+			std::views::transform([begin_it](int i) { return std::tuple{i, *(std::next(begin_it, i))}; });
+	}
+}
 
 } // namespace msl
+
 #endif
