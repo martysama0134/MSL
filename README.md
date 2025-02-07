@@ -1,5 +1,5 @@
 # MSL
-Marty(Sama0134) Support Library for C++17 (C++14 backward-compatible)
+Marty(Sama0134) Support Library for C++20
 
 ### What it contains
 It includes:
@@ -44,6 +44,10 @@ It includes:
 		- `getline(char delim = '\n')`; read a line ending with 'delim' from file and return it as string
 		- `filename()`; return the filename
 		- `wfilename()`; return the filename (windows only)
+- `<msl/ptr.h>`
+	- `msl::scoped_shared_ptr<T>`; wrapper of `std::shared_ptr` that can't be copied/moved outside the current scope
+	- `msl::no_owner<T>`; wrapper of a raw pointer that can't be copied/moved outside the current scope
+	- `msl::observer_ptr<T>`; a similar implementation of `std::experimental::observer_ptr`
 - `<msl/macro.h>`
 	- `MSL_FOR_LOOP(count)`; wrapper of `for (auto i = 0; i < count; ++i)`
 	- `MSL_FOR_LOOP_VAR(count, varname)`; like MSL_FOR_LOOP but with `varname` instead of `i`
@@ -63,6 +67,9 @@ It includes:
 - `<msl/range.h>`
 	- `msl::range<T>(&min = 0, max)`; perform for-range loop with no memory allocation (10x faster than xrange!)
 	- `msl::xrange<T>(&min = 0, max, &diff = 1.0)`; perform for-range loop using a runtime generated vector
+   	- `msl::for_each_indexed(begin, end, func)`; perform for-range loop using a custom func(index, elem)
+   	- `msl::for_each_indexed(container, func)`; perform for-range loop using a custom func(index, elem)
+   	- `for (auto&& [i, elem] : msl::enumerate(container))`; perform for-each loop like python enumerate
 - `<msl/util.h>`
 	- `msl::string_split(str, char token)`; split a string into a vector by providing a single delim character (2x faster than string version)
 	- `msl::string_split(str, string token)`; split a string into a vector by providing the delim string
@@ -75,6 +82,8 @@ It includes:
 	- `msl::refill(array, value=default())`; default/custom-initialize the specific c array
 	- `msl::refill(container, value=default())`; default/custom-initialize the specific std container
 	- `msl::trim(str, chars)`; also `msl::rtrim`, `msl::ltrim`, `msl::trim_in_place`, `msl::rtrim_in_place`, `msl::ltrim_in_place`, `msl::whitespaces`
+   	- `msl::calculate_percentage(current, max)`; return the percentage of the difference of current and max
+   	- `msl::value_from_percentage(amount, pct)`; apply and return the percentage to amount
 
 ### How to use it
 ```cpp
