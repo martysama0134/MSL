@@ -17,7 +17,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include <concepts>
 #include <limits>
 #include <string>
 #include <type_traits>
@@ -204,26 +203,26 @@ template <class _Container, class _Ty> constexpr void refill(_Container & _Cont,
 	std::fill(std::begin(_Cont), std::end(_Cont), _Elem);
 }
 
-template <std::integral T> constexpr double calculate_percentage(T current, T max)
+template <typename T> constexpr std::enable_if_t<std::is_integral_v<T>, double> calculate_percentage(T current, T max)
 {
 	if (max == 0)
 		return 0.0;
 	return static_cast<double>(current) / static_cast<double>(max) * 100.0;
 }
 
-template <std::floating_point T> constexpr T calculate_percentage(T current, T max)
+template <typename T> constexpr std::enable_if_t<std::is_floating_point_v<T>, T> calculate_percentage(T current, T max)
 {
 	if (max == 0 || std::abs(max) < std::numeric_limits<T>::epsilon())
 		return static_cast<T>(0);
 	return (current * static_cast<T>(100)) / max;
 }
 
-template <std::integral T> constexpr double value_from_percentage(T amount, T pct)
+template <typename T> constexpr std::enable_if_t<std::is_integral_v<T>, double> value_from_percentage(T amount, T pct)
 {
 	return static_cast<double>(amount) * (static_cast<double>(pct) / 100.0);
 }
 
-template <std::floating_point T> constexpr T value_from_percentage(T amount, T pct)
+template <typename T> constexpr std::enable_if_t<std::is_floating_point_v<T>, T> value_from_percentage(T amount, T pct)
 {
 	return amount * (pct / static_cast<T>(100));
 }
