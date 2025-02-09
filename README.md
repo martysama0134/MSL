@@ -3,6 +3,10 @@ Marty(Sama0134) Support Library for C++20
 
 ### What it contains
 It includes:
+- `<msl/assert.h>`
+	- `msl::check_assert(condition)`; inline function for asserts (instead of macros)
+	- `msl::test_assert(name, condition)`; inline function for test asserts (instead of macros)
+	- `msl::test_error`; exception class for tests
 - `<msl/bench.h>`
 	- `msl::avg_bench(func, tries = 10000, retries = 100)`; perform easy benchmark tests and print the result by average
 	- `msl::avg_evaluate(func, tries = 10000, retries = 100)`; perform easy benchmark tests and return the ms by average
@@ -15,10 +19,6 @@ It includes:
 	- `msl::truncate<T>`; Truncate floating-point and throw msl::truncate_error exception if check fails.
 	- `msl::integral_cast<T>`; Truncate floating-point to integral and throw msl::truncate_error exception if check fails.
 	- `msl::inherit_cast<T>`; static_cast vs dynamic_cast? inherit_cast!
-- `<msl/assert.h>`
-	- `msl::check_assert(condition)`; inline function for asserts (instead of macros)
-	- `msl::test_assert(name, condition)`; inline function for test asserts (instead of macros)
-	- `msl::test_error`; exception class for tests
 - `<msl/file_ptr.h>` Smart pointer (wrapper) for FILE.
 	- `msl::file_ptr`:
 		- `file_ptr(string_view filename, mode = "r")`, `open(string_view filename, mode = "r")`; open filename and take ownership.
@@ -44,10 +44,6 @@ It includes:
 		- `getline(char delim = '\n')`; read a line ending with 'delim' from file and return it as string
 		- `filename()`; return the filename
 		- `wfilename()`; return the filename (windows only)
-- `<msl/ptr.h>`
-	- `msl::scoped_shared_ptr<T>`; wrapper of `std::shared_ptr` that can't be copied/moved outside the current scope
-	- `msl::no_owner<T>`; wrapper of a raw pointer that can't be copied/moved outside the current scope
-	- `msl::observer_ptr<T>`; a similar implementation of `std::experimental::observer_ptr`
 - `<msl/macro.h>`
 	- `MSL_FOR_LOOP(count)`; wrapper of `for (auto i = 0; i < count; ++i)`
 	- `MSL_FOR_LOOP_VAR(count, varname)`; like MSL_FOR_LOOP but with `varname` instead of `i`
@@ -58,6 +54,12 @@ It includes:
 	- `MSL_RUN_TEST(func)`; it runs the whole test case by passing a function / lambda
 	- `MSL_TEST_ASSERT(name, condition)`; it checks a named test unit
 	- `MSL_TEST_ASSERT_WN(condition)`; it checks an unnamed test unit
+- `<msl/pool.h>`
+	- `msl::shared_pool<T>`; a full thread-safe template class for memory pooling, internally handled with `std::shared_ptr`
+- `<msl/ptr.h>`
+	- `msl::scoped_shared_ptr<T>`; wrapper of `std::shared_ptr` that can't be copied/moved outside the current scope
+	- `msl::no_owner<T>`; wrapper of a raw pointer that can't be copied/moved outside the current scope
+	- `msl::observer_ptr<T>`; a similar implementation of `std::experimental::observer_ptr`
 - `<msl/random.h>`
 	- `msl::gen_random_number<T>(min = 0, max)`; it returns an instance to return random integral/real numbers between min and max
 	- `msl::random_int<T>(min=<T>::min_value, max=<T>::max_value)`; pick a random integral number between min and max (min max included)
