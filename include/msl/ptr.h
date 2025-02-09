@@ -1,5 +1,5 @@
-#ifndef __MSL_PTR_H__
-#define __MSL_PTR_H__
+#ifndef MSL_PTR_H__
+#define MSL_PTR_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2025 martysama0134. All rights reserved.
@@ -16,6 +16,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
+
 #include <functional> // For std::hash
 #include <memory> // For std::shared_ptr
 
@@ -63,7 +64,7 @@ public:
 
 	/// @brief Default destructor. Prevents explicit deletion since ownership is controlled.
 	~scoped_shared_ptr() = default;
-};
+}; // scoped_shared_ptr
 
 
 /// @brief A non-owning pointer wrapper to prevent accidental ownership semantics.
@@ -125,7 +126,7 @@ public:
 
 private:
 	T* ptr_{};  ///< The wrapped raw pointer.
-};
+}; // no_owner
 
 
 
@@ -181,7 +182,7 @@ public:
 
 private:
 	T * ptr_; ///< The observed raw pointer.
-};
+}; // observer_ptr
 
 } // namespace msl
 
@@ -198,4 +199,4 @@ namespace std
 	};
 }
 
-#endif // __MSL_PTR_H__
+#endif // MSL_PTR_H__

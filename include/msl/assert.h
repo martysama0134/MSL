@@ -1,5 +1,5 @@
-#ifndef __MSL_CAST_ASSERT_H__
-#define __MSL_CAST_ASSERT_H__
+#ifndef MSL_CAST_ASSERT_H__
+#define MSL_CAST_ASSERT_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2018 martysama0134. All rights reserved.
@@ -23,6 +23,7 @@
 
 namespace msl
 {
+
 //! @brief msl::check_assert struct
 inline void check_assert(bool condition)
 {
@@ -47,4 +48,4 @@ struct test_error : std::exception
 //}
 
 } // namespace msl
-#endif
+#endif // MSL_CAST_ASSERT_H__

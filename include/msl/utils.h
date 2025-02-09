@@ -1,5 +1,5 @@
-#ifndef __MSL_UTILS_H__
-#define __MSL_UTILS_H__
+#ifndef MSL_UTILS_H__
+#define MSL_UTILS_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2018 martysama0134. All rights reserved.
@@ -24,6 +24,7 @@
 
 namespace msl
 {
+
 //! @brief string_split split a string into a vector by providing a single delim character
 template <class T = std::vector<std::string>> T string_split(const std::string & str, char tok = ' ')
 {
@@ -203,6 +204,7 @@ template <class _Container, class _Ty> constexpr void refill(_Container & _Cont,
 	std::fill(std::begin(_Cont), std::end(_Cont), _Elem);
 }
 
+//! @brief get the percentage between current and max
 template <typename T> constexpr std::enable_if_t<std::is_integral_v<T>, double> calculate_percentage(T current, T max)
 {
 	if (max == 0)
@@ -210,6 +212,7 @@ template <typename T> constexpr std::enable_if_t<std::is_integral_v<T>, double> 
 	return static_cast<double>(current) / static_cast<double>(max) * 100.0;
 }
 
+//! @brief get the percentage between current and max
 template <typename T> constexpr std::enable_if_t<std::is_floating_point_v<T>, T> calculate_percentage(T current, T max)
 {
 	if (max == 0 || std::abs(max) < std::numeric_limits<T>::epsilon())
@@ -217,15 +220,17 @@ template <typename T> constexpr std::enable_if_t<std::is_floating_point_v<T>, T>
 	return (current * static_cast<T>(100)) / max;
 }
 
+//! @brief get the value from the percentage pct of amount
 template <typename T> constexpr std::enable_if_t<std::is_integral_v<T>, double> value_from_percentage(T amount, T pct)
 {
 	return static_cast<double>(amount) * (static_cast<double>(pct) / 100.0);
 }
 
+//! @brief get the value from the percentage pct of amount
 template <typename T> constexpr std::enable_if_t<std::is_floating_point_v<T>, T> value_from_percentage(T amount, T pct)
 {
 	return amount * (pct / static_cast<T>(100));
 }
 
 } // namespace msl
-#endif
+#endif // MSL_UTILS_H__

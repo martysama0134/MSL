@@ -1,5 +1,5 @@
-#ifndef __MSL_BENCH_H__
-#define __MSL_BENCH_H__
+#ifndef MSL_BENCH_H__
+#define MSL_BENCH_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2018 martysama0134. All rights reserved.
@@ -19,8 +19,10 @@
 
 #include <chrono>
 #include <iostream>
+
 namespace msl
 {
+
 template <class F> auto evaluate(F && func, const std::size_t tries = 100000)
 {
 	const auto start = std::chrono::steady_clock::now();
@@ -58,4 +60,4 @@ template <class F> void avg_named_bench(const std::string& name, F&& func, const
 }
 
 } // namespace msl
-#endif
+#endif // MSL_BENCH_H__

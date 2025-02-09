@@ -1,5 +1,5 @@
-#ifndef __MSL_FILE_PTR_H__
-#define __MSL_FILE_PTR_H__
+#ifndef MSL_FILE_PTR_H__
+#define MSL_FILE_PTR_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2018 martysama0134. All rights reserved.
@@ -33,6 +33,7 @@
 
 namespace msl
 {
+
 class file_ptr
 {
 	std::FILE * m_ptr_{nullptr};
@@ -348,6 +349,7 @@ public:
 
 	//! @brief check if the opened file reached EOF
 	[[nodiscard]] bool eof() const noexcept { return std::feof(m_ptr_) != 0; }
-};
+}; // file_ptr
+
 } // namespace msl
-#endif
+#endif // MSL_FILE_PTR_H__

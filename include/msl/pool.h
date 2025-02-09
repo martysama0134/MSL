@@ -1,5 +1,5 @@
-#ifndef __MSL_POOL_H__
-#define __MSL_POOL_H__
+#ifndef MSL_POOL_H__
+#define MSL_POOL_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2025 martysama0134. All rights reserved.
@@ -16,10 +16,10 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
+
 #include <functional>
 #include <memory>
 #include <mutex>
-#include <unordered_set>
 #include <vector>
 
 namespace msl
@@ -248,5 +248,4 @@ private:
 }; // shared_pool
 
 } // namespace msl
-
-#endif // __MSL_POOL_H__
+#endif // MSL_POOL_H__

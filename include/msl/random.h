@@ -1,5 +1,5 @@
-#ifndef __MSL_RANDOM_H__
-#define __MSL_RANDOM_H__
+#ifndef MSL_RANDOM_H__
+#define MSL_RANDOM_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2022 martysama0134 & IkarusDeveloper. All rights reserved.
@@ -81,7 +81,9 @@ namespace msl
 
 	private:
 		typename distribution_deduce<T>::dist_type m_dist;
-	};
+	}; // gen_random_number
+
+	// Type aliases for gen_random_number
 	using gen_random_int = gen_random_number<int>;
 	using gen_random_real = gen_random_number<double>;
 
@@ -119,6 +121,6 @@ namespace msl
 		std::advance(iter, random_number<size_type>(0, std::size(container) - 1));
 		return iter;
 	}
-} // namespace msl
 
-#endif
+} // namespace msl
+#endif // MSL_RANDOM_H__

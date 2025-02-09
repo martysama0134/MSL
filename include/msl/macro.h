@@ -1,5 +1,5 @@
-#ifndef __MSL_MACRO_H__
-#define __MSL_MACRO_H__
+#ifndef MSL_MACRO_H__
+#define MSL_MACRO_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2022 martysama0134. All rights reserved.
@@ -16,6 +16,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
+
 #include <iostream>
 // clang-format on
 
@@ -71,4 +72,4 @@
 		throw msl::test_error((std::string("Test Condition: ") + #condition).c_str());
 
 // clang-format off
-#endif
+#endif // MSL_MACRO_H__

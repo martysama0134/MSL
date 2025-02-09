@@ -1,5 +1,5 @@
-#ifndef __MSL_RANGE_H__
-#define __MSL_RANGE_H__
+#ifndef MSL_RANGE_H__
+#define MSL_RANGE_H__
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Copyright (c) 2018 martysama0134. All rights reserved.
@@ -53,7 +53,7 @@ public:
 		return *this;
 	}
 	constexpr bool operator!=(const range_iterator<T> & r) const noexcept { return m_value_ != *r; }
-};
+}; // range_iterator
 
 //! @brief range mostly used in for-range (no memory allocation)
 template <class T> class range
@@ -67,9 +67,9 @@ public:
 
 	[[nodiscard]] constexpr range_iterator<T> begin() const noexcept { return *m_min_ >= *m_max_ ? m_max_ : m_min_; }
 	[[nodiscard]] constexpr range_iterator<T> end() const noexcept { return m_max_; }
-};
+}; // range
 
-// Type aliases
+// Type aliases for range
 using crange = range<char>;
 using irange = range<int>;
 using llrange = range<long long>;
@@ -108,7 +108,7 @@ private:
 						  return current;
 					  });
 	}
-};
+}; // xrange
 
 // Type aliases for xrange
 using xcrange = xrange<char>;
@@ -116,7 +116,6 @@ using xirange = xrange<int>;
 using xllrange = xrange<long long>;
 using xfrange = xrange<float>;
 using xdrange = xrange<double>;
-
 
 // for_each_indexed (iterator-based)
 template <typename It, typename Func> void for_each_indexed(It begin, It end, Func func)
@@ -152,5 +151,4 @@ template <typename Container> auto enumerate(Container & container)
 }
 
 } // namespace msl
-
-#endif
+#endif // MSL_RANGE_H__
