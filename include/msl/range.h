@@ -18,9 +18,12 @@
 #pragma once
 
 #include <algorithm>
-#include <ranges>
 #include <utility>
 #include <vector>
+
+#if __has_include(<ranges>)
+#include <ranges>
+#endif
 
 namespace msl
 {
@@ -95,7 +98,7 @@ private:
 			return;
 
 		// 4x faster than emplace_back
-		if constexpr (std::floating_point<T>)
+		if constexpr (std::is_floating_point_v<T>)
 			m_vec_.resize(static_cast<std::size_t>((max - min) / diff));
 		else
 			m_vec_.resize(static_cast<std::size_t>((max - min) / diff) + ((max - min) % diff ? 1 : 0));
@@ -133,6 +136,7 @@ template <typename Container, typename Func> void for_each_indexed(Container & c
 	for_each_indexed(std::begin(c), std::end(c), func);
 }
 
+#if __has_include(<ranges>)
 template <typename Container> auto enumerate(Container & container)
 {
 	if constexpr (std::ranges::random_access_range<Container>)
@@ -149,6 +153,7 @@ template <typename Container> auto enumerate(Container & container)
 			std::views::transform([begin_it](int i) { return std::tuple{i, *(std::next(begin_it, i))}; });
 	}
 }
+#endif
 
 } // namespace msl
 #endif // MSL_RANGE_H__
