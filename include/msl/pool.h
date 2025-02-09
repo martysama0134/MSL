@@ -166,14 +166,39 @@ public:
 		for (std::size_t i = 0; i < left; ++i)
 			available_.emplace_back(allocate());
 	}
-
-	static PoolType create(Initializer initializer = default_initializer, Destroyer destroyer = default_destroyer)
+	
+	template <typename... Args>
+	static PoolType create(Args &&... args)
 	{
-		return std::shared_ptr<shared_pool<T>>(new shared_pool<T>(initializer, destroyer)); //make_shared can't be added in friend
+		return std::shared_ptr<shared_pool<T>>(new shared_pool<T>(std::forward<Args>(args)...)); //make_shared can't be added in friend
+	}
+
+	template <typename... Args>
+	static PoolType create_with_methods(Initializer initializer = default_initializer, Destroyer destroyer = default_destroyer,
+										Args &&... args)
+	{
+		auto obj = std::shared_ptr<shared_pool<T>>(new shared_pool<T>(std::forward<Args>(args)...)); //make_shared can't be added in friend
+		obj->set_methods(initializer, destroyer);
+		return obj;
+	}
+
+	void set_methods(Initializer initializer = default_initializer, Destroyer destroyer = default_destroyer)
+	{
+		initializer_ = initializer;
+		destroyer_ = destroyer;
 	}
 
 protected:
-	shared_pool(Initializer initializer, Destroyer destroyer) : initializer_(initializer), destroyer_(destroyer) {}
+	template <typename... Args>
+	shared_pool(Args &&... args)
+	{
+		creator_ = [tuple = std::make_tuple(std::forward<Args>(args)...)]()
+		{
+			return std::apply([](auto &&... params) {
+				return std::make_shared<T>(std::forward<decltype(params)>(params)...);
+			}, tuple);
+		};
+	}
 
 	void release(ObjectType object_)
 	{
@@ -184,7 +209,7 @@ protected:
 
 	[[nodiscard]] ObjectType allocate(bool init = false)
 	{
-		auto obj = std::make_shared<T>();
+		auto obj = creator_();
 		if (init)
 			initializer_(obj); // before emplace in case of std exception
 		return allocated_.emplace_back(obj);
@@ -193,8 +218,9 @@ protected:
 private:
 	std::vector<ObjectType> allocated_; // pick unordered_set only if search will be implementated later on
 	std::vector<ObjectType> available_; // reserve+pop_back
-	Initializer initializer_;
-	Destroyer destroyer_;
+	Initializer initializer_ = default_initializer; // used to initialize the obj when acquired
+	Destroyer destroyer_ = default_destroyer; // used to destroy the obj when expired
+	std::function<ObjectType()> creator_; // used to create the object instance with variadic arguments
 	mutable std::mutex mutex_;
 }; // shared_pool
 

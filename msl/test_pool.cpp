@@ -17,6 +17,23 @@ struct TestObject
 	//~TestObject() { std::cout << "Destroying TestObject with data: " << data << std::endl; }
 };
 
+struct ComplexObject
+{
+	std::string data1;
+	std::string data2;
+	explicit ComplexObject(const std::string & s = "default") : data1(s) {}
+	void Initialize()
+	{
+		data2 = "initialized";
+		std::cout << "ComplexObject " << data1 << " " << data2 << std::endl;
+	}
+	void Destroy()
+	{
+		data2 = "destroyed";
+		std::cout << "ComplexObject " << data1 << " " << data2 << std::endl;
+	}
+};
+
 void test_iterator_invalidation(std::shared_ptr<msl::shared_pool<TestObject>> & pool)
 {
 	std::cout << "\nTesting iterator invalidation:\n";
@@ -96,8 +113,39 @@ void test_move_semantics(std::shared_ptr<msl::shared_pool<TestObject>> pool)
 	}
 }
 
-void TestPool()
+void test_variadic()
 {
+	std::cout << "\nTesting variadic semantics:\n";
+
+	{
+		auto pool = msl::shared_pool<TestObject>::create("Args1");
+		pool->set_methods(msl::shared_pool<TestObject>::default_initializer);
+		auto handle1 = pool->acquire();
+		std::cout << "Pool create variadic handle: " << handle1->data << std::endl;
+	}
+	{
+		auto pool = msl::shared_pool<TestObject>::create_with_methods([](auto & obj) { obj->data = "123"; });
+		auto handle1 = pool->acquire();
+		std::cout << "Pool create_with_methods handle: " << handle1->data << std::endl;
+	}
+	{
+		auto pool = msl::shared_pool<TestObject>::create_with_methods([](auto &) { std::cout << "initializer123 called" << std::endl; },
+																	  [](auto &) { std::cout << "destroyer123 called" << std::endl; },
+																	  "CreatedWithMethods");
+		auto handle1 = pool->acquire();
+		std::cout << "Pool123 variadic handle: " << handle1->data << std::endl;
+	}
+	{
+		auto pool = msl::shared_pool<ComplexObject>::create_with_methods([](auto & obj) { obj->Initialize(); },
+																	  [](auto & obj) { obj->Destroy(); },
+																	  "Complex");
+		auto handle1 = pool->acquire();
+		std::cout << "ComplexPool1 variadic handle: data1=" << handle1->data1 << ", data2=" << handle1->data2 << std::endl;
+	}
+}
+
+void TestPool()
+	{
 	std::cout << __FUNCTION__ << " test starting" << '\n';
 
 	{
@@ -137,6 +185,9 @@ void TestPool()
 		// Test 3: Move semantics
 		test_move_semantics(pool);
 		std::cout << "After test 3 - size: " << pool->size() << std::endl;
+
+		// Test 4: Variadic
+		test_variadic();
 	}
 	catch (const std::exception & e)
 	{
@@ -146,7 +197,7 @@ void TestPool()
 
 
 
-	std::cout << "All tests passed." << '\n';
+	std::cout << "\nAll tests passed." << '\n';
 
 	std::cout << std::endl << "Press enter to continue..." << std::endl;
 	std::ignore = getchar();
