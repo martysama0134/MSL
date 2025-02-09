@@ -188,6 +188,29 @@ public:
 		destroyer_ = destroyer;
 	}
 
+	void debug_deallocate_all(bool cleanup = true)
+	{
+		std::lock_guard<std::mutex> lock(mutex_);
+
+		if (cleanup)
+		{
+			// destroy all the objects
+			for (auto & obj : allocated_)
+			{
+				if (obj)
+					destroyer_(obj);
+			}
+		}
+
+		// clear the containers
+		allocated_.clear();
+		available_.clear();
+
+		// release allocated capacity
+		allocated_.shrink_to_fit();
+		available_.shrink_to_fit();
+	}
+
 protected:
 	template <typename... Args>
 	shared_pool(Args &&... args)

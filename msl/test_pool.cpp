@@ -185,8 +185,12 @@ void TestPool()
 		// Test 3: Move semantics
 		test_move_semantics(pool);
 		std::cout << "After test 3 - size: " << pool->size() << std::endl;
+		
+		// Test 4: Deallocate all
+		pool->debug_deallocate_all();
+		std::cout << "After debug_deallocate_all() - size: " << pool->size() << std::endl;
 
-		// Test 4: Variadic
+		// Test 5: Variadic
 		test_variadic();
 	}
 	catch (const std::exception & e)
