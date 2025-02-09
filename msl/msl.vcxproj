@@ -126,6 +126,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="test_mixed_msl.cpp" />
+    <ClCompile Include="test_pool.cpp" />
     <ClCompile Include="test_scoped_shared_ptr.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +136,7 @@
     <ClInclude Include="..\include\msl\file_ptr.h" />
     <ClInclude Include="..\include\msl\macro.h" />
     <ClInclude Include="..\include\msl\msl.h" />
+    <ClInclude Include="..\include\msl\pool.h" />
     <ClInclude Include="..\include\msl\random.h" />
     <ClInclude Include="..\include\msl\range.h" />
     <ClInclude Include="..\include\msl\ptr.h" />

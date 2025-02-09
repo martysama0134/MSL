@@ -48,6 +48,9 @@
     <ClInclude Include="..\include\msl\ptr.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\msl\pool.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test_mixed_msl.cpp">
@@ -57,6 +60,9 @@
       <Filter>File di origine</Filter>
     </ClCompile>
     <ClCompile Include="test_scoped_shared_ptr.cpp">
+      <Filter>File di origine</Filter>
+    </ClCompile>
+    <ClCompile Include="test_pool.cpp">
       <Filter>File di origine</Filter>
     </ClCompile>
   </ItemGroup>
