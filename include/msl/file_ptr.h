@@ -20,12 +20,12 @@
 #include <cstdio>
 #include <cstring>
 #include <cwchar>
+#include <ios>
 #include <optional>
+#include <span>
 #include <string>
 #include <string_view>
 #include <vector>
-#include <span>
-#include <ios>
 
 //#define MSL_FILE_PTR_ENABLE_IMPLICIT_CONVERSION
 //#define MSL_FILE_PTR_ENABLE_WIDE_STRING

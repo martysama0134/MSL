@@ -18,8 +18,8 @@
 #pragma once
 
 #include <cstdlib>
-#include <string>
 #include <exception>
+#include <string>
 
 namespace msl
 {
