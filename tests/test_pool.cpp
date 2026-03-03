@@ -41,7 +41,7 @@ void test_move_constructor_preserves_destroyer()
 
         auto moved_handle(std::move(handle));
         MSL_EXPECT(!handle);
-        MSL_EXPECT(moved_handle);
+        MSL_EXPECT(static_cast<bool>(moved_handle));
 
         pool.reset();
     }

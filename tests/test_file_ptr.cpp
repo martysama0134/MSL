@@ -76,7 +76,7 @@ void test_write_reports_bytes()
         const char raw_bytes[] = {'d', 'e'};
 
         const auto n1 = file.write(bytes_vec);
-        const auto n2 = file.write(raw_bytes, sizeof(raw_bytes));
+        const auto n2 = file.write(static_cast<const void*>(raw_bytes), sizeof(raw_bytes));
         const auto n3 = file.string_write("fg");
 
         MSL_EXPECT(n1 == bytes_vec.size());
