@@ -18,15 +18,12 @@
 #pragma once
 
 #include <algorithm>
+#include <cstddef>
 #include <iterator>
 #include <tuple>
 #include <type_traits>
 #include <utility>
 #include <vector>
-
-#if __has_include(<ranges>)
-#include <ranges>
-#endif
 
 namespace msl
 {
@@ -139,24 +136,42 @@ template <typename Container, typename Func> void for_each_indexed(Container & c
 	for_each_indexed(std::begin(c), std::end(c), func);
 }
 
-#if __has_include(<ranges>)
-template <typename Container> auto enumerate(Container & container)
+template <typename Container> class enumerate_view
 {
-	if constexpr (std::ranges::random_access_range<Container>)
+	using iterator_type = decltype(std::begin(std::declval<Container &>()));
+
+public:
+	explicit enumerate_view(Container & container) : container_(&container) {}
+
+	class iterator
 	{
-		// Use direct indexing for random access
-		return std::views::iota(0, static_cast<int>(std::ranges::size(container))) |
-			std::views::transform([&container](int i) { return std::tuple{i, container[i]}; });
-	}
-	else
-	{
-		// Fall back to std::next for other iterator categories
-		auto begin_it = std::begin(container);
-		return std::views::iota(0, static_cast<int>(std::ranges::size(container))) |
-			std::views::transform([begin_it](int i) { return std::tuple{i, *(std::next(begin_it, i))}; });
-	}
-}
-#endif
+	public:
+		iterator(std::size_t index, iterator_type it) : index_(index), it_(it) {}
+
+		auto operator*() const { return std::tuple<std::size_t, decltype(*it_)>{index_, *it_}; }
+
+		iterator & operator++()
+		{
+			++index_;
+			++it_;
+			return *this;
+		}
+
+		bool operator!=(const iterator & other) const { return it_ != other.it_; }
+
+	private:
+		std::size_t index_{};
+		iterator_type it_;
+	};
+
+	iterator begin() { return iterator{0, std::begin(*container_)}; }
+	iterator end() { return iterator{0, std::end(*container_)}; }
+
+private:
+	Container * container_{};
+};
+
+template <typename Container> auto enumerate(Container & container) { return enumerate_view<Container>{container}; }
 
 } // namespace msl
 #endif // MSL_RANGE_H__
