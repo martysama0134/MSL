@@ -51,6 +51,9 @@
     <ClInclude Include="..\include\msl\pool.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\msl\util.h">
+      <Filter>File di intestazione</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test_mixed_msl.cpp">

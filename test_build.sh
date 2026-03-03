@@ -1,2 +1,9 @@
-#!/bin/sh
-c++ -std=c++17 -g -Wall -I./include ./msl/msl_tests.cpp -o msl/a.out
+#!/usr/bin/env sh
+set -eu
+
+BUILD_CONFIG="${BUILD_CONFIG:-Release}"
+BUILD_DIR="${BUILD_DIR:-build/dev}"
+PRESET="${PRESET:-dev}"
+
+cmake --preset "${PRESET}"
+cmake --build "${BUILD_DIR}" --config "${BUILD_CONFIG}"

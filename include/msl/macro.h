@@ -17,7 +17,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#include <cstdint>
 #include <iostream>
+#include <string>
 // clang-format on
 
 //! @brief MSL_FORCE_NOMINMAX is a workaround for Windows' min max macro

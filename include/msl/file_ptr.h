@@ -17,6 +17,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#include <clocale>
 #include <cstdio>
 #include <cstring>
 #include <cwchar>
@@ -25,6 +26,7 @@
 #include <span>
 #include <string>
 #include <string_view>
+#include <utility>
 #include <vector>
 
 //#define MSL_FILE_PTR_ENABLE_IMPLICIT_CONVERSION
@@ -117,10 +119,13 @@ public:
 	//! @brief close the file ptr and reset it
 	void open(const std::string_view & filename, const std::string_view & mode = "r")
 	{
+		reset();
+		const std::string filename_str(filename);
+		const std::string mode_str(mode);
 		#ifdef _WIN32
-		fopen_s(&m_ptr_, filename.data(), mode.data());
+		fopen_s(&m_ptr_, filename_str.c_str(), mode_str.c_str());
 		#else
-		m_ptr_ = std::fopen(filename.data(), mode.data());
+		m_ptr_ = std::fopen(filename_str.c_str(), mode_str.c_str());
 		#endif
 		#ifdef MSL_FILE_PTR_ENABLE_STORE_FILENAME
 		m_filename_ = filename;
@@ -133,7 +138,7 @@ public:
 		// on Windows, UTF-16 is internal Unicode encoding (UCS2 before WinXP)
 		// on Linux, UCS4 is internal Unicode encoding
 		// on BSD, UCS4 is internal Unicode encoding
-		setlocale(LC_ALL,"en_US.UTF-8");
+		setlocale(LC_ALL, "en_US.UTF-8");
 		const wchar_t * wcs = wcstr.data(); // implicit conversion for compatibility
 		auto s = std::mbstate_t();
 
@@ -160,14 +165,17 @@ public:
 	//! @brief close the file ptr and reset it
 	void open(const std::wstring_view & filename, const std::wstring_view & mode = L"r")
 	{
+		reset();
+		const std::wstring filename_str(filename);
+		const std::wstring mode_str(mode);
 		#ifdef _WIN32
-		_wfopen_s(&m_ptr_, filename.data(), mode);
+		_wfopen_s(&m_ptr_, filename_str.c_str(), mode_str.c_str());
 		#else
-		auto fn2 = w2s(filename);
-		auto mode2 = w2s(mode);
+		auto fn2 = w2s(filename_str);
+		auto mode2 = w2s(mode_str);
 		if (!fn2 || !mode2)
 		{
-			printf("failed open conversion of %ws %ws\n", filename.data(), mode);
+			printf("failed open conversion of %ls %ls\n", filename_str.c_str(), mode_str.c_str());
 			return;
 		}
 		m_ptr_ = std::fopen(fn2->c_str(), mode2->c_str());
@@ -248,17 +256,17 @@ public:
 	template<class... Args>
 	void write(const char* _Format, Args&&... args) const { std::fprintf(m_ptr_, _Format, std::forward<Args>(args)...); }
 	//! @brief write into the file from byte vector
-	std::size_t write(const std::vector<char> & vec) const { return std::fwrite(vec.data(), vec.size(), 1, m_ptr_); }
+	std::size_t write(const std::vector<char> & vec) const { return std::fwrite(vec.data(), 1, vec.size(), m_ptr_); }
 	//! @brief write into the file from c array
-	std::size_t write(const void * buf, size_t size) const { return std::fwrite(buf, size, 1, m_ptr_); }
+	std::size_t write(const void * buf, std::size_t size) const { return std::fwrite(buf, 1, size, m_ptr_); }
 	//! @brief write into the file from span
 	template <typename T> std::size_t write(std::span<const T> buffer) const
 	{
-		return std::fwrite(buffer.data(), sizeof(T), buffer.size(), m_ptr_);
+		return std::fwrite(buffer.data(), sizeof(T), buffer.size(), m_ptr_) * sizeof(T);
 	}
 
 	//! @brief write into the file from string
-	std::size_t string_write(const std::string_view & str) const { return std::fwrite(str.data(), str.size(), 1, m_ptr_); }
+	std::size_t string_write(const std::string_view & str) const { return std::fwrite(str.data(), 1, str.size(), m_ptr_); }
 
 	#ifdef MSL_FILE_PTR_ENABLE_WIDE_STRING
 	//! @brief write into the file from wstring
@@ -271,7 +279,8 @@ public:
 		if (n == 0) // 0 implies reading the whole remaining file
 			n = this->remain_size();
 		std::vector<char> buf(n);
-		std::fread(buf.data(), 1, buf.size(), m_ptr_);
+		const auto read_bytes = std::fread(buf.data(), 1, buf.size(), m_ptr_);
+		buf.resize(read_bytes);
 		return buf;
 	}
 
@@ -325,6 +334,8 @@ public:
 	std::string string_read(const std::size_t n = 0) const
 	{
 		auto vec = this->read(n);
+		if (vec.empty())
+			return {};
 		if (!vec.empty() && vec.back() != '\0') // append EOS at the end of vector
 			vec.emplace_back('\0');
 		return std::string(vec.data()); // convert vector to string
@@ -333,9 +344,17 @@ public:
 	//! @brief read the file from the current position using a null-terminated string buffer
 	void string_read(char buf[], const std::size_t n = 0) const
 	{
-		this->read(buf, n);
-		if (buf[n - 1] != '\0')
-			buf[n - 1] = '\0';
+		if (n == 0)
+			return;
+
+		if (n == 1)
+		{
+			buf[0] = '\0';
+			return;
+		}
+
+		const auto read_bytes = this->read(buf, n - 1);
+		buf[read_bytes] = '\0';
 	}
 
 	//! @brief move unwritten memory buffer data to the target file.

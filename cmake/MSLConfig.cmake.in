@@ -1,0 +1,5 @@
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/MSLTargets.cmake")
+
+set(MSL_VERSION "@PROJECT_VERSION@")

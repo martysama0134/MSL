@@ -799,8 +799,4 @@ void TestMixedMsl()
 
 	MSL_RUN_TEST(RunFailedTests);
 	MSL_RUN_TEST([]() { MSL_TEST_ASSERT("ForceFail2", false); });
-
-	std::cout << std::endl << "Press enter to continue..." << std::endl;
-	std::ignore = getchar();
-	std::ignore = getchar();
 }

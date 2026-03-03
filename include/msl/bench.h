@@ -19,6 +19,7 @@
 
 #include <chrono>
 #include <iostream>
+#include <string>
 
 namespace msl
 {

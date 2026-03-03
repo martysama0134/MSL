@@ -19,6 +19,8 @@
 
 #include <cstdint>
 #include <chrono>
+#include <iterator>
+#include <limits>
 #include <random>
 #include <type_traits>
 

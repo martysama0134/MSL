@@ -20,6 +20,9 @@
 #include <functional>
 #include <memory>
 #include <mutex>
+#include <stdexcept>
+#include <tuple>
+#include <utility>
 #include <vector>
 
 namespace msl
@@ -69,7 +72,11 @@ public:
 		handle & operator=(const handle &) = delete;
 
 		// move declared
-		handle(handle && other) noexcept : pool_(other.pool_), object_(other.object_) { other.object_.reset(); }
+		handle(handle && other) noexcept :
+			pool_(std::move(other.pool_)), object_(std::move(other.object_)), destroyer_(std::move(other.destroyer_))
+		{
+			other.object_.reset();
+		}
 		handle & operator=(handle && other) noexcept
 		{
 			if (this != &other)
@@ -95,7 +102,7 @@ public:
 		constexpr T * operator->() { return object_.get(); }
 		constexpr T & operator*() { return *(object_.get()); }
 		constexpr explicit operator bool() const { return object_ != nullptr; }
-		constexpr T * get() const noexcept { return object_; }
+		constexpr T * get() const noexcept { return object_.get(); }
 
 	private:
 		std::weak_ptr<shared_pool<T>> pool_;
@@ -150,7 +157,7 @@ public:
 
 		const auto left = n - total;
 		available_.reserve(available_.size() + left);
-		allocated_.reserve(available_.size() + left);
+		allocated_.reserve(total + left);
 	}
 
 	void prepare(std::size_t n)
@@ -162,7 +169,7 @@ public:
 
 		const auto left = n - total;
 		available_.reserve(available_.size() + left);
-		allocated_.reserve(available_.size() + left);
+		allocated_.reserve(total + left);
 		for (std::size_t i = 0; i < left; ++i)
 			available_.emplace_back(allocate());
 	}

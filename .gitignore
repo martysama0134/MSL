@@ -56,3 +56,13 @@ bin/
 ### giteye (eclipse egit)
 /.project
 msl/test_write.txt
+
+### cmake artifacts
+/build/
+/cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
+Testing/
+CTestTestfile.cmake
+cmake_install.cmake
+install_manifest.txt

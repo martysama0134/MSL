@@ -1,0 +1,68 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - dev
+  pull_request:
+
+jobs:
+  windows-msvc:
+    name: windows-msvc (VS2022)
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake --preset ci-windows
+      - name: Build
+        run: cmake --build --preset ci-windows
+      - name: Test
+        run: ctest --preset ci-windows
+
+  debian-default:
+    name: debian-default
+    runs-on: ubuntu-latest
+    container: debian:bookworm
+    steps:
+      - name: Install dependencies
+        run: apt-get update && apt-get install -y --no-install-recommends git cmake ninja-build g++ ca-certificates
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake --preset ci-linux
+      - name: Build
+        run: cmake --build --preset ci-linux
+      - name: Test
+        run: ctest --preset ci-linux
+
+  debian-clang:
+    name: debian-clang
+    runs-on: ubuntu-latest
+    container: debian:bookworm
+    steps:
+      - name: Install dependencies
+        run: apt-get update && apt-get install -y --no-install-recommends git cmake ninja-build clang ca-certificates
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake --preset ci-linux -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+      - name: Build
+        run: cmake --build --preset ci-linux
+      - name: Test
+        run: ctest --preset ci-linux
+
+  alpine-clang:
+    name: alpine-clang (non-blocking)
+    runs-on: ubuntu-latest
+    container: alpine:3.20
+    continue-on-error: true
+    steps:
+      - name: Install dependencies
+        run: apk add --no-cache git cmake ninja clang build-base
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake --preset ci-linux -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+      - name: Build
+        run: cmake --build --preset ci-linux
+      - name: Test
+        run: ctest --preset ci-linux

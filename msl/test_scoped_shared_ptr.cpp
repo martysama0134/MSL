@@ -80,8 +80,4 @@ void TestScopedSharedPtr()
 		sauce.~scoped_shared_ptr(); // ok - unsafe
 	}
 	std::cout << "All tests passed." << '\n';
-
-	std::cout << std::endl << "Press enter to continue..." << std::endl;
-	std::ignore = getchar();
-	std::ignore = getchar();
 }

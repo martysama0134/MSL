@@ -17,6 +17,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#include <algorithm>
+#include <cmath>
+#include <iterator>
 #include <limits>
 #include <string>
 #include <type_traits>
@@ -45,6 +48,12 @@ template <class T = std::vector<std::string>> T string_split(const std::string &
 template <class T = std::vector<std::string>> T string_split(const std::string & str, const std::string & tok = " ")
 {
 	T vec{};
+	if (tok.empty())
+	{
+		vec.emplace_back(str);
+		return vec;
+	}
+
 	std::size_t prev = 0;
 	auto cur = str.find(tok);
 	while (cur != std::string::npos)
