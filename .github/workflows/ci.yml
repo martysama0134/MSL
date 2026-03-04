@@ -8,6 +8,13 @@ on:
       - dev
   pull_request:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   windows-msvc:
     name: windows-msvc (VS2022)
@@ -50,6 +57,25 @@ jobs:
         run: cmake --build --preset ci-linux
       - name: Test
         run: ctest --preset ci-linux
+
+  linux-clang-asan-ubsan:
+    name: linux-clang-asan-ubsan
+    runs-on: ubuntu-24.04
+    env:
+      ASAN_OPTIONS: detect_leaks=1
+      UBSAN_OPTIONS: print_stacktrace=1
+    steps:
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends cmake ninja-build clang
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake --preset ci-linux-asan -DCMAKE_CXX_COMPILER=clang++
+      - name: Build
+        run: cmake --build --preset ci-linux-asan
+      - name: Test
+        run: ctest --preset ci-linux-asan
+      - name: Example smoke
+        run: ./build/ci-linux-asan/examples/msl_example_string_split
 
   alpine-clang:
     name: alpine-clang (non-blocking)

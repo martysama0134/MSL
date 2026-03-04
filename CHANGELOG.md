@@ -4,13 +4,20 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [3.1.0] - 2026-03-04
+
 ### Added
 
-- CMake-based build and test system with install/export package support.
-- Deterministic CI-grade tests in `tests/`.
-- Header smoke translation units for self-containment checks.
+- CMake option `MSL_BUILD_EXAMPLES` to compile optional example programs.
+- Compile-verified `examples/` targets:
+  - `msl_example_string_split`
+  - `msl_example_safe_cast`
+  - `msl_example_shared_pool`
+  - `msl_example_file_ptr_io`
+- Blocking Linux Clang ASan+UBSan CI lane (`linux-clang-asan-ubsan`) with dedicated `ci-linux-asan` preset.
+- CI workflow hardening with explicit `permissions` and `concurrency` control.
+- `legacy/README.md` documenting canonical CMake path versus legacy Visual Studio assets.
 - Header-only exception configuration (`<msl/config.h>`) with `MSL_HAS_EXCEPTIONS` detection/override.
-- GitHub Actions CI matrix for Windows (MSVC) and Linux (Debian default + Clang), with optional Alpine Clang lane.
 - Compatibility forwarding header `<msl/util.h>`.
 - Baseline project policy docs:
   - `docs/COMPATIBILITY.md`
@@ -19,8 +26,10 @@ All notable changes to this project are documented in this file.
 
 ### Changed
 
+- CMake project version is now `3.1.0`.
+- Legacy Visual Studio solution/project and demo files moved under `legacy/vs/`.
 - `test_build.sh` and `test_run.sh` now use CMake/CTest.
-- Legacy `msl/test_*.cpp` tests no longer pause for interactive input.
+- Legacy demo `test_*.cpp` sources no longer pause for interactive input.
 - `file_ptr` write methods now use byte-count semantics for byte-oriented overloads.
 - `file_ptr::open(std::string_view, ...)` now opens via owned null-terminated strings.
 

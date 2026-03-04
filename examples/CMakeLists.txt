@@ -1,0 +1,16 @@
+function(msl_add_example target source_file)
+    add_executable(${target} ${source_file})
+    target_link_libraries(${target} PRIVATE msl::msl)
+    target_compile_features(${target} PRIVATE cxx_std_20)
+
+    if(MSVC)
+        target_compile_options(${target} PRIVATE /W4 /permissive-)
+    else()
+        target_compile_options(${target} PRIVATE -Wall -Wextra -Wpedantic)
+    endif()
+endfunction()
+
+msl_add_example(msl_example_string_split string_split.cpp)
+msl_add_example(msl_example_safe_cast safe_cast.cpp)
+msl_add_example(msl_example_shared_pool shared_pool.cpp)
+msl_add_example(msl_example_file_ptr_io file_ptr_io.cpp)

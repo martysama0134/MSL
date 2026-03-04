@@ -2,12 +2,13 @@ cmake_minimum_required(VERSION 3.23)
 
 project(
     MSL
-    VERSION 3.0.0
+    VERSION 3.1.0
     DESCRIPTION "Marty Support Library (header-only C++20 utilities)"
     LANGUAGES CXX
 )
 
 option(MSL_BUILD_TESTS "Build deterministic MSL test suite" ON)
+option(MSL_BUILD_EXAMPLES "Build MSL example programs" OFF)
 
 add_library(msl INTERFACE)
 add_library(msl::msl ALIAS msl)
@@ -58,6 +59,10 @@ install(
         ${CMAKE_CURRENT_BINARY_DIR}/MSLConfigVersion.cmake
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/MSL
 )
+
+if(MSL_BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif()
 
 if(MSL_BUILD_TESTS)
     enable_testing()

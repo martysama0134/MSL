@@ -56,3 +56,16 @@ Inputs previously producing undefined behavior or implementation-defined results
 ### Migration impact
 
 No change required. Existing include paths continue to work.
+
+## 6) Legacy Visual Studio path relocation (v3.1)
+
+### What changed
+
+Legacy Visual Studio solution/project and demo sources moved from repo root and `msl/` into:
+
+- `legacy/vs/msl_tests.sln`
+- `legacy/vs/msl/`
+
+### Migration impact
+
+Tooling/scripts that referenced old legacy paths should be updated to the new `legacy/vs/...` locations.

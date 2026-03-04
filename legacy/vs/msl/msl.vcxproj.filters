@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="File di origine">
@@ -15,43 +15,43 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\msl\file_ptr.h">
+    <ClInclude Include="..\..\..\include\msl\file_ptr.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\msl\msl.h">
+    <ClInclude Include="..\..\..\include\msl\msl.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\msl\range.h">
+    <ClInclude Include="..\..\..\include\msl\range.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\msl\bench.h">
+    <ClInclude Include="..\..\..\include\msl\bench.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\msl\cast.h">
+    <ClInclude Include="..\..\..\include\msl\cast.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\msl\utils.h">
+    <ClInclude Include="..\..\..\include\msl\utils.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\msl\random.h">
+    <ClInclude Include="..\..\..\include\msl\random.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\msl\macro.h">
+    <ClInclude Include="..\..\..\include\msl\macro.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\msl\assert.h">
+    <ClInclude Include="..\..\..\include\msl\assert.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>File di origine</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\msl\ptr.h">
+    <ClInclude Include="..\..\..\include\msl\ptr.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\msl\pool.h">
+    <ClInclude Include="..\..\..\include\msl\pool.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\msl\util.h">
+    <ClInclude Include="..\..\..\include\msl\util.h">
       <Filter>File di intestazione</Filter>
     </ClInclude>
   </ItemGroup>

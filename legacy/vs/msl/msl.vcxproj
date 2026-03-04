@@ -77,7 +77,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -88,7 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>..\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include\</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -99,7 +99,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include\</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>..\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -130,18 +130,18 @@
     <ClCompile Include="test_scoped_shared_ptr.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\msl\assert.h" />
-    <ClInclude Include="..\include\msl\bench.h" />
-    <ClInclude Include="..\include\msl\cast.h" />
-    <ClInclude Include="..\include\msl\file_ptr.h" />
-    <ClInclude Include="..\include\msl\macro.h" />
-    <ClInclude Include="..\include\msl\msl.h" />
-    <ClInclude Include="..\include\msl\pool.h" />
-    <ClInclude Include="..\include\msl\random.h" />
-    <ClInclude Include="..\include\msl\range.h" />
-    <ClInclude Include="..\include\msl\ptr.h" />
-    <ClInclude Include="..\include\msl\util.h" />
-    <ClInclude Include="..\include\msl\utils.h" />
+    <ClInclude Include="..\..\..\include\msl\assert.h" />
+    <ClInclude Include="..\..\..\include\msl\bench.h" />
+    <ClInclude Include="..\..\..\include\msl\cast.h" />
+    <ClInclude Include="..\..\..\include\msl\file_ptr.h" />
+    <ClInclude Include="..\..\..\include\msl\macro.h" />
+    <ClInclude Include="..\..\..\include\msl\msl.h" />
+    <ClInclude Include="..\..\..\include\msl\pool.h" />
+    <ClInclude Include="..\..\..\include\msl\random.h" />
+    <ClInclude Include="..\..\..\include\msl\range.h" />
+    <ClInclude Include="..\..\..\include\msl\ptr.h" />
+    <ClInclude Include="..\..\..\include\msl\util.h" />
+    <ClInclude Include="..\..\..\include\msl\utils.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

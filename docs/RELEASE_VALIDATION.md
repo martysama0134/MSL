@@ -9,6 +9,7 @@ The following GitHub Actions jobs must be green before tagging a release:
 - `windows-msvc (VS2022)`
 - `debian-default`
 - `debian-clang`
+- `linux-clang-asan-ubsan`
 
 The `alpine-clang` lane is intentionally non-blocking and can fail without blocking release.
 

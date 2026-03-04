@@ -52,10 +52,11 @@ bin/
 
 ### vs2017 workspace
 .vs/
+*.vcxproj.user
 
 ### giteye (eclipse egit)
 /.project
-msl/test_write.txt
+legacy/vs/msl/test_write.txt
 
 ### cmake artifacts
 /build/

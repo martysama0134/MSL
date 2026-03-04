@@ -63,6 +63,14 @@ find_package(MSL CONFIG REQUIRED)
 target_link_libraries(your_target PRIVATE msl::msl)
 ```
 
+## Project Layout
+
+- `include/msl/`: public header-only library.
+- `tests/`: deterministic CI regression tests and header smoke builds.
+- `examples/`: compile-verified example programs (optional build via `MSL_BUILD_EXAMPLES`).
+- `docs/`: compatibility, migration, and release validation docs.
+- `legacy/vs/`: legacy Visual Studio solution/project and demo-heavy test assets.
+
 ## Compiler and Platform Support
 
 | Platform | Compiler/toolchain | Status |
@@ -73,6 +81,14 @@ target_link_libraries(your_target PRIVATE msl::msl)
 | FreeBSD 14/15 | Default `cc` / `c++` (Clang 18/19) | Release-gated manual validation |
 
 MSL targets C++20 with a stability-first subset. `std::format` and `std::ranges` are treated as optional/incremental features, not mandatory baseline dependencies.
+
+Current CI quality gates:
+
+- `windows-msvc` (blocking)
+- `debian-default` (blocking)
+- `debian-clang` (blocking)
+- `linux-clang-asan-ubsan` (blocking)
+- `alpine-clang` (non-blocking)
 
 ## Quick Start
 
@@ -144,15 +160,32 @@ Shell helpers:
 ./test_run.sh
 ```
 
-CI runs deterministic tests from `tests/` only. Legacy demo-heavy test sources remain in `msl/test_*.cpp` for local/manual use.
+CI runs deterministic tests from `tests/` only. Legacy demo-heavy test sources remain in `legacy/vs/msl/test_*.cpp` for local/manual use.
+
+## Examples
+
+Configure/build examples:
+
+```sh
+cmake -S . -B build/examples -DMSL_BUILD_TESTS=ON -DMSL_BUILD_EXAMPLES=ON
+cmake --build build/examples
+```
+
+Example executables:
+
+- `msl_example_string_split`
+- `msl_example_safe_cast`
+- `msl_example_shared_pool`
+- `msl_example_file_ptr_io`
 
 ## Versioning and Release Notes
 
-- Current release target: `v3.0`.
+- Current release target: `v3.1`.
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
 - Migration notes: [docs/MIGRATION_v3.md](docs/MIGRATION_v3.md)
 - Compatibility policy: [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md)
 - Release validation gate: [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md)
+- Legacy Visual Studio solution: `legacy/vs/msl_tests.sln`
 
 ## License
 
