@@ -17,6 +17,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#include "config.h"
+
 #include <cstdlib>
 #include <exception>
 #include <string>
@@ -44,7 +46,7 @@ struct test_error : std::exception
 inline void test_assert(const std::string & name, bool condition)
 {
 	if (!condition)
-		throw msl::test_error(name);
+		MSL_THROW(msl::test_error(name));
 }
 
 } // namespace msl

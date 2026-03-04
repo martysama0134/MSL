@@ -8,6 +8,13 @@
   - `std::format`
   - `std::ranges`
 
+## Exceptions Policy
+
+- Exception-enabled builds are the default behavior.
+- `-fno-exceptions` builds are supported for header compilation and usage.
+- On error paths that normally throw, no-exceptions builds fail fast with `std::abort()`.
+- `MSL_HAS_EXCEPTIONS` can be predefined (`0` or `1`) to override compiler auto-detection.
+
 ## Official Platforms
 
 - Windows

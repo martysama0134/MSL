@@ -17,6 +17,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#include "config.h"
+
 #include <functional>
 #include <memory>
 #include <mutex>
@@ -49,7 +51,7 @@ public:
 			{
 				if (object_) // clean up
 					destroyer_(object_);
-				throw std::invalid_argument("shared_pool::handle pool can't be nullptr");
+				MSL_THROW(std::invalid_argument("shared_pool::handle pool can't be nullptr"));
 			}
 		}
 		friend shared_pool<T>;

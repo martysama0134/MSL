@@ -23,6 +23,7 @@ add_library(
     headers/assert.cpp
     headers/bench.cpp
     headers/cast.cpp
+    headers/config.cpp
     headers/file_ptr.cpp
     headers/macro.cpp
     headers/msl.cpp
@@ -41,4 +42,16 @@ if(MSVC)
     target_compile_options(msl_header_smoke PRIVATE /W4 /permissive-)
 else()
     target_compile_options(msl_header_smoke PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+if(NOT MSVC)
+    add_library(
+        msl_header_smoke_no_exceptions OBJECT
+        headers/no_exceptions.cpp
+    )
+
+    target_link_libraries(msl_header_smoke_no_exceptions PRIVATE msl::msl)
+    target_compile_features(msl_header_smoke_no_exceptions PRIVATE cxx_std_20)
+    target_compile_definitions(msl_header_smoke_no_exceptions PRIVATE MSL_HAS_EXCEPTIONS=0)
+    target_compile_options(msl_header_smoke_no_exceptions PRIVATE -Wall -Wextra -Wpedantic -fno-exceptions)
 endif()

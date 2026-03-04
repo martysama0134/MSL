@@ -9,6 +9,7 @@ All notable changes to this project are documented in this file.
 - CMake-based build and test system with install/export package support.
 - Deterministic CI-grade tests in `tests/`.
 - Header smoke translation units for self-containment checks.
+- Header-only exception configuration (`<msl/config.h>`) with `MSL_HAS_EXCEPTIONS` detection/override.
 - GitHub Actions CI matrix for Windows (MSVC) and Linux (Debian default + Clang), with optional Alpine Clang lane.
 - Compatibility forwarding header `<msl/util.h>`.
 - Baseline project policy docs:
@@ -28,6 +29,7 @@ All notable changes to this project are documented in this file.
 - `shared_pool::handle::get()` returned wrong pointer type.
 - `shared_pool::handle` move constructor now moves `destroyer_`.
 - `shared_pool::reserve()` / `prepare()` capacity reservation logic corrected.
+- `assert`/`macro`/`cast`/`pool` throw paths now compile in `-fno-exceptions` builds (fail-fast abort semantics on error paths).
 - `utils::string_split(str, tok_string)` now handles empty delimiters safely.
 - `cast` floating-to-integral conversion paths now validate finite/range/truncation before cast.
 - `file_ptr::string_read(char[], n)` now has defined and safe behavior for `n == 0`.

@@ -17,6 +17,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#include "assert.h"
+
 #include <cstdint>
 #include <iostream>
 #include <string>
@@ -53,25 +55,46 @@
 #define MSL_FOR_RLOOP_VAR_PRE(count, varname) int64_t varname = (count) - 1; for (; varname >= 0; --varname)
 #define MSL_FOR_RLOOP_VAR_START_PRE(count, varname, start) int64_t varname = (count); for (; varname >= start; --varname)
 
-//! @brief MSL_RUN_TEST runs the whole test case by passing a function / lambda
-#define MSL_RUN_TEST(fnc) \
-	try {\
-		{(fnc)();}\
-		std::cout << "All tests passed." << '\n';\
-	}\
-	catch (msl::test_error& e) {\
-		std::cout << e.what() << " test failed." << '\n';\
-	}
+#if MSL_HAS_EXCEPTIONS
+	//! @brief MSL_RUN_TEST runs the whole test case by passing a function / lambda
+	#define MSL_RUN_TEST(fnc) \
+		do \
+		{ \
+			try \
+			{ \
+				{ (fnc)(); } \
+				std::cout << "All tests passed." << '\n'; \
+			} \
+			catch (msl::test_error & e) \
+			{ \
+				std::cout << e.what() << " test failed." << '\n'; \
+			} \
+		} while (false)
+#else
+	//! @brief MSL_RUN_TEST runs the whole test case by passing a function / lambda
+	#define MSL_RUN_TEST(fnc) \
+		do \
+		{ \
+			{ (fnc)(); } \
+			std::cout << "All tests passed." << '\n'; \
+		} while (false)
+#endif
 
 //! @brief MSL_TEST_ASSERT check and print condition
 #define MSL_TEST_ASSERT(name, condition) \
-	if (!(condition)) \
-		throw msl::test_error((std::string("Test Assert: ") + (name) + " Condition: " + #condition));
+	do \
+	{ \
+		if (!(condition)) \
+			MSL_THROW(msl::test_error(std::string("Test Assert: ") + (name) + " Condition: " + #condition)); \
+	} while (false)
 
 //! @brief MSL_TEST_ASSERT_WN check and print condition without name
 #define MSL_TEST_ASSERT_WN(condition) \
-	if (!(condition)) \
-		throw msl::test_error((std::string("Test Condition: ") + #condition).c_str());
+	do \
+	{ \
+		if (!(condition)) \
+			MSL_THROW(msl::test_error(std::string("Test Condition: ") + #condition)); \
+	} while (false)
 
 // clang-format off
 #endif // MSL_MACRO_H__

@@ -17,6 +17,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#include "config.h"
+
 #include <cmath>
 #include <exception>
 #include <limits>
@@ -39,16 +41,16 @@ template <class T, class U> constexpr T checked_float_to_integral(U u, bool requ
 	const long double value = static_cast<long double>(u);
 	const auto inf = std::numeric_limits<long double>::infinity();
 	if (value != value || value == inf || value == -inf)
-		throw truncate_error();
+		MSL_THROW(truncate_error());
 
 	const long double truncated = std::trunc(value);
 	if (require_exact && truncated != value)
-		throw truncate_error();
+		MSL_THROW(truncate_error());
 
 	const long double min_v = static_cast<long double>((std::numeric_limits<T>::min)());
 	const long double max_v = static_cast<long double>((std::numeric_limits<T>::max)());
 	if (truncated < min_v || truncated > max_v)
-		throw truncate_error();
+		MSL_THROW(truncate_error());
 
 	return static_cast<T>(truncated);
 }
@@ -68,7 +70,7 @@ template <class T, class U> constexpr T truncate(U u)
 
 	auto t = truncate_cast<T>(u);
 	if (static_cast<U>(t) != std::trunc(u))
-		throw truncate_error();
+		MSL_THROW(truncate_error());
 	return t;
 }
 
@@ -80,7 +82,7 @@ template <class T, class U> constexpr T integral_cast(U u)
 
 	auto t = static_cast<T>(u);
 	if (static_cast<U>(t) != std::trunc(u))
-		throw truncate_error();
+		MSL_THROW(truncate_error());
 	return t;
 }
 
