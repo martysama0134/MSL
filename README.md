@@ -204,7 +204,7 @@ Example executables:
 
 ## Versioning and Release Notes
 
-- Current release target: `v3.1.1`.
+- Current release target: `v3.2.0`.
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
 - Migration notes: [docs/MIGRATION_v3.md](docs/MIGRATION_v3.md)
 - Compatibility policy: [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md)

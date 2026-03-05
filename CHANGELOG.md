@@ -4,7 +4,7 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
-## [3.1.1] - 2026-03-05
+## [3.2.0] - 2026-03-05
 
 ### Added
 
@@ -29,7 +29,7 @@ All notable changes to this project are documented in this file.
 
 ### Changed
 
-- CMake project version is now `3.1.1`.
+- CMake project version is now `3.2.0`.
 - README updated with legacy header feature entry and explicit legacy policy.
 - No-exceptions header smoke now compiles and uses legacy plus traits/utils APIs.
 - `msl/msl.h` aggregate include now exports `traits.h`.
