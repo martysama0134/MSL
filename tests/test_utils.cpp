@@ -1,5 +1,6 @@
 #include "test_common.h"
 
+#include <climits>
 #include <string>
 #include <vector>
 
@@ -31,6 +32,30 @@ void test_split_char_token()
     MSL_EXPECT(parts[1] == "2");
     MSL_EXPECT(parts[2] == "3");
 }
+
+void test_to_lower_in_place_and_copy()
+{
+    std::string text = "HeLLo-123!";
+    msl::to_lower_in_place(text);
+    MSL_EXPECT(text == "hello-123!");
+
+    const auto lowered = msl::to_lower("MiXeD Case!");
+    MSL_EXPECT(lowered == "mixed case!");
+}
+
+void test_format_grouped_number_default_separator()
+{
+    MSL_EXPECT(msl::format_grouped_number(0) == "0");
+    MSL_EXPECT(msl::format_grouped_number(1234567) == "1.234.567");
+    MSL_EXPECT(msl::format_grouped_number(-9876543) == "-9.876.543");
+}
+
+void test_format_grouped_number_custom_separator_and_limits()
+{
+    MSL_EXPECT(msl::format_grouped_number(1234567, ',') == "1,234,567");
+    MSL_EXPECT(msl::format_grouped_number(LLONG_MAX, ',') == "9,223,372,036,854,775,807");
+    MSL_EXPECT(msl::format_grouped_number(LLONG_MIN) == "-9.223.372.036.854.775.808");
+}
 } // namespace
 
 void run_utils_tests()
@@ -38,4 +63,7 @@ void run_utils_tests()
     test_split_string_empty_token();
     test_split_string_regular_token();
     test_split_char_token();
+    test_to_lower_in_place_and_copy();
+    test_format_grouped_number_default_separator();
+    test_format_grouped_number_custom_separator_and_limits();
 }

@@ -17,6 +17,7 @@ MSL (Marty Support Library) is a header-only C++20 utility library focused on pr
 | `msl/ptr.h` | Pointer ownership wrappers (`scoped_shared_ptr`, `no_owner`, `observer_ptr`). |
 | `msl/random.h` | Random generators, number utilities, and container sampling. |
 | `msl/range.h` | Range/xrange and indexed iteration helpers. |
+| `msl/traits.h` | Type traits for contiguous/raw template constraints (`msl::traits::*`). |
 | `msl/utils.h` | String and container utility helpers. |
 | `msl/util.h` | Compatibility forwarding header to `msl/utils.h`. |
 | `msl/legacy.h` | Opt-in legacy compatibility helpers (`minmax`, bind/random-shuffle/mem_fun wrappers). |
@@ -142,6 +143,12 @@ int main() {
 - `shared_pool`:
   - `shared_pool<T>::handle::get()` now correctly returns `T*`.
   - `shared_pool` remains thread-safe via internal mutex-protected operations.
+- `traits`:
+  - `msl::traits::is_contiguous_v<T>` and `msl::traits::is_raw_v<T>` are available for template routing and raw-write constraints.
+- `utils`:
+  - `to_lower_in_place` / `to_lower` are intentionally ASCII/language-neutral right now.
+  - Unicode-aware lowercase helper(s) may be added later with distinct API names.
+  - `format_grouped_number(value, separator)` provides simple digit grouping for integral values.
 - `MSL_FOR_*` macros are supported public API.
 - `legacy`:
   - `<msl/legacy.h>` is an explicit opt-in compatibility header.

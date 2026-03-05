@@ -26,6 +26,7 @@
 #include "ptr.h"
 #include "random.h"
 #include "range.h"
+#include "traits.h"
 #include "utils.h"
 
 #endif // MSL_MSL_H__

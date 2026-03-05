@@ -15,14 +15,25 @@ All notable changes to this project are documented in this file.
   - `msl::random_shuffle`
   - `msl::void_mem_fun`
   - `msl::void_mem_fun_ref`
+- New `msl::traits` header `<msl/traits.h>` with:
+  - `msl::traits::is_contiguous`
+  - `msl::traits::is_contiguous_v`
+  - `msl::traits::is_raw_v`
+- New utility helpers in `<msl/utils.h>`:
+  - `msl::to_lower_in_place`
+  - `msl::to_lower`
+  - `msl::format_grouped_number`
 - Legacy regression suite `tests/test_legacy.cpp` and header smoke `tests/headers/legacy.cpp`.
-- `docs/LEGACY_API_MAP.md` to track implemented and deferred legacy candidates.
+- `docs/LEGACY_API_MAP.md` to track implemented legacy APIs.
+- Trait regression suite `tests/test_traits.cpp` and header smoke `tests/headers/traits.cpp`.
 
 ### Changed
 
 - CMake project version is now `3.1.1`.
 - README updated with legacy header feature entry and explicit legacy policy.
-- No-exceptions header smoke now compiles and uses legacy APIs.
+- No-exceptions header smoke now compiles and uses legacy plus traits/utils APIs.
+- `msl/msl.h` aggregate include now exports `traits.h`.
+- Migration docs refreshed for current in-repo API guidance.
 
 ## [3.1.0] - 2026-03-04
 

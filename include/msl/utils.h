@@ -19,6 +19,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstdint>
 #include <iterator>
 #include <limits>
 #include <string>
@@ -143,6 +144,53 @@ inline std::string string_replace(std::string str, const std::string & from, con
 {
 	string_replace_in_place(str, from, to);
 	return str;
+}
+
+//! @brief to_lower_in_place converts ASCII uppercase characters to lowercase in place
+inline void to_lower_in_place(std::string & str)
+{
+	for (char & c : str)
+	{
+		if (c >= 'A' && c <= 'Z')
+			c = static_cast<char>(c + ('a' - 'A'));
+	}
+}
+
+//! @brief to_lower converts ASCII uppercase characters to lowercase and returns by copy
+inline std::string to_lower(std::string str)
+{
+	to_lower_in_place(str);
+	return str;
+}
+
+//! @brief format_grouped_number formats integral values with a grouping separator each three digits
+inline std::string format_grouped_number(long long value, char separator = '.')
+{
+	const bool negative = value < 0;
+	const std::uint64_t magnitude = negative
+		? static_cast<std::uint64_t>(-(value + 1)) + 1
+		: static_cast<std::uint64_t>(value);
+
+	const std::string digits = std::to_string(magnitude);
+	std::string grouped;
+	grouped.reserve(digits.size() + digits.size() / 3 + (negative ? 1 : 0));
+
+	int count = 0;
+	for (auto it = digits.rbegin(); it != digits.rend(); ++it)
+	{
+		grouped.push_back(*it);
+		++count;
+		if (count == 3 && (it + 1) != digits.rend())
+		{
+			grouped.push_back(separator);
+			count = 0;
+		}
+	}
+
+	std::reverse(grouped.begin(), grouped.end());
+	if (negative)
+		grouped.insert(grouped.begin(), '-');
+	return grouped;
 }
 
 //! @brief whitespaces returns a string containing the default ascii spaces

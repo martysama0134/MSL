@@ -4,6 +4,7 @@ add_executable(
     test_pool.cpp
     test_file_ptr.cpp
     test_utils.cpp
+    test_traits.cpp
     test_cast.cpp
     test_legacy.cpp
 )
@@ -33,6 +34,7 @@ add_library(
     headers/ptr.cpp
     headers/random.cpp
     headers/range.cpp
+    headers/traits.cpp
     headers/util.cpp
     headers/utils.cpp
 )
