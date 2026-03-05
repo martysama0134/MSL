@@ -4,6 +4,7 @@ void run_pool_tests();
 void run_file_ptr_tests();
 void run_utils_tests();
 void run_cast_tests();
+void run_legacy_tests();
 
 int main()
 {
@@ -12,6 +13,7 @@ int main()
         {"file_ptr regression tests", run_file_ptr_tests},
         {"utils regression tests", run_utils_tests},
         {"cast regression tests", run_cast_tests},
+        {"legacy compatibility tests", run_legacy_tests},
     };
 
     const int failures = msl_test::run_all(tests);

@@ -19,6 +19,7 @@ MSL (Marty Support Library) is a header-only C++20 utility library focused on pr
 | `msl/range.h` | Range/xrange and indexed iteration helpers. |
 | `msl/utils.h` | String and container utility helpers. |
 | `msl/util.h` | Compatibility forwarding header to `msl/utils.h`. |
+| `msl/legacy.h` | Opt-in legacy compatibility helpers (`minmax`, bind/random-shuffle/mem_fun wrappers). |
 | `msl/msl.h` | Aggregate include for all MSL headers. |
 
 ## Installation
@@ -142,6 +143,22 @@ int main() {
   - `shared_pool<T>::handle::get()` now correctly returns `T*`.
   - `shared_pool` remains thread-safe via internal mutex-protected operations.
 - `MSL_FOR_*` macros are supported public API.
+- `legacy`:
+  - `<msl/legacy.h>` is an explicit opt-in compatibility header.
+  - legacy helpers are exposed in `msl` namespace and are not included by `<msl/msl.h>`.
+  - legacy helpers do not extend `namespace std`.
+
+## Legacy Policy
+
+Use `<msl/legacy.h>` only for compatibility migrations. It is intentionally separate from the default aggregate include to keep modern usage lean.
+
+```cpp
+#include <msl/legacy.h>
+
+int main() {
+    const auto v = msl::minmax(10, 42, 0); // auto-swaps bounds, returns 10
+}
+```
 
 ## Build and Test
 
@@ -180,10 +197,11 @@ Example executables:
 
 ## Versioning and Release Notes
 
-- Current release target: `v3.1`.
+- Current release target: `v3.1.1`.
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
 - Migration notes: [docs/MIGRATION_v3.md](docs/MIGRATION_v3.md)
 - Compatibility policy: [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md)
+- Legacy API map: [docs/LEGACY_API_MAP.md](docs/LEGACY_API_MAP.md)
 - Release validation gate: [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md)
 - Legacy Visual Studio solution: `legacy/vs/msl_tests.sln`
 

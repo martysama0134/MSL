@@ -4,6 +4,26 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [3.1.1] - 2026-03-05
+
+### Added
+
+- New opt-in compatibility header `<msl/legacy.h>` with:
+  - `msl::minmax`
+  - `msl::bind1st`
+  - `msl::bind2nd`
+  - `msl::random_shuffle`
+  - `msl::void_mem_fun`
+  - `msl::void_mem_fun_ref`
+- Legacy regression suite `tests/test_legacy.cpp` and header smoke `tests/headers/legacy.cpp`.
+- `docs/LEGACY_API_MAP.md` to track implemented and deferred legacy candidates.
+
+### Changed
+
+- CMake project version is now `3.1.1`.
+- README updated with legacy header feature entry and explicit legacy policy.
+- No-exceptions header smoke now compiles and uses legacy APIs.
+
 ## [3.1.0] - 2026-03-04
 
 ### Added

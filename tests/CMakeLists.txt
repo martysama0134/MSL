@@ -5,6 +5,7 @@ add_executable(
     test_file_ptr.cpp
     test_utils.cpp
     test_cast.cpp
+    test_legacy.cpp
 )
 
 target_link_libraries(msl_tests PRIVATE msl::msl)
@@ -25,6 +26,7 @@ add_library(
     headers/cast.cpp
     headers/config.cpp
     headers/file_ptr.cpp
+    headers/legacy.cpp
     headers/macro.cpp
     headers/msl.cpp
     headers/pool.cpp
