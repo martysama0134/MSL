@@ -117,3 +117,216 @@ All notable changes to this project are documented in this file.
 - `cast` floating-to-integral conversion paths now validate finite/range/truncation before cast.
 - `file_ptr::string_read(char[], n)` now has defined and safe behavior for `n == 0`.
 - `file_ptr::read(n)` now returns a vector resized to actual bytes read.
+
+## [2.2.0] - 2025-02-09
+
+### Added
+
+- New `shared_pool` module for pooled shared-object lifetime management.
+- Pool APIs now support variadic construction paths.
+- Added `pool::debug_deallocate_all` for pool diagnostics/cleanup workflows.
+
+### Changed
+
+- Standardized header include guards and normalized include ordering across headers.
+
+## [2.1.0] - 2025-02-08
+
+### Changed
+
+- Removed concepts as a hard requirement to improve compiler compatibility.
+
+## [2.0.0] - 2025-02-07
+
+### Added
+
+- New smart-pointer utilities: `scoped_shared_ptr`, `observer_ptr`, and related no-owner pointer support.
+- New range helpers: `enumerate` and `for_each_indexed`.
+- New utility math helpers: `calculate_percentage` and `value_from_percentage`.
+
+### Changed
+
+- Refactored `range` internals and `file_ptr` internals.
+
+### Fixed
+
+- `string_split` vector output path now initializes defaults correctly.
+
+## [1.4.3] - 2023-03-30
+
+### Fixed
+
+- Fixed `range` module interoperability with standard containers.
+
+## [1.4.2] - 2023-01-24
+
+### Added
+
+- Added reverse-loop helper macro `MSL_FOR_RLOOP`.
+
+## [1.4.1] - 2022-12-22
+
+### Changed
+
+- Updated `random.h` documentation coverage.
+
+## [1.4.0] - 2022-12-12
+
+### Changed
+
+- Continued `std::string_view` refactor (part 2) across string/file interfaces.
+
+## [1.3.9] - 2022-12-12
+
+### Changed
+
+- Expanded `MSL_FILE_PTR_ENABLE_WIDE_STRING` support with full wchar-to-char handling paths.
+
+## [1.3.8] - 2022-12-12
+
+### Changed
+
+- Refactored string-oriented APIs toward `std::string_view` usage.
+
+## [1.3.7] - 2022-12-11
+
+### Changed
+
+- Replaced `readline` naming with `getline` in `file_ptr` APIs.
+- Reworked wide-string platform gating from `_WIN32` checks to `MSL_FILE_PTR_ENABLE_WIDE_STRING`.
+
+## [1.3.6] - 2022-12-11
+
+### Added
+
+- Added `file_ptr` line-reading support and `MSL_FILE_PTR_ENABLE_STORE_FILENAME`.
+
+## [1.3.5] - 2022-09-29
+
+### Fixed
+
+- Fixed warning around `test_error::what` override.
+
+## [1.3.4] - 2022-06-20
+
+### Fixed
+
+- Resolved `min`/`max` conflicts when `windows.h` is included.
+
+## [1.3.3] - 2022-06-15
+
+### Added
+
+- Added `MSL_FORCE_NOMINMAX` macro for Windows compatibility control.
+
+## [1.3.2] - 2022-06-08
+
+### Added
+
+- Added `msl::avg_bench`.
+
+### Changed
+
+- Temporarily disabled `msl::test_assert` under `-fno-exceptions` configurations.
+
+## [1.3.1] - 2022-06-05
+
+### Added
+
+- Added random-distribution validation tests.
+
+### Changed
+
+- Increased benchmark iterations and improved benchmark output clarity.
+- Updated `MSL_FOR_LOOP` to use pre-increment iteration.
+
+### Fixed
+
+- Corrected default random-engine seeding/first-result behavior.
+
+## [1.3.0] - 2022-06-04
+
+### Added
+
+- Introduced the random module (`random_number`, `random_real`, `random_from`, and related engine helpers).
+- Added test/assert and benchmark helpers (`msl::test_assert`, `MSL_TEST_ASSERT`, `MSL_TEST_ASSERT_WN`, `msl::named_bench`, `MSL_FOR_LOOP`).
+- Expanded `file_ptr` with wchar/wstring string-write support, stream/flush arguments, and simple fread wrappers.
+
+### Changed
+
+- Refactored `range`/`xrange` and `file_ptr` internals, including include-guard and test harness cleanup.
+
+### Fixed
+
+- Addressed Linux/non-Windows build issues, `fseek` warnings, `xrange` integer-step handling, and range template-specialization edge cases.
+
+## [1.2.2] - 2019-05-03
+
+### Changed
+
+- Refactored `string_replace` internals.
+
+## [1.2.1] - 2019-04-28
+
+### Changed
+
+- Documentation refresh in `README.md`.
+
+## [1.2.0] - 2019-04-28
+
+### Added
+
+- Added `msl::trim`.
+
+### Changed
+
+- Improved trim implementation and simplified empty-string checks.
+
+## [1.1.8] - 2018-09-11
+
+### Added
+
+- Added `msl::refill` support using free-function `begin/end` for generic containers.
+- Extended `file_ptr` read/write pointer overload coverage (`char*`/`void*` paths).
+
+### Fixed
+
+- Fixed clang compatibility in `refill` (`typename value_type`) and refreshed Unix formatting/tooling patterns.
+
+## [1.1.1] - 2018-08-24
+
+### Added
+
+- Added `msl::refill` for C arrays and standard containers.
+
+## [1.0.9] - 2018-08-24
+
+### Added
+
+- Added `file_ptr` buffer-read/string-read helpers and accessor helpers (`get_ref`, `get_ptr`).
+
+### Changed
+
+- `file_ptr` constructors/open/reset paths now accept const string-reference inputs.
+- Refined `file_ptr` reset/move behavior and implicit-conversion feature gating.
+
+## [1.0.4] - 2018-08-23
+
+### Added
+
+- Added implicit `FILE*` conversion support for `file_ptr`.
+
+## [1.0.3] - 2018-08-15
+
+### Added
+
+- Initial stabilized release of core utilities: `file_ptr`, `range`/`xrange`, `string_split`, `string_join`, `string_replace`, and cast helpers.
+- Introduced early benchmark/test scaffolding and build-script support.
+
+### Changed
+
+- Refined header/template structure for utility APIs and improved cross-platform compiler settings.
+
+### Fixed
+
+- Fixed early `file_ptr` correctness issues (operators, move/swap/default ctor/dtor behavior) and multiple warning-level portability problems.
