@@ -3,10 +3,9 @@
 ## Language and Toolchain Baseline
 
 - Language level: C++20.
-- Stability-first subset: prefer broadly stable C++20 features across target toolchains.
-- Avoid hard dependency on unstable library areas unless guarded:
-  - `std::format`
-  - `std::ranges`
+- `std::format` is a required baseline dependency in v4.0+.
+- `std::ranges` is a required baseline dependency in v4.0+.
+- Consumers must use a standard library implementation that provides both features in C++20 mode.
 
 ## Exceptions Policy
 
@@ -24,14 +23,14 @@
 ## Official Compiler Targets
 
 - Visual Studio 2022 (MSVC v143)
-- Clang 18+
-- Linux default latest Debian preinstalled toolchain
+- GCC 14+ (libstdc++)
+- Clang 19+ with libstdc++ 14+ or libc++ 19+
 - FreeBSD default `cc` / `c++` (Clang 18/19 on FreeBSD 14/15)
 
 ## API Compatibility
 
 - Compatibility is preferred for existing APIs unless a break provides clear safety/correctness value.
-- Breaking changes require migration notes in `docs/MIGRATION_v3.md`.
+- Breaking changes require migration notes in `docs/MIGRATION_v4.md`.
 - `MSL_FOR_*` macros are supported public API.
 
 ## Validation Model

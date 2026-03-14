@@ -7,7 +7,7 @@ This document tracks compatibility-focused APIs exposed from `<msl/legacy.h>`.
 - Legacy APIs are opt-in via explicit include (`#include <msl/legacy.h>`).
 - Legacy APIs are exposed in `namespace msl` for source compatibility.
 - `namespace std` extension APIs are not provided.
-- Legacy APIs are reviewed for potential removal or migration policy changes in v4.
+- Legacy APIs are retained in v4 and reviewed for potential removal or migration policy changes in future major versions.
 
 ## Implemented in `msl/legacy.h`
 

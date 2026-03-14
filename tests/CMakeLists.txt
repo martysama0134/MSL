@@ -4,6 +4,8 @@ add_executable(
     test_pool.cpp
     test_file_ptr.cpp
     test_utils.cpp
+    test_range.cpp
+    test_feature_gates.cpp
     test_traits.cpp
     test_cast.cpp
     test_legacy.cpp
@@ -19,6 +21,22 @@ else()
 endif()
 
 add_test(NAME msl.tests COMMAND msl_tests)
+
+add_executable(
+    msl_toolchain_info
+    toolchain_info.cpp
+)
+
+target_link_libraries(msl_toolchain_info PRIVATE msl::msl)
+target_compile_features(msl_toolchain_info PRIVATE cxx_std_20)
+
+if(MSVC)
+    target_compile_options(msl_toolchain_info PRIVATE /W4 /permissive-)
+else()
+    target_compile_options(msl_toolchain_info PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+add_test(NAME msl.toolchain_info COMMAND msl_toolchain_info)
 
 add_library(
     msl_header_smoke OBJECT

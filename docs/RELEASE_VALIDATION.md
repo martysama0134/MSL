@@ -7,11 +7,14 @@ This document defines the required validation checks for a release candidate.
 The following GitHub Actions jobs must be green before tagging a release:
 
 - `windows-msvc (VS2022)`
-- `debian-default`
-- `debian-clang`
+- `linux-gcc14-libstdcxx`
+- `linux-clang19-libstdcxx`
+- `linux-clang19-libcxx`
 - `linux-clang-asan-ubsan`
 
 The `alpine-clang` lane is intentionally non-blocking and can fail without blocking release.
+All blocking lanes must emit successful toolchain probe output (`msl.toolchain_info`) including
+`__cpp_lib_format` and `__cpp_lib_ranges`.
 
 ## Required FreeBSD Manual Gate
 
@@ -39,5 +42,5 @@ Record for each FreeBSD run:
 
 1. CI required lanes are green.
 2. FreeBSD 14.x and 15.x manual validation logs are attached.
-3. `README.md`, `CHANGELOG.md`, and `docs/MIGRATION_v3.md` are updated.
+3. `README.md`, `CHANGELOG.md`, and `docs/MIGRATION_v4.md` are updated.
 4. Tag creation is based on the validated commit SHA.

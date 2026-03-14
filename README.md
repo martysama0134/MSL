@@ -78,17 +78,18 @@ target_link_libraries(your_target PRIVATE msl::msl)
 | Platform | Compiler/toolchain | Status |
 | --- | --- | --- |
 | Windows | Visual Studio 2022 (MSVC v143) | First-class |
-| Linux | Debian default latest preinstalled toolchain | First-class |
-| Linux | Clang 18+ | First-class |
+| Linux | GCC 14+ (libstdc++) | First-class |
+| Linux | Clang 19+ (libstdc++14+ or libc++19+) | First-class |
 | FreeBSD 14/15 | Default `cc` / `c++` (Clang 18/19) | Release-gated manual validation |
 
-MSL targets C++20 with a stability-first subset. `std::format` and `std::ranges` are treated as optional/incremental features, not mandatory baseline dependencies.
+MSL targets C++20 and requires `std::format` plus `std::ranges` as baseline dependencies in v4.0+.
 
 Current CI quality gates:
 
 - `windows-msvc` (blocking)
-- `debian-default` (blocking)
-- `debian-clang` (blocking)
+- `linux-gcc14-libstdcxx` (blocking)
+- `linux-clang19-libstdcxx` (blocking)
+- `linux-clang19-libcxx` (blocking)
 - `linux-clang-asan-ubsan` (blocking)
 - `alpine-clang` (non-blocking)
 
@@ -136,6 +137,7 @@ int main() {
 - `file_ptr`:
   - `open(std::string_view, ...)` now opens through owned null-terminated strings.
   - reopening via `open(...)` first closes any currently owned file handle.
+  - formatted `write(fmt, args...)` uses `std::format` placeholders (not `printf` format strings).
   - byte-oriented write helpers return bytes written.
   - `string_read(char[], n)` is defined for `n == 0` (no-op) and always null-terminates for `n > 0`.
 - `cast`:
@@ -204,9 +206,9 @@ Example executables:
 
 ## Versioning and Release Notes
 
-- Current release target: `v3.2.0`.
+- Current release target: `v4.0.0`.
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
-- Migration notes: [docs/MIGRATION_v3.md](docs/MIGRATION_v3.md)
+- Migration notes: [docs/MIGRATION_v4.md](docs/MIGRATION_v4.md)
 - Compatibility policy: [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md)
 - Legacy API map: [docs/LEGACY_API_MAP.md](docs/LEGACY_API_MAP.md)
 - Release validation gate: [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md)

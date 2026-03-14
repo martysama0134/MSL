@@ -21,6 +21,7 @@
 #include <cstdio>
 #include <cstring>
 #include <cwchar>
+#include <format>
 #include <ios>
 #include <optional>
 #include <span>
@@ -252,9 +253,13 @@ public:
 	//! @brief return the file size from the current position; alias of size(true)
 	std::size_t remain_size() const { return size(true); }
 
-	//! @brief write into the file from stream
-	template<class... Args>
-	void write(const char* _Format, Args&&... args) const { std::fprintf(m_ptr_, _Format, std::forward<Args>(args)...); }
+	//! @brief write into the file from format string
+	template <class... Args>
+	void write(std::format_string<Args...> fmt, Args&&... args) const
+	{
+		const auto formatted = std::format(fmt, std::forward<Args>(args)...);
+		(void)string_write(formatted);
+	}
 	//! @brief write into the file from byte vector
 	std::size_t write(const std::vector<char> & vec) const { return std::fwrite(vec.data(), 1, vec.size(), m_ptr_); }
 	//! @brief write into the file from c array

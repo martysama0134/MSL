@@ -1,8 +1,8 @@
 #pragma once
 
 #include <functional>
+#include <format>
 #include <iostream>
-#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -21,9 +21,7 @@ inline void expect(bool condition, const char * expr, const char * file, int lin
     if (condition)
         return;
 
-    std::ostringstream oss;
-    oss << file << ":" << line << " expectation failed: " << expr;
-    throw std::runtime_error(oss.str());
+    throw std::runtime_error(std::format("{}:{} expectation failed: {}", file, line, expr));
 }
 
 inline int run_all(const std::vector<test_case> & cases)

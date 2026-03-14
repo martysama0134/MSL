@@ -19,15 +19,34 @@
 
 #include <algorithm>
 #include <cmath>
+#include <concepts>
 #include <cstdint>
 #include <iterator>
 #include <limits>
+#include <ranges>
 #include <string>
+#include <string_view>
 #include <type_traits>
 #include <vector>
 
 namespace msl
 {
+
+namespace details
+{
+template <typename T>
+concept string_like =
+	std::convertible_to<T, std::string_view> ||
+	std::same_as<std::remove_cvref_t<T>, char>;
+
+template <typename T> inline void append_string_like(std::string & target, T && value)
+{
+	if constexpr (std::same_as<std::remove_cvref_t<T>, char>)
+		target += value;
+	else
+		target += std::string_view(value);
+}
+} // namespace details
 
 //! @brief string_split split a string into a vector by providing a single delim character
 template <class T = std::vector<std::string>> T string_split(const std::string & str, char tok = ' ')
@@ -83,28 +102,36 @@ template <class T = std::vector<std::string>> T string_split_any(const std::stri
 	return vec;
 }
 
-//! @brief string_join join a vector into a string by uniting them with tok char
-template <class T = std::vector<std::string>> std::string string_join(const T & vec, const char tok = ' ')
+//! @brief string_join joins a string-like range into a string by uniting elements with tok char
+template <std::ranges::input_range Range>
+requires details::string_like<std::remove_cvref_t<std::ranges::range_reference_t<Range>>>
+std::string string_join(const Range & vec, const char tok = ' ')
 {
 	std::string str;
-	for (auto & elem : vec)
+	bool first = true;
+	for (const auto & elem : vec)
 	{
-		if (!str.empty())
+		if (!first)
 			str += tok;
-		str += elem;
+		first = false;
+		details::append_string_like(str, elem);
 	}
 	return str;
 }
 
-//! @brief string_join join a vector into a string by uniting them with tok string
-template <class T = std::vector<std::string>> std::string string_join(const T & vec, const std::string & tok = " ")
+//! @brief string_join joins a string-like range into a string by uniting elements with tok string
+template <std::ranges::input_range Range>
+requires details::string_like<std::remove_cvref_t<std::ranges::range_reference_t<Range>>>
+std::string string_join(const Range & vec, const std::string & tok = " ")
 {
 	std::string str;
-	for (auto & elem : vec)
+	bool first = true;
+	for (const auto & elem : vec)
 	{
-		if (!str.empty())
+		if (!first)
 			str += tok;
-		str += elem;
+		first = false;
+		details::append_string_like(str, elem);
 	}
 	return str;
 }
@@ -240,25 +267,25 @@ inline std::string trim(std::string str, const char * chars = whitespaces())
 //! @brief refill for c arrays (set default value)
 template <class _Ty, std::size_t _Size> constexpr void refill(_Ty (&_Array)[_Size]) noexcept
 {
-	std::fill(std::begin(_Array), std::end(_Array), _Ty());
+	std::ranges::fill(_Array, _Ty());
 }
 
 //! @brief refill for c arrays (set custom value)
 template <class _Ty, std::size_t _Size> constexpr void refill(_Ty (&_Array)[_Size], _Ty _Elem) noexcept
 {
-	std::fill(std::begin(_Array), std::end(_Array), _Elem);
+	std::ranges::fill(_Array, _Elem);
 }
 
 //! @brief refill for std containers (set default value)
 template <class _Container> constexpr void refill(_Container & _Cont)
 {
-	std::fill(std::begin(_Cont), std::end(_Cont), typename _Container::value_type());
+	std::ranges::fill(_Cont, typename _Container::value_type());
 }
 
 //! @brief refill for std containers (set custom value)
 template <class _Container, class _Ty> constexpr void refill(_Container & _Cont, _Ty _Elem)
 {
-	std::fill(std::begin(_Cont), std::end(_Cont), _Elem);
+	std::ranges::fill(_Cont, _Elem);
 }
 
 //! @brief get the percentage between current and max

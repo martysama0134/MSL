@@ -92,6 +92,28 @@ void test_write_reports_bytes()
     remove_file_if_exists(path);
 }
 
+void test_write_uses_std_format_syntax()
+{
+    const std::string path = "msl_file_ptr_std_format.tmp";
+    remove_file_if_exists(path);
+
+    {
+        msl::file_ptr file(path, "wb");
+        MSL_EXPECT(file.is_open());
+
+        file.write("{} + {} = {}", 2, 3, 5);
+        file.write(" [{}]", "ok");
+    }
+
+    {
+        msl::file_ptr file(path, "rb");
+        MSL_EXPECT(file.is_open());
+        MSL_EXPECT(file.string_read() == "2 + 3 = 5 [ok]");
+    }
+
+    remove_file_if_exists(path);
+}
+
 void test_read_returns_actual_bytes()
 {
     const std::string path = "msl_file_ptr_read_size.tmp";
@@ -131,6 +153,7 @@ void run_file_ptr_tests()
     test_open_with_non_null_terminated_string_view();
     test_reopen_is_safe();
     test_write_reports_bytes();
+    test_write_uses_std_format_syntax();
     test_read_returns_actual_bytes();
     test_string_read_buffer_behavior();
 }

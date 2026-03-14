@@ -25,38 +25,69 @@ jobs:
         run: cmake --preset ci-windows
       - name: Build
         run: cmake --build --preset ci-windows
+      - name: Feature/toolchain probe
+        run: ctest --preset ci-windows -R msl.toolchain_info -V
       - name: Test
         run: ctest --preset ci-windows
 
-  debian-default:
-    name: debian-default
+  linux-gcc14-libstdcxx:
+    name: linux-gcc14-libstdcxx
     runs-on: ubuntu-latest
-    container: debian:bookworm
+    container: debian:trixie
     steps:
       - name: Install dependencies
-        run: apt-get update && apt-get install -y --no-install-recommends git cmake ninja-build g++ ca-certificates
+        run: apt-get update && apt-get install -y --no-install-recommends git cmake ninja-build gcc-14 g++-14 ca-certificates
       - uses: actions/checkout@v4
+      - name: Compiler version
+        run: g++-14 --version
       - name: Configure
-        run: cmake --preset ci-linux
+        run: cmake --preset ci-linux -DCMAKE_C_COMPILER=gcc-14 -DCMAKE_CXX_COMPILER=g++-14
       - name: Build
         run: cmake --build --preset ci-linux
+      - name: Feature/toolchain probe
+        run: ctest --preset ci-linux -R msl.toolchain_info -V
       - name: Test
         run: ctest --preset ci-linux
 
-  debian-clang:
-    name: debian-clang
+  linux-clang19-libstdcxx:
+    name: linux-clang19-libstdcxx
     runs-on: ubuntu-latest
-    container: debian:bookworm
+    container: debian:trixie
     steps:
       - name: Install dependencies
-        run: apt-get update && apt-get install -y --no-install-recommends git cmake ninja-build clang ca-certificates
+        run: apt-get update && apt-get install -y --no-install-recommends git cmake ninja-build clang-19 g++-14 ca-certificates
       - uses: actions/checkout@v4
+      - name: Compiler version
+        run: |
+          clang++-19 --version
+          g++-14 --version
       - name: Configure
-        run: cmake --preset ci-linux -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
+        run: cmake --preset ci-linux -DCMAKE_C_COMPILER=clang-19 -DCMAKE_CXX_COMPILER=clang++-19
       - name: Build
         run: cmake --build --preset ci-linux
+      - name: Feature/toolchain probe
+        run: ctest --preset ci-linux -R msl.toolchain_info -V
       - name: Test
         run: ctest --preset ci-linux
+
+  linux-clang19-libcxx:
+    name: linux-clang19-libcxx
+    runs-on: ubuntu-latest
+    container: debian:trixie
+    steps:
+      - name: Install dependencies
+        run: apt-get update && apt-get install -y --no-install-recommends git cmake ninja-build clang-19 libc++-19-dev libc++abi-19-dev ca-certificates
+      - uses: actions/checkout@v4
+      - name: Compiler version
+        run: clang++-19 --version
+      - name: Configure
+        run: cmake --preset ci-linux-libcxx -DCMAKE_C_COMPILER=clang-19 -DCMAKE_CXX_COMPILER=clang++-19
+      - name: Build
+        run: cmake --build --preset ci-linux-libcxx
+      - name: Feature/toolchain probe
+        run: ctest --preset ci-linux-libcxx -R msl.toolchain_info -V
+      - name: Test
+        run: ctest --preset ci-linux-libcxx
 
   linux-clang-asan-ubsan:
     name: linux-clang-asan-ubsan
@@ -66,12 +97,16 @@ jobs:
       UBSAN_OPTIONS: print_stacktrace=1
     steps:
       - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends cmake ninja-build clang
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends cmake ninja-build clang-18
       - uses: actions/checkout@v4
+      - name: Compiler version
+        run: clang++-18 --version
       - name: Configure
-        run: cmake --preset ci-linux-asan -DCMAKE_CXX_COMPILER=clang++
+        run: cmake --preset ci-linux-asan -DCMAKE_C_COMPILER=clang-18 -DCMAKE_CXX_COMPILER=clang++-18
       - name: Build
         run: cmake --build --preset ci-linux-asan
+      - name: Feature/toolchain probe
+        run: ctest --preset ci-linux-asan -R msl.toolchain_info -V
       - name: Test
         run: ctest --preset ci-linux-asan
       - name: Example smoke
@@ -86,9 +121,13 @@ jobs:
       - name: Install dependencies
         run: apk add --no-cache git cmake ninja clang build-base
       - uses: actions/checkout@v4
+      - name: Compiler version
+        run: clang++ --version
       - name: Configure
         run: cmake --preset ci-linux -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++
       - name: Build
         run: cmake --build --preset ci-linux
+      - name: Feature/toolchain probe
+        run: ctest --preset ci-linux -R msl.toolchain_info -V
       - name: Test
         run: ctest --preset ci-linux

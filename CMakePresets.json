@@ -25,6 +25,19 @@
       }
     },
     {
+      "name": "ci-linux-libcxx",
+      "displayName": "CI Linux Clang libc++ Release",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/ci-linux-libcxx",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "MSL_BUILD_TESTS": "ON",
+        "CMAKE_CXX_FLAGS": "-stdlib=libc++",
+        "CMAKE_EXE_LINKER_FLAGS": "-stdlib=libc++",
+        "CMAKE_SHARED_LINKER_FLAGS": "-stdlib=libc++"
+      }
+    },
+    {
       "name": "ci-linux-asan",
       "displayName": "CI Linux Clang ASan+UBSan",
       "generator": "Ninja",
@@ -62,6 +75,10 @@
       "configurePreset": "ci-linux"
     },
     {
+      "name": "ci-linux-libcxx",
+      "configurePreset": "ci-linux-libcxx"
+    },
+    {
       "name": "ci-linux-asan",
       "configurePreset": "ci-linux-asan"
     },
@@ -82,6 +99,13 @@
     {
       "name": "ci-linux",
       "configurePreset": "ci-linux",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "ci-linux-libcxx",
+      "configurePreset": "ci-linux-libcxx",
       "output": {
         "outputOnFailure": true
       }

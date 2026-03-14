@@ -4,6 +4,33 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [4.0.0] - 2026-03-14
+
+### Added
+
+- New compile-time feature gate tests for C++20 `std::format` and `std::ranges` support.
+- New range regression suite (`tests/test_range.cpp`) covering const ranges, spans, and `enumerate`/`for_each_indexed` usage.
+- New CI toolchain probe executable (`msl_toolchain_info`) that reports compiler/STL and feature macro values.
+- New migration guide `docs/MIGRATION_v4.md`.
+- New Linux libc++ CI preset (`ci-linux-libcxx`).
+
+### Changed
+
+- CMake project version is now `4.0.0`.
+- `file_ptr::write(fmt, args...)` now uses C++20 `std::format` placeholder syntax.
+- `utils` now provides `std::ranges`-constrained `string_join` overloads for string-like input ranges.
+- `range` helpers now accept `std::ranges` input ranges, including const ranges.
+- Blocking Linux CI lanes now pin explicit supported toolchains on Debian Trixie:
+  - GCC 14 + libstdc++
+  - Clang 19 + libstdc++
+  - Clang 19 + libc++
+- ASan/UBSan lane now pins Clang 18 on Ubuntu 24.04.
+- Compatibility and release-validation docs updated for the v4 toolchain baseline.
+
+### Breaking
+
+- `msl::file_ptr::write` no longer accepts printf `%` format strings; callers must use `std::format` style strings.
+
 ## [3.2.0] - 2026-03-05
 
 ### Added

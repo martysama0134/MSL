@@ -18,8 +18,10 @@
 #pragma once
 
 #include <algorithm>
+#include <concepts>
 #include <cstddef>
 #include <iterator>
+#include <ranges>
 #include <tuple>
 #include <type_traits>
 #include <utility>
@@ -103,13 +105,14 @@ private:
 		else
 			m_vec_.resize(static_cast<std::size_t>((max - min) / diff) + ((max - min) % diff ? 1 : 0));
 
-		std::generate(m_vec_.begin(), m_vec_.end(),
-					  [&min, diff]()
-					  {
-						  T current = min;
-						  min += diff;
-						  return current;
-					  });
+		std::ranges::generate(
+			m_vec_,
+			[&min, diff]()
+			{
+				T current = min;
+				min += diff;
+				return current;
+			});
 	}
 }; // xrange
 
@@ -121,7 +124,8 @@ using xfrange = xrange<float>;
 using xdrange = xrange<double>;
 
 // for_each_indexed (iterator-based)
-template <typename It, typename Func> void for_each_indexed(It begin, It end, Func func)
+template <std::input_iterator It, std::sentinel_for<It> Sent, typename Func>
+void for_each_indexed(It begin, Sent end, Func func)
 {
 	std::size_t index = 0;
 	for (auto it = begin; it != end; ++it, ++index)
@@ -130,18 +134,20 @@ template <typename It, typename Func> void for_each_indexed(It begin, It end, Fu
 	}
 }
 
-// for_each_indexed (container-based)
-template <typename Container, typename Func> void for_each_indexed(Container & c, Func func)
+// for_each_indexed (range-based)
+template <std::ranges::input_range Range, typename Func> void for_each_indexed(Range && range, Func func)
 {
-	for_each_indexed(std::begin(c), std::end(c), func);
+	for_each_indexed(std::ranges::begin(range), std::ranges::end(range), std::move(func));
 }
 
-template <typename Container> class enumerate_view
+template <std::ranges::view View>
+requires std::ranges::input_range<View> && std::ranges::common_range<View>
+class enumerate_view
 {
-	using iterator_type = decltype(std::begin(std::declval<Container &>()));
+	using iterator_type = std::ranges::iterator_t<View>;
 
 public:
-	explicit enumerate_view(Container & container) : container_(&container) {}
+	explicit enumerate_view(View view) : view_(std::move(view)) {}
 
 	class iterator
 	{
@@ -164,14 +170,19 @@ public:
 		iterator_type it_;
 	};
 
-	iterator begin() { return iterator{0, std::begin(*container_)}; }
-	iterator end() { return iterator{0, std::end(*container_)}; }
+	iterator begin() { return iterator{0, std::ranges::begin(view_)}; }
+	iterator end() { return iterator{0, std::ranges::end(view_)}; }
 
 private:
-	Container * container_{};
+	View view_;
 };
 
-template <typename Container> auto enumerate(Container & container) { return enumerate_view<Container>{container}; }
+template <std::ranges::viewable_range Range>
+requires std::ranges::input_range<Range> && std::ranges::common_range<std::views::all_t<Range>>
+auto enumerate(Range && range)
+{
+	return enumerate_view<std::views::all_t<Range>>{std::views::all(std::forward<Range>(range))};
+}
 
 } // namespace msl
 #endif // MSL_RANGE_H__
