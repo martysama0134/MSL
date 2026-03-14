@@ -17,7 +17,8 @@ All notable changes to this project are documented in this file.
 ### Changed
 
 - CMake project version is now `4.0.0`.
-- `file_ptr::write(fmt, args...)` now uses C++20 `std::format` placeholder syntax.
+- `file_ptr::write(fmt, args...)` keeps legacy `printf` formatting compatibility.
+- New `file_ptr::write_fmt(fmt, args...)` adds C++20 `std::format` formatting.
 - `utils` now provides `std::ranges`-constrained `string_join` overloads for string-like input ranges.
 - `range` helpers now accept `std::ranges` input ranges, including const ranges.
 - Blocking Linux CI lanes now pin explicit supported toolchains on Debian Trixie:
@@ -26,10 +27,6 @@ All notable changes to this project are documented in this file.
   - Clang 19 + libc++
 - ASan/UBSan lane now pins Clang 18 on Ubuntu 24.04.
 - Compatibility and release-validation docs updated for the v4 toolchain baseline.
-
-### Breaking
-
-- `msl::file_ptr::write` no longer accepts printf `%` format strings; callers must use `std::format` style strings.
 
 ## [3.2.0] - 2026-03-05
 

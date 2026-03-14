@@ -2,20 +2,19 @@
 
 This guide documents behavior and platform baseline changes introduced in v4.0.
 
-## 1) `msl::file_ptr::write` format syntax change (breaking)
+## 1) `msl::file_ptr` now supports both legacy and modern formatting
 
 ### What changed
 
-The formatted overload now uses C++20 `std::format` syntax:
+v4.0 keeps legacy `printf` formatting and adds a new C++20 formatting path:
 
-- Old style: `file.write("%d %s", 42, "ok")`
-- New style: `file.write("{} {}", 42, "ok")`
-
-The printf-style formatted backend has been removed from `file_ptr::write`.
+- Legacy style (unchanged): `file.write("%d %s", 42, "ok")`
+- New style: `file.write_fmt("{} {}", 42, "ok")`
 
 ### Migration impact
 
-Call sites that used `%` specifiers must be updated to `{}` format strings.
+No migration is required for existing `write("%...")` call sites.
+Use `write_fmt` when you want `std::format` syntax and compile-time format checking.
 
 ## 2) C++20 library feature baseline is now mandatory
 

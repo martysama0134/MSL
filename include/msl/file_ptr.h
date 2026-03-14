@@ -253,9 +253,16 @@ public:
 	//! @brief return the file size from the current position; alias of size(true)
 	std::size_t remain_size() const { return size(true); }
 
-	//! @brief write into the file from format string
+	//! @brief write into the file from printf format string (legacy-compatible)
 	template <class... Args>
-	void write(std::format_string<Args...> fmt, Args&&... args) const
+	void write(const char * format, Args&&... args) const
+	{
+		std::fprintf(m_ptr_, format, std::forward<Args>(args)...);
+	}
+
+	//! @brief write into the file from std::format string
+	template <class... Args>
+	void write_fmt(std::format_string<Args...> fmt, Args&&... args) const
 	{
 		const auto formatted = std::format(fmt, std::forward<Args>(args)...);
 		(void)string_write(formatted);

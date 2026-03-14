@@ -137,7 +137,8 @@ int main() {
 - `file_ptr`:
   - `open(std::string_view, ...)` now opens through owned null-terminated strings.
   - reopening via `open(...)` first closes any currently owned file handle.
-  - formatted `write(fmt, args...)` uses `std::format` placeholders (not `printf` format strings).
+  - `write(fmt, args...)` keeps legacy `printf` formatting compatibility.
+  - `write_fmt(fmt, args...)` provides C++20 `std::format` formatting.
   - byte-oriented write helpers return bytes written.
   - `string_read(char[], n)` is defined for `n == 0` (no-op) and always null-terminates for `n > 0`.
 - `cast`:
