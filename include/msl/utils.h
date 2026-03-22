@@ -136,6 +136,20 @@ std::string string_join(const Range & vec, const std::string & tok = " ")
 	return str;
 }
 
+//! @brief string_join with std::initializer_list (braced-init-list support)
+template <details::string_like T>
+std::string string_join(std::initializer_list<T> list, const char tok = ' ')
+{
+	return string_join<std::initializer_list<T>>(list, tok);
+}
+
+//! @brief string_join with std::initializer_list (braced-init-list support)
+template <details::string_like T>
+std::string string_join(std::initializer_list<T> list, const std::string & tok = " ")
+{
+	return string_join<std::initializer_list<T>>(list, tok);
+}
+
 //! @brief string_replace_in_place replace all char instances of 'from' to 'to' from the input string
 inline void string_replace_in_place(std::string & str, const char from, const char to)
 {
