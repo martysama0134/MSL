@@ -9,6 +9,9 @@ add_executable(
     test_traits.cpp
     test_cast.cpp
     test_legacy.cpp
+    test_ptr.cpp
+    test_random.cpp
+    test_bench.cpp
 )
 
 target_link_libraries(msl_tests PRIVATE msl::msl)

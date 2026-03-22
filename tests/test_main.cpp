@@ -8,6 +8,9 @@ void run_feature_gate_tests();
 void run_cast_tests();
 void run_legacy_tests();
 void run_traits_tests();
+void run_ptr_tests();
+void run_random_tests();
+void run_bench_tests();
 
 int main()
 {
@@ -20,6 +23,9 @@ int main()
         {"traits regression tests", run_traits_tests},
         {"cast regression tests", run_cast_tests},
         {"legacy compatibility tests", run_legacy_tests},
+        {"ptr regression tests", run_ptr_tests},
+        {"random regression tests", run_random_tests},
+        {"bench regression tests", run_bench_tests},
     };
 
     const int failures = msl_test::run_all(tests);
