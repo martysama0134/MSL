@@ -82,6 +82,23 @@ void test_random_int_produces_variety()
     // 100 draws from [0,99] should produce at least 10 distinct values
     MSL_EXPECT(seen.size() >= 10);
 }
+void test_random_element_returns_value()
+{
+    const std::vector<int> items = {10, 20, 30};
+    for (int i = 0; i < 50; ++i)
+    {
+        auto val = msl::random_element(items);
+        MSL_EXPECT(val.has_value());
+        MSL_EXPECT(*val == 10 || *val == 20 || *val == 30);
+    }
+}
+
+void test_random_element_empty()
+{
+    const std::vector<int> empty;
+    auto val = msl::random_element(empty);
+    MSL_EXPECT(!val.has_value());
+}
 } // namespace
 
 void run_random_tests()
@@ -94,4 +111,6 @@ void run_random_tests()
     test_random_from_container();
     test_random_from_empty();
     test_random_int_produces_variety();
+    test_random_element_returns_value();
+    test_random_element_empty();
 }

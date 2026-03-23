@@ -21,6 +21,7 @@
 #include <chrono>
 #include <iterator>
 #include <limits>
+#include <optional>
 #include <random>
 #include <type_traits>
 
@@ -122,6 +123,14 @@ namespace msl
 		auto iter = std::begin(container);
 		std::advance(iter, random_number<size_type>(0, std::size(container) - 1));
 		return iter;
+	}
+
+	//! @brief random_element(container) returns an optional copy of a random element
+	template<typename T>
+	auto random_element(const T& container) -> std::optional<typename T::value_type> {
+		if (std::empty(container))
+			return std::nullopt;
+		return *random_from(container);
 	}
 
 } // namespace msl
