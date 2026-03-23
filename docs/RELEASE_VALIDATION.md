@@ -42,5 +42,5 @@ Record for each FreeBSD run:
 
 1. CI required lanes are green.
 2. FreeBSD 14.x and 15.x manual validation logs are attached.
-3. `README.md`, `CHANGELOG.md`, and `docs/MIGRATION_v4.md` are updated.
+3. `README.md`, `CHANGELOG.md`, `docs/COMPATIBILITY.md`, and `docs/MIGRATION_v4.md` are updated.
 4. Tag creation is based on the validated commit SHA.

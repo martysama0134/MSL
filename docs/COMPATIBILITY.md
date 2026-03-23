@@ -5,7 +5,8 @@
 - Language level: C++20.
 - `std::format` is a required baseline dependency in v4.0+.
 - `std::ranges` is a required baseline dependency in v4.0+.
-- Consumers must use a standard library implementation that provides both features in C++20 mode.
+- `<compare>` (three-way comparison) is used by `observer_ptr` in v4.1+.
+- Consumers must use a standard library implementation that provides these features in C++20 mode.
 
 ## Exceptions Policy
 

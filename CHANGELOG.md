@@ -4,6 +4,19 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- `observer_ptr` now supports `operator<=>` (defaulted), synthesizing `==`, `!=`, `<`, `<=`, `>`, `>=` — enables use in `std::set`, `std::unordered_set`, and sorted algorithms.
+- New `msl::random_element(container)` returns `std::optional<value_type>` — a value-returning alternative to iterator-based `random_from`.
+- `string_join` now accepts `std::initializer_list` arguments, fixing MSVC braced-init-list deduction failures.
+- New test suites for `ptr`, `random`, and `bench` modules.
+- Extended test coverage for `utils` (trim, string_replace, string_split_any, calculate_percentage, value_from_percentage) and `range` (irange, xrange edge cases).
+
+### Changed
+
+- `<msl/ptr.h>` now includes `<compare>` for three-way comparison support.
+- `<msl/random.h>` now includes `<optional>` for `random_element` return type.
+
 ## [4.0.0] - 2026-03-14
 
 ### Added
