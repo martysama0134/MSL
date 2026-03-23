@@ -4,6 +4,8 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [4.1.0] - 2026-03-23
+
 ### Added
 
 - `observer_ptr` now supports `operator<=>` (defaulted), synthesizing `==`, `!=`, `<`, `<=`, `>`, `>=` — enables use in `std::set`, `std::unordered_set`, and sorted algorithms.

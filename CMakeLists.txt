@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.23)
 
 project(
     MSL
-    VERSION 4.0.0
+    VERSION 4.1.0
     DESCRIPTION "Marty Support Library (header-only C++20 utilities)"
     LANGUAGES CXX
 )
