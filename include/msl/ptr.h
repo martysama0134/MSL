@@ -17,6 +17,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 #pragma once
 
+#include <compare> // For std::strong_ordering (operator<=>)
 #include <functional> // For std::hash
 #include <memory> // For std::shared_ptr
 
@@ -179,6 +180,11 @@ public:
 	/// @param ptr The raw pointer to observe.
 	/// @return An observer_ptr wrapping the given pointer.
 	static constexpr observer_ptr make_observer(T * ptr) noexcept { return observer_ptr(ptr); }
+
+	/// @brief Three-way comparison operator for observer_ptr.
+	/// @param other The other observer_ptr to compare with.
+	/// @return The ordering result of the two stored pointers.
+	constexpr auto operator<=>(const observer_ptr & other) const noexcept = default;
 
 private:
 	T * ptr_; ///< The observed raw pointer.

@@ -2,6 +2,8 @@
 
 #include <functional>
 #include <memory>
+#include <set>
+#include <unordered_set>
 
 #include <msl/ptr.h>
 
@@ -130,6 +132,61 @@ void test_observer_ptr_hash()
     MSL_EXPECT(h1 == h1_again);
     MSL_EXPECT(h1 != h2); // different pointers should (almost certainly) differ
 }
+void test_observer_ptr_equality()
+{
+    int a = 1, b = 2;
+    msl::observer_ptr<int> p1(&a);
+    msl::observer_ptr<int> p2(&a);
+    msl::observer_ptr<int> p3(&b);
+
+    MSL_EXPECT(p1 == p2);
+    MSL_EXPECT(p1 != p3);
+}
+
+void test_observer_ptr_ordering()
+{
+    int arr[3] = {1, 2, 3};
+    msl::observer_ptr<int> p0(&arr[0]);
+    msl::observer_ptr<int> p1(&arr[1]);
+    msl::observer_ptr<int> p2(&arr[2]);
+
+    MSL_EXPECT(p0 < p1);
+    MSL_EXPECT(p1 < p2);
+    MSL_EXPECT(p2 > p0);
+    MSL_EXPECT(p0 <= p1);
+    MSL_EXPECT(p1 >= p1);
+}
+
+void test_observer_ptr_unordered_set()
+{
+    int a = 1, b = 2, c = 3;
+    std::unordered_set<msl::observer_ptr<int>> s;
+    s.insert(msl::observer_ptr<int>(&a));
+    s.insert(msl::observer_ptr<int>(&b));
+    s.insert(msl::observer_ptr<int>(&a)); // duplicate
+
+    MSL_EXPECT(s.size() == 2);
+    MSL_EXPECT(s.count(msl::observer_ptr<int>(&a)) == 1);
+    MSL_EXPECT(s.count(msl::observer_ptr<int>(&c)) == 0);
+}
+
+void test_observer_ptr_ordered_set()
+{
+    int arr[3] = {10, 20, 30};
+    std::set<msl::observer_ptr<int>> s;
+    s.insert(msl::observer_ptr<int>(&arr[2]));
+    s.insert(msl::observer_ptr<int>(&arr[0]));
+    s.insert(msl::observer_ptr<int>(&arr[1]));
+
+    MSL_EXPECT(s.size() == 3);
+    // elements should be sorted by pointer address; arr is contiguous
+    auto it = s.begin();
+    MSL_EXPECT(it->get() == &arr[0]);
+    ++it;
+    MSL_EXPECT(it->get() == &arr[1]);
+    ++it;
+    MSL_EXPECT(it->get() == &arr[2]);
+}
 } // namespace
 
 void run_ptr_tests()
@@ -146,4 +203,8 @@ void run_ptr_tests()
     test_observer_ptr_copy();
     test_observer_ptr_make_observer();
     test_observer_ptr_hash();
+    test_observer_ptr_equality();
+    test_observer_ptr_ordering();
+    test_observer_ptr_unordered_set();
+    test_observer_ptr_ordered_set();
 }
